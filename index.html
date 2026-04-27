@@ -1,0 +1,2064 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>David Design Thinking</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Cg transform='rotate(-22, 18, 18)'%3E%3Cpath d='M 0,18 A 18,3.5 0 0,1 36,18' stroke='%2307070E' stroke-width='2.6' stroke-linecap='round'/%3E%3C/g%3E%3Ccircle cx='18' cy='18' r='12' fill='%2307070E'/%3E%3Cg transform='rotate(-22, 18, 18)'%3E%3Cpath d='M 0,18 A 18,3.5 0 0,0 36,18' stroke='%23F1F1F5' stroke-width='5.2' stroke-linecap='round'/%3E%3Cpath d='M 0,18 A 18,3.5 0 0,0 36,18' stroke='%2307070E' stroke-width='2.6' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+/* ════════════════════════════════════════
+   RESET & TOKENS
+════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --bg:        #F1F1F5;
+  --surface-s: #FFFFFF;
+  --surface-m: #E8E8ED;
+  --surface-h: #DCDCE2;
+  --border:    rgba(0,0,0,0.08);
+  --border-m:  rgba(0,0,0,0.15);
+  --tx-hi:     #07070E;
+  --tx-1:      #14142A;
+  --tx-2:      #363650;
+  --tx-3:      #606075;
+  --tx-4:      #9898B0;
+
+  /* skill / article accent palette — darkened for light background */
+  --c1: #4455E0;   /* UX — indigo */
+  --c2: #14A060;   /* Strategy — mint */
+  --c3: #B07808;   /* Visual — amber */
+  --c4: #C84040;   /* Impl — rose */
+  --c-motion: #6828D8; /* Motion — violet */
+
+  --radius: 10px;
+  --max-w:  900px;
+  --col-w:  700px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--tx-2);
+  font-family: 'Noto Serif SC', 'PingFang SC', serif;
+  font-size: 16px;
+  line-height: 1.9;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ════════════════════════════════════════
+   PAGE / VIEW TRANSITIONS
+════════════════════════════════════════ */
+@keyframes viewIn  {
+  from { opacity: 0; transform: translateY(20px) scale(0.984); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes viewOut {
+  from { opacity: 1; transform: none; }
+  to   { opacity: 0; transform: translateY(-14px) scale(1.013); }
+}
+
+.view { display: none; }
+.view.active { display: block; }
+.view.is-entering { animation: viewIn  0.50s cubic-bezier(0.22,1,0.36,1) both; }
+.view.is-leaving  { animation: viewOut 0.32s cubic-bezier(0.55,0,1,0.45) both; pointer-events: none; }
+
+/* ════════════════════════════════════════
+   NAV  (always visible, above views)
+════════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  background: rgba(241,241,245,0.94);
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+  transform: translateZ(0);
+}
+.nav-inner {
+  max-width: var(--max-w); margin: 0 auto;
+  padding: 0 36px; height: 58px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+/* ── Logo ── */
+.logo {
+  display: flex; align-items: center; gap: 11px;
+  text-decoration: none; cursor: pointer;
+  flex-shrink: 0;
+}
+.logo-mark {
+  width: 34px; height: 34px; flex-shrink: 0;
+}
+.logo-text { display: flex; flex-direction: column; gap: 1px; line-height: 1; }
+.logo-name {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px;
+  color: var(--tx-hi); letter-spacing: -0.02em;
+}
+.logo-sub {
+  font-family: 'JetBrains Mono', monospace; font-size: 8.5px;
+  color: var(--tx-4); letter-spacing: 0.16em; text-transform: uppercase;
+}
+
+/* ── Nav right ── */
+.nav-right { display: flex; align-items: center; gap: 20px; }
+.nav-tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--tx-4); letter-spacing: 0.12em; text-transform: uppercase;
+}
+#nav-back {
+  display: none;
+  font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+  color: var(--tx-3); letter-spacing: 0.06em;
+  cursor: pointer; transition: color 0.2s;
+  background: none; border: none; padding: 0;
+}
+#nav-back:hover { color: var(--tx-1); }
+
+/* ════════════════════════════════════════
+   PROGRESS BAR
+════════════════════════════════════════ */
+#progress-bar {
+  display: none;
+  position: fixed; top: 58px; left: 0;
+  height: 2px; background: var(--c1); width: 0%;
+  transition: width 0.08s linear; z-index: 299;
+}
+
+/* ════════════════════════════════════════
+   FOOTER  (always visible)
+════════════════════════════════════════ */
+footer {
+  border-top: 1px solid var(--border);
+}
+.footer-inner {
+  max-width: var(--max-w); margin: 0 auto; padding: 28px 36px;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 20px;
+}
+.footer-left { display: flex; align-items: center; gap: 10px; }
+.footer-mark {
+  width: 22px; height: 22px; opacity: 0.30;
+}
+.footer-name {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 12px;
+  color: var(--tx-4);
+}
+.footer-right {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--tx-4); letter-spacing: 0.06em;
+  text-align: right;
+}
+
+/* ════════════════════════════════════════
+   ── HOME VIEW ──
+════════════════════════════════════════ */
+.home-hero {
+  max-width: var(--max-w); margin: 0 auto; padding: 130px 36px 36px;
+}
+.home-eyebrow {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--c1); letter-spacing: 0.18em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 10px; margin-bottom: 22px;
+}
+.home-eyebrow::before {
+  content: ''; display: block; width: 22px; height: 1px;
+  background: var(--c1); opacity: 0.55;
+}
+.home-title {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: clamp(36px, 5.2vw, 64px);
+  color: var(--tx-hi); letter-spacing: -0.03em; line-height: 1.05;
+  margin-bottom: 20px;
+}
+.home-title em { font-style: normal; color: var(--c1); }
+.home-sub {
+  font-size: 16px; color: var(--tx-3); max-width: 480px; line-height: 1.75;
+}
+
+/* ── Article Cards ── */
+.articles-wrap {
+  max-width: var(--max-w); margin: 0 auto; padding: 16px 36px 100px;
+}
+.articles-head {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 36px;
+}
+.articles-head-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--tx-4); letter-spacing: 0.14em; text-transform: uppercase;
+  white-space: nowrap;
+}
+.articles-head-rule { flex: 1; height: 1px; background: var(--border); }
+
+.card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+.art-card {
+  --accent: var(--c1);
+  position: relative; display: flex; flex-direction: column;
+  background: color-mix(in srgb, var(--accent) 3%, #FFFFFF);
+  border: 1px solid color-mix(in srgb, var(--accent) 12%, var(--border-m));
+  border-radius: 18px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,.05), 0 4px 14px rgba(0,0,0,.08), 0 14px 36px rgba(0,0,0,.07);
+  transition: transform 0.5s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.5s cubic-bezier(0.22,1,0.36,1),
+              border-color 0.35s ease;
+  will-change: transform;
+}
+.art-card.featured {
+  box-shadow: 0 2px 6px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.10), 0 22px 52px rgba(0,0,0,.08);
+}
+.art-card:hover {
+  animation: none;
+  transform: translateY(-11px) rotateX(1.2deg);
+  border-color: rgba(0,0,0,0.20);
+  box-shadow: 0 4px 10px rgba(0,0,0,.12), 0 16px 44px rgba(0,0,0,.14), 0 40px 88px rgba(0,0,0,.10), inset 0 1px 0 rgba(255,255,255,.90);
+}
+.art-card::before {
+  content: ''; position: absolute; top: 0; left: 0; bottom: 0;
+  width: 3px;
+  background: var(--accent);
+  opacity: 0.55;
+  transition: opacity 0.4s, width 0.35s cubic-bezier(0.22,1,0.36,1);
+}
+.art-card:hover::before { opacity: 0.9; width: 4px; }
+
+.art-card-inner { padding: 22px 24px 18px; position: relative; z-index: 1; flex: 1; }
+.card-num-row {
+  display: flex; align-items: baseline; gap: 14px; margin-bottom: 20px;
+}
+.card-num {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: 30px; line-height: 1; letter-spacing: -0.04em;
+  color: var(--accent);
+  text-shadow: 0 0 36px color-mix(in srgb, var(--accent) 28%, transparent);
+  transition: text-shadow 0.4s;
+}
+.art-card:hover .card-num { text-shadow: 0 0 48px color-mix(in srgb, var(--accent) 45%, transparent); }
+.card-num-line {
+  height: 1px; max-width: 60px; flex: 1;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  opacity: 0.22; margin-bottom: 4px;
+  transition: opacity 0.4s, max-width 0.5s;
+}
+.art-card:hover .card-num-line { opacity: 0.45; max-width: 100px; }
+.card-num-meta {
+  font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+  color: var(--tx-4); letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 4px; align-self: flex-end;
+}
+.card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+.tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+  letter-spacing: 0.07em; padding: 2px 8px; border-radius: 4px; border: 1px solid;
+}
+.tag-blue  { color: #4455E0; border-color: rgba(68,85,224,.25); background: rgba(68,85,224,.08); }
+.tag-green { color: #14A060; border-color: rgba(20,160,96,.25);  background: rgba(20,160,96,.08); }
+.tag-amber { color: #B07808; border-color: rgba(176,120,8,.25);  background: rgba(176,120,8,.08); }
+.tag-rose  { color: #C84040; border-color: rgba(200,64,64,.25);  background: rgba(200,64,64,.08); }
+.tag-violet{ color: #6828D8; border-color: rgba(104,40,216,.25); background: rgba(104,40,216,.08); }
+
+.card-title {
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 16px; color: var(--tx-1); letter-spacing: -0.02em;
+  line-height: 1.35; margin-bottom: 8px;
+  transition: color 0.25s;
+}
+.art-card:hover .card-title { color: var(--tx-hi); }
+.card-excerpt {
+  font-size: 12.5px; color: var(--tx-3); line-height: 1.75; margin-bottom: 0;
+}
+.art-card-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 24px 16px;
+  border-top: 1px solid var(--border); position: relative; z-index: 1;
+}
+.card-meta { display: flex; gap: 18px; }
+.card-meta span {
+  font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+  color: var(--tx-4); letter-spacing: 0.07em;
+}
+.card-arrow {
+  font-size: 15px; color: var(--accent);
+  opacity: 0; transform: translateX(-8px);
+  transition: opacity 0.28s, transform 0.42s cubic-bezier(0.22,1,0.36,1);
+}
+.art-card:hover .card-arrow { opacity: 1; transform: none; }
+
+/* accent variants */
+.ac1 { --accent: var(--c1); }
+.ac2 { --accent: var(--c2); }
+.ac3 { --accent: var(--c3); }
+.ac4 { --accent: var(--c4); }
+
+/* ── Featured Card (2-col span) ── */
+.art-card.featured { grid-column: span 2; }
+.art-card.featured .art-card-inner { padding: 30px 36px 22px; }
+.art-card.featured .card-num-row { flex-direction: row; gap: 14px; margin-bottom: 18px; align-items: baseline; }
+.art-card.featured .card-num { font-size: 44px; }
+.art-card.featured .card-num-line { display: block; }
+.art-card.featured .card-num-meta { align-self: flex-end; margin-bottom: 4px; }
+.art-card.featured .card-title { font-size: 22px; line-height: 1.25; margin-bottom: 12px; }
+.art-card.featured .card-excerpt { font-size: 14px; line-height: 1.8; }
+.art-card.featured .art-card-footer { padding: 14px 36px 20px; }
+
+/* ── Regular Grid Cards ── */
+.art-card:not(.featured) .card-num-row { flex-direction: column; gap: 3px; margin-bottom: 12px; align-items: flex-start; }
+.art-card:not(.featured) .card-num { font-size: 20px; }
+.art-card:not(.featured) .card-num-line { display: none; }
+.art-card:not(.featured) .card-num-meta { align-self: auto; margin-bottom: 0; }
+.art-card:not(.featured) .card-tags { margin-bottom: 10px; }
+.art-card:not(.featured) .card-tags .tag:nth-child(n+3) { display: none; }
+.art-card:not(.featured) .card-title {
+  font-size: 15px; line-height: 1.4; margin-bottom: 8px;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.art-card:not(.featured) .card-excerpt {
+  font-size: 12px; line-height: 1.7; color: var(--tx-3);
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.art-card:not(.featured) .art-card-footer { padding: 10px 22px 14px; }
+.art-card:not(.featured):hover { transform: translateY(-7px) rotateX(0.8deg); }
+
+/* ── Home About ── */
+.home-about {
+  border-top: 1px solid var(--border);
+}
+.home-about-inner {
+  max-width: var(--max-w); margin: 0 auto; padding: 52px 36px;
+  display: grid; grid-template-columns: 1fr auto; gap: 72px; align-items: start;
+}
+.about-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+  color: var(--tx-4); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 13px;
+}
+.about-text { font-size: 14px; color: var(--tx-3); line-height: 1.85; max-width: 440px; }
+.home-stats { display: flex; gap: 48px; }
+.stat-num {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 30px;
+  color: var(--tx-hi); letter-spacing: -0.03em; line-height: 1;
+}
+.stat-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  color: var(--tx-4); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 5px;
+}
+
+/* ════════════════════════════════════════
+   ── ARTICLE VIEWS ──  (shared structure)
+════════════════════════════════════════ */
+.art-view { padding-top: 58px; } /* nav height offset */
+
+.art-hero {
+  max-width: var(--col-w); margin: 0 auto; padding: 72px 40px 52px;
+}
+.art-hero-meta {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 28px;
+}
+.art-no {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: var(--accent-art); letter-spacing: 0.1em;
+}
+.art-dot { width: 3px; height: 3px; background: var(--tx-4); border-radius: 50%; }
+.art-date {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--tx-4); letter-spacing: 0.08em;
+}
+.art-title {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: clamp(28px, 4vw, 44px);
+  color: var(--tx-hi); letter-spacing: -0.025em; line-height: 1.1;
+  margin-bottom: 22px;
+}
+.art-title em { font-style: normal; color: var(--accent-art); }
+.art-lede {
+  font-size: 17px; color: var(--tx-3); line-height: 1.75; margin-bottom: 28px;
+  font-weight: 300; max-width: 580px;
+}
+.art-tag-row { display: flex; gap: 7px; flex-wrap: wrap; }
+
+.art-rule { max-width: var(--col-w); margin: 0 auto; border: 0; border-top: 1px solid var(--border); }
+
+/* Article body */
+.art-body { max-width: var(--col-w); margin: 0 auto; padding: 56px 40px 100px; }
+.art-body h2 {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 22px;
+  color: var(--tx-hi); letter-spacing: -0.02em; line-height: 1.25;
+  margin: 60px 0 18px; padding-top: 44px; border-top: 1px solid var(--border);
+}
+.art-body h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+.art-body h3 {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 17px;
+  color: var(--tx-1); letter-spacing: -0.01em; margin: 36px 0 12px;
+}
+.art-body p { margin-bottom: 18px; color: var(--tx-2); }
+.art-body strong { color: var(--tx-1); font-weight: 600; }
+
+.pull-quote {
+  margin: 36px 0; padding: 24px 28px;
+  background: var(--surface-s);
+  border-left: 2.5px solid var(--accent-art);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.pull-quote p { font-size: 17px; color: var(--tx-1); line-height: 1.75; margin: 0; font-style: italic; }
+
+.callout {
+  margin: 36px 0; padding: 24px 28px;
+  background: rgba(68,85,224,0.06);
+  border: 1px solid rgba(68,85,224,0.20); border-radius: 12px;
+}
+.callout-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--c1);
+  letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 9px;
+}
+.callout p { font-size: 15.5px; color: var(--tx-1); margin: 0; line-height: 1.8; }
+
+.needs-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 28px 0; }
+.need-card {
+  padding: 20px; background: var(--surface-s);
+  border: 1px solid var(--border); border-radius: 12px;
+}
+.need-icon { font-size: 20px; margin-bottom: 9px; }
+.need-title {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px;
+  color: var(--tx-1); margin-bottom: 6px;
+}
+.need-desc { font-size: 13px; color: var(--tx-3); line-height: 1.65; margin: 0; }
+
+.trend-list { list-style: none; display: flex; flex-direction: column; gap: 0; margin: 22px 0; }
+.trend-item {
+  display: grid; grid-template-columns: 28px 1fr; gap: 14px;
+  padding: 18px 0; border-bottom: 1px solid var(--border); align-items: start;
+}
+.trend-item:first-child { border-top: 1px solid var(--border); }
+.trend-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--tx-4); padding-top: 3px; }
+.trend-title {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15.5px;
+  color: var(--tx-1); letter-spacing: -0.01em; margin-bottom: 7px;
+}
+.trend-body { font-size: 14px; color: var(--tx-3); line-height: 1.8; margin: 0; }
+
+.false-grid { display: grid; gap: 10px; margin: 20px 0; }
+.false-item {
+  padding: 18px 22px; background: var(--surface-s);
+  border: 1px solid rgba(200,64,64,0.18); border-radius: 10px;
+  display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start;
+}
+.false-x { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #C84040; opacity: 0.75; padding-top: 2px; }
+.false-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13.5px; color: var(--tx-1); margin-bottom: 5px; }
+.false-text { font-size: 13.5px; color: var(--tx-3); line-height: 1.7; margin: 0; }
+
+.art-closing { margin-top: 64px; padding-top: 28px; border-top: 1px solid var(--border); }
+.art-closing p { font-size: 15px; color: var(--tx-3); font-style: italic; line-height: 1.85; }
+
+/* ════════════════════════════════════════
+   ── ARTICLE 01: SKILL ATLAS ──
+════════════════════════════════════════ */
+.skill-tabs-bar {
+  max-width: var(--col-w); margin: 0 auto; padding: 28px 40px 36px;
+}
+.skill-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.skill-tab {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 4px;
+  padding: 16px 18px 15px;
+  background: var(--surface-s);
+  border: 1px solid var(--border-m);
+  border-radius: 12px;
+  cursor: pointer;
+  position: relative; overflow: hidden;
+  transition: background 0.25s, border-color 0.25s, transform 0.25s;
+  text-align: left;
+}
+.skill-tab::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--tab-color); opacity: 0.25;
+  transition: opacity 0.25s;
+}
+.skill-tab:hover {
+  background: var(--surface-m);
+  border-color: rgba(0,0,0,0.20);
+  transform: translateY(-2px);
+}
+.skill-tab.active {
+  background: color-mix(in srgb, var(--tab-color) 9%, var(--surface-s));
+  border-color: color-mix(in srgb, var(--tab-color) 50%, transparent);
+}
+.skill-tab.active::after { opacity: 1; }
+.stab-num {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 10px;
+  color: var(--tab-color); letter-spacing: 0.12em;
+}
+.stab-name {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px;
+  color: var(--tx-2); line-height: 1.2;
+  transition: color 0.2s;
+}
+.skill-tab.active .stab-name, .skill-tab:hover .stab-name { color: var(--tx-hi); }
+.stab-en {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  color: var(--tx-4); letter-spacing: 0.1em; text-transform: uppercase;
+  margin-top: 1px;
+}
+
+/* Skill content sections */
+.skill-section { display: none; }
+.skill-section.active { display: block; }
+
+.skill-hero {
+  max-width: var(--col-w); margin: 0 auto; padding: 40px 40px 32px;
+  background: var(--surface-s);
+  border-bottom: 1px solid var(--border);
+}
+.skill-hero-tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--sk-accent); margin-bottom: 10px;
+}
+.skill-hero-title {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px;
+  color: var(--tx-hi); letter-spacing: -0.02em; margin-bottom: 12px;
+}
+.skill-hero-quote {
+  font-size: 15px; color: var(--tx-2); line-height: 1.8;
+  border-left: 2px solid var(--sk-accent); padding-left: 16px;
+  margin-bottom: 20px;
+}
+.skill-hero-meta { display: flex; gap: 32px; flex-wrap: wrap; }
+.skill-meta-item {}
+.skill-meta-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--tx-4);
+  letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 3px;
+}
+.skill-meta-value { font-size: 13px; color: var(--tx-2); line-height: 1.5; }
+
+/* Skill body — same max-width, internal */
+.skill-body { max-width: var(--col-w); margin: 0 auto; padding: 40px 40px 80px; }
+.skill-body h2 {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px;
+  color: var(--tx-hi); letter-spacing: -0.01em;
+  margin: 48px 0 14px; padding-top: 36px; border-top: 1px solid var(--border);
+}
+.skill-body h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+.skill-body h2::before {
+  content: attr(data-num); display: inline-block;
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  color: var(--sk-accent); letter-spacing: 0.1em; margin-right: 10px;
+  opacity: 0.9; vertical-align: middle;
+}
+.skill-body h3 {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px;
+  color: var(--tx-1); margin: 28px 0 10px;
+}
+.skill-body p { margin-bottom: 16px; color: var(--tx-2); font-size: 15px; line-height: 1.9; }
+.skill-body strong { color: var(--tx-1); }
+
+.skill-body table {
+  width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 13.5px;
+  border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+}
+.skill-body th {
+  font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--tx-3);
+  text-align: left; padding: 10px 14px;
+  background: var(--surface-m); border-bottom: 1px solid var(--border-m);
+}
+.skill-body td {
+  padding: 10px 14px; color: var(--tx-2); border-bottom: 1px solid var(--border);
+  vertical-align: top; line-height: 1.7;
+}
+.skill-body tr:last-child td { border-bottom: none; }
+.skill-body tr:hover td { background: rgba(0,0,0,0.03); }
+.skill-body td strong { color: var(--tx-1); }
+
+.skill-body ul, .skill-body ol {
+  margin: 12px 0 16px 0; padding-left: 20px;
+}
+.skill-body li {
+  color: var(--tx-2); margin-bottom: 7px; font-size: 14.5px; line-height: 1.8;
+}
+.skill-body li strong { color: var(--tx-1); }
+.skill-body ul li::marker { color: var(--sk-accent); }
+
+.skill-body pre {
+  background: var(--surface-m); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 18px 20px; overflow-x: auto;
+  margin: 18px 0;
+}
+.skill-body code {
+  font-family: 'JetBrains Mono', monospace; font-size: 12.5px;
+  color: var(--tx-2); line-height: 1.7;
+}
+.skill-body pre code { background: none; }
+.skill-body blockquote {
+  margin: 14px 0; padding: 14px 20px;
+  border-left: 2px solid var(--sk-accent); color: var(--tx-2);
+  font-style: italic; font-size: 15px;
+}
+
+.step-block {
+  margin: 12px 0; padding: 18px 22px;
+  background: var(--surface-s);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  border-left: 2.5px solid var(--sk-accent);
+}
+.step-title {
+  font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; color: var(--sk-accent); margin-bottom: 8px;
+}
+.step-body { color: var(--tx-2); font-size: 14px; line-height: 1.85; }
+.step-body p { margin-bottom: 8px; }
+.step-body p:last-child { margin-bottom: 0; }
+.step-body ul { margin-top: 6px; }
+.step-body li { font-size: 14px; color: var(--tx-2); }
+
+.insight-list { display: flex; flex-direction: column; gap: 6px; margin: 14px 0; }
+.insight-item {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 12px 16px; background: var(--surface-s);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  font-size: 14px; color: var(--tx-2); line-height: 1.7;
+  transition: background 0.15s, border-color 0.15s;
+}
+.insight-item:hover { background: var(--surface-h); border-color: var(--border-m); }
+.insight-item.anti { border-left: 2px solid var(--c4); }
+.insight-item.anti::before {
+  content: '✕'; font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; color: var(--c4); margin-top: 2px; flex-shrink: 0;
+}
+.insight-item.tip { border-left: 2px solid var(--sk-accent); }
+.insight-item.tip::before {
+  content: '→'; font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; color: var(--sk-accent); margin-top: 2px; flex-shrink: 0;
+}
+.h3-num {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--tx-4); margin-right: 6px;
+}
+
+
+/* ════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════ */
+@media (max-width: 860px) {
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
+  .art-card.featured { grid-column: span 2; }
+}
+
+@media (max-width: 640px) {
+  .card-grid { grid-template-columns: 1fr; }
+  .art-card.featured { grid-column: span 1; }
+  .art-card.featured .art-card-inner { padding: 22px 22px 18px; }
+  .art-card.featured .card-num { font-size: 30px; }
+  .art-card.featured .card-title { font-size: 17px; }
+  .art-card.featured .art-card-footer { padding: 12px 22px 16px; }
+  .home-hero, .articles-wrap { padding-left: 20px; padding-right: 20px; }
+  .art-card-inner, .art-card-footer { padding-left: 18px; padding-right: 18px; }
+  .art-hero, .art-body, .skill-tabs-bar, .skill-hero, .skill-body { padding-left: 20px; padding-right: 20px; }
+  .needs-grid { grid-template-columns: 1fr; }
+  .home-about-inner { grid-template-columns: 1fr; gap: 28px; }
+  .skill-tabs { grid-template-columns: repeat(2, 1fr); }
+  .skill-tabs-bar { padding-left: 20px; padding-right: 20px; }
+  .skill-hero-meta { gap: 18px; }
+  .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+}
+
+/* ════════════════════════════════════════
+   FLOATING SIDE NAV
+════════════════════════════════════════ */
+.float-nav {
+  position: fixed;
+  right: max(16px, calc(50vw - 408px));
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.38s cubic-bezier(0.22,1,0.36,1);
+}
+.float-nav.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.float-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.78);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 14px rgba(0,0,0,0.07);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--tx-4);
+  transition:
+    background 0.22s,
+    border-color 0.22s,
+    box-shadow 0.22s,
+    transform 0.28s cubic-bezier(0.22,1,0.36,1),
+    color 0.22s;
+}
+.float-btn:hover {
+  background: rgba(255,255,255,0.96);
+  border-color: rgba(0,0,0,0.14);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.09), 0 8px 26px rgba(0,0,0,0.10);
+  transform: translateY(-2px);
+  color: var(--tx-1);
+}
+.float-btn:active {
+  transform: translateY(0px);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+  transition-duration: 0.08s;
+}
+/* divider line between the two buttons */
+.float-divider {
+  width: 20px;
+  height: 1px;
+  background: var(--border-m);
+  align-self: center;
+  margin: 1px 0;
+}
+
+/* copy-link toast */
+.copy-toast {
+  position: fixed;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  background: var(--tx-hi);
+  color: #F1F1F5;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  padding: 8px 18px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.24s ease, transform 0.28s cubic-bezier(0.22,1,0.36,1);
+  z-index: 500;
+  white-space: nowrap;
+}
+.copy-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+@media (max-width: 780px) {
+  .float-nav { display: none; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ════ FLOATING SIDE NAV ════ -->
+<div class="float-nav" id="float-nav">
+  <!-- 返回主页 -->
+  <button class="float-btn" onclick="navigate('home')" title="返回主页">
+    <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+      <rect x="1.5" y="1.5" width="5" height="5" rx="1.2" fill="currentColor"/>
+      <rect x="8.5" y="1.5" width="5" height="5" rx="1.2" fill="currentColor"/>
+      <rect x="1.5" y="8.5" width="5" height="5" rx="1.2" fill="currentColor"/>
+      <rect x="8.5" y="8.5" width="5" height="5" rx="1.2" fill="currentColor"/>
+    </svg>
+  </button>
+  <!-- 分享 -->
+  <button class="float-btn" onclick="shareURL()" title="复制链接">
+    <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+      <circle cx="11" cy="3.5" r="1.6" stroke="currentColor" stroke-width="1.3"/>
+      <circle cx="3.5" cy="7.5" r="1.6" stroke="currentColor" stroke-width="1.3"/>
+      <circle cx="11" cy="11.5" r="1.6" stroke="currentColor" stroke-width="1.3"/>
+      <path d="M9.4 4.4L5.1 6.6M5.1 8.4L9.4 10.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <div class="float-divider"></div>
+  <!-- 回到顶部 -->
+  <button class="float-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">
+    <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+      <path d="M7.5 12V4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      <path d="M4 7L7.5 3.5L11 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<!-- ════ COPY TOAST ════ -->
+<div class="copy-toast" id="copy-toast">已复制链接</div>
+
+<!-- ════ PROGRESS BAR ════ -->
+<div id="progress-bar"></div>
+
+<!-- ════ NAV (shared, always visible) ════ -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo" onclick="navigate('home')">
+      <!-- Logo mark: Saturn planet -->
+      <svg class="logo-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g transform="rotate(-22, 18, 18)">
+          <path d="M 0,18 A 18,3.5 0 0,1 36,18" stroke="#07070E" stroke-width="2.6" stroke-linecap="round"/>
+        </g>
+        <circle cx="18" cy="18" r="12" fill="#07070E"/>
+        <g transform="rotate(-22, 18, 18)">
+          <path d="M 0,18 A 18,3.5 0 0,0 36,18" stroke="#F1F1F5" stroke-width="5.2" stroke-linecap="round"/>
+          <path d="M 0,18 A 18,3.5 0 0,0 36,18" stroke="#07070E" stroke-width="2.6" stroke-linecap="round"/>
+        </g>
+      </svg>
+      <div class="logo-text">
+        <div class="logo-name">David</div>
+        <div class="logo-sub">Design Thinking</div>
+      </div>
+    </div>
+    <div class="nav-right">
+      <span class="nav-tag" id="nav-tag">Thinking · Craft · Systems</span>
+      <button id="nav-back" onclick="navigate('home')">← All Articles</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════
+     VIEW: HOME
+════════════════════════════════════════ -->
+<div id="view-home" class="view active">
+
+  <section class="home-hero">
+    <div class="home-eyebrow">Personal Design Journal</div>
+    <h1 class="home-title">Design<br><em>Thinking</em></h1>
+    <p class="home-sub">一点浩然气，千里快哉风。</p>
+  </section>
+
+  <section class="articles-wrap">
+    <div class="articles-head">
+      <span class="articles-head-label">All Articles — 05 Published</span>
+      <span class="articles-head-rule"></span>
+    </div>
+
+    <div class="card-grid">
+      <!-- Card 01 -->
+      <div class="art-card ac1 featured" data-tags="game-ux,visual-design,motion,implementation" onclick="navigate('a01')">
+        <div class="art-card-inner">
+          <div class="card-num-row">
+            <span class="card-num">01</span>
+            <span class="card-num-line"></span>
+            <span class="card-num-meta">Skill Atlas · Interactive</span>
+          </div>
+          <div class="card-tags">
+            <span class="tag tag-blue">Game UX</span>
+            <span class="tag tag-amber">Visual Design</span>
+            <span class="tag tag-violet">Motion</span>
+            <span class="tag tag-rose">Implementation</span>
+          </div>
+          <div class="card-title">游戏 UX 专家技能图谱</div>
+          <p class="card-excerpt">一份完整的游戏 UX 设计师成长地图。涵盖交互设计、视觉语言、界面动效、工程实现四大维度，以技能树的形式呈现从新手到专家的完整能力结构。</p>
+        </div>
+        <div class="art-card-footer">
+          <div class="card-meta">
+            <span>2026 · Apr</span>
+            <span>Pinned</span>
+          </div>
+          <span class="card-arrow">→</span>
+        </div>
+      </div>
+      <div class="art-card ac3" data-tags="product-thinking,strategy,claude-skill" onclick="navigate('a03')">
+        <div class="art-card-inner">
+          <div class="card-num-row">
+            <span class="card-num">02</span>
+            <span class="card-num-line"></span>
+            <span class="card-num-meta">Skill Review · 长文</span>
+          </div>
+          <div class="card-tags">
+            <span class="tag tag-rose">Product Thinking</span>
+            <span class="tag tag-green">Strategy</span>
+            <span class="tag tag-blue">Claude Skill</span>
+          </div>
+          <div class="card-title">把《产品沉思录》的刘少楠装进 Skill</div>
+          <p class="card-excerpt">一个让 AI 说话不像 AI、而像一个真正想清楚了的产品人的 Skill。把刘少楠的思考纪律——拒绝表面叙事、追问系统本质、以长期视角做艰难取舍——变成 Claude 回答产品问题时的默认方式。</p>
+        </div>
+        <div class="art-card-footer">
+          <div class="card-meta">
+            <span>2026 · Apr</span>
+            <span>工具评测</span>
+          </div>
+          <span class="card-arrow">→</span>
+        </div>
+      </div>
+      <div class="art-card ac2" data-tags="strategy,product-thinking,game-ux" onclick="navigate('a02')">
+        <div class="art-card-inner">
+          <div class="card-num-row">
+            <span class="card-num">03</span>
+            <span class="card-num-line"></span>
+            <span class="card-num-meta">Product Thinking · 长文</span>
+          </div>
+          <div class="card-tags">
+            <span class="tag tag-green">Strategy</span>
+            <span class="tag tag-rose">Product Thinking</span>
+            <span class="tag tag-blue">Game UX</span>
+          </div>
+          <div class="card-title">游戏 UX 设计的未来：我们问错了问题</div>
+          <p class="card-excerpt">用刘少楠式产品思维解构游戏 UX 的本质矛盾。大多数人谈技术趋势，但真正值得问的是：游戏 UX 在服务玩家的什么真实处境？留存设计与尊重设计，是两条截然不同的路。</p>
+        </div>
+        <div class="art-card-footer">
+          <div class="card-meta">
+            <span>2026 · Apr</span>
+            <span>深度分析</span>
+          </div>
+          <span class="card-arrow">→</span>
+        </div>
+      </div>
+      <div class="art-card ac4" data-tags="culture,essay,implementation" onclick="navigate('a06')">
+        <div class="art-card-inner">
+          <div class="card-num-row">
+            <span class="card-num">04</span>
+            <span class="card-num-line"></span>
+            <span class="card-num-meta">Essay · 长文</span>
+          </div>
+          <div class="card-tags">
+            <span class="tag tag-violet">Culture</span>
+      <span class="tag tag-amber">Essay</span>
+      <span class="tag tag-rose">Implementation</span>
+          </div>
+          <div class="card-title">苏轼：一个人的风雨与明月</div>
+          <p class="card-excerpt">苏轼（1037—1101），字子瞻，号东坡居士。这个名字，中国人几乎无人不知。</p>
+        </div>
+        <div class="art-card-footer">
+          <div class="card-meta">
+            <span>2026 · Apr</span>
+            <span>长文</span>
+          </div>
+          <span class="card-arrow">→</span>
+        </div>
+      </div>
+      <!-- Card 05 -->
+      <div class="art-card ac1" data-tags="essay,culture" onclick="navigate('a07')">
+        <div class="art-card-inner">
+          <div class="card-num-row">
+            <span class="card-num">05</span>
+            <span class="card-num-line"></span>
+            <span class="card-num-meta">影像随笔</span>
+          </div>
+          <div class="card-tags">
+            <span class="tag tag-amber">Essay</span>
+      <span class="tag tag-violet">Culture</span>
+          </div>
+          <div class="card-title">如果你知道结局，你还愿意开始吗？</div>
+          <p class="card-excerpt">——关于《你一生的故事》与电影《降临》</p>
+        </div>
+        <div class="art-card-footer">
+          <div class="card-meta">
+            <span>2026 · Apr</span>
+            <span>影像随笔</span>
+          </div>
+          <span class="card-arrow">→</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="home-about">
+    <div class="home-about-inner">
+      <div>
+        <div class="about-label">About This Journal</div>
+        <p class="about-text">这是一份由AI主导生成的设计思考记录。每篇文章在内容构建与呈现设计上均由AI一体化生成，感谢Claude Code、Chatgpt、Trae的贡献与智慧。</p>
+      </div>
+      <div class="home-stats">
+        <div><div class="stat-num">05</div><div class="stat-label">Articles</div></div>
+        <div><div class="stat-num">∞</div><div class="stat-label">In Progress</div></div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /view-home -->
+
+
+<!-- ════════════════════════════════════════
+     VIEW: ARTICLE 01 — SKILL ATLAS
+════════════════════════════════════════ -->
+<div id="view-a01" class="view art-view" style="--accent-art:var(--c1)">
+
+  <header class="art-hero">
+    <div class="art-hero-meta">
+      <span class="art-no">No.01</span>
+      <span class="art-dot"></span>
+      <span class="art-date">April 2026</span>
+      <span class="art-dot"></span>
+      <span class="art-date">Skill Atlas</span>
+    </div>
+    <h1 class="art-title">游戏 UX 专家<em>技能图谱</em></h1>
+    <p class="art-lede">一份完整的游戏 UX 设计师成长地图。四个专家维度，每一个都是独立的能力体系，也是彼此咬合的设计系统。</p>
+    <div class="art-tag-row">
+      <span class="tag tag-blue">Game UX</span>
+      <span class="tag tag-amber">Visual Design</span>
+      <span class="tag tag-violet">Motion Design</span>
+      <span class="tag tag-rose">UI Implementation</span>
+    </div>
+  </header>
+
+  <hr class="art-rule">
+
+  <!-- Skill Tabs -->
+  <div class="skill-tabs-bar">
+    <div class="skill-tabs">
+      <button class="skill-tab active" style="--tab-color:var(--c1)" data-skill="ux" onclick="switchSkill('ux')">
+        <span class="stab-num">01</span>
+        <span class="stab-name">交互设计</span>
+        <span class="stab-en">Interaction Design</span>
+      </button>
+      <button class="skill-tab" style="--tab-color:var(--c3)" data-skill="visual" onclick="switchSkill('visual')">
+        <span class="stab-num">02</span>
+        <span class="stab-name">视觉设计</span>
+        <span class="stab-en">Visual Design</span>
+      </button>
+      <button class="skill-tab" style="--tab-color:var(--c-motion)" data-skill="motion" onclick="switchSkill('motion')">
+        <span class="stab-num">03</span>
+        <span class="stab-name">界面动效</span>
+        <span class="stab-en">Motion Design</span>
+      </button>
+      <button class="skill-tab" style="--tab-color:var(--c4)" data-skill="impl" onclick="switchSkill('impl')">
+        <span class="stab-num">04</span>
+        <span class="stab-name">界面重构</span>
+        <span class="stab-en">UI Implementation</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Skill: 交互设计 ── -->
+  <div class="skill-section active" id="skill-ux" style="--sk-accent:var(--c1)">
+    <div class="skill-hero">
+      <div class="skill-hero-tag">Skill 01 · Interaction Design</div>
+      <h2 class="skill-hero-title">游戏交互设计专家</h2>
+      <div class="skill-hero-quote">交互设计的本质不是「让界面好用」，而是<strong>让玩家在正确的时机做出正确的决策，并且感到爽</strong>。</div>
+      <div class="skill-hero-meta">
+        <div class="skill-meta-item"><div class="skill-meta-label">核心输出</div><div class="skill-meta-value">低认知摩擦 + 高情绪回报的交互系统</div></div>
+        <div class="skill-meta-item"><div class="skill-meta-label">工作阶段</div><div class="skill-meta-value">玩法设计之后 · 视觉设计之前</div></div>
+        <div class="skill-meta-item"><div class="skill-meta-label">关键指标</div><div class="skill-meta-value">步骤数 / 反馈延迟 / 完成率</div></div>
+      </div>
+    </div>
+    <div class="skill-body">
+
+      <h2 data-num="一">角色定位</h2>
+      <p>你是一名专注于游戏领域的交互设计专家。你的工作发生在「玩法设计」结束之后、「视觉设计」开始之前——你定义的是<strong>玩家与系统之间的对话逻辑</strong>。</p>
+      <table>
+        <thead><tr><th>维度</th><th>通用 UX</th><th>游戏 UX</th></tr></thead>
+        <tbody>
+          <tr><td>用户状态</td><td>目标明确，相对平静</td><td>情绪多变，高唤醒或疲惫</td></tr>
+          <tr><td>注意力竞争</td><td>UI 本身即主体</td><td>UI 与游戏本体抢夺注意力</td></tr>
+          <tr><td>容错预期</td><td>可以慢慢学</td><td>不能打断心流</td></tr>
+          <tr><td>反馈期待</td><td>有效即可</td><td>必须有爽感</td></tr>
+          <tr><td>习惯成本</td><td>一次性迁移</td><td>老玩家肌肉记忆极难改</td></tr>
+        </tbody>
+      </table>
+
+      <h2 data-num="二">思维模型</h2>
+      <h3><span class="h3-num">2.1</span>Fun Tax · 娱乐税</h3>
+      <blockquote><p>每一次 UI 交互，都是玩家从游戏乐趣中「扣税」支付的时间成本。</p></blockquote>
+      <ul>
+        <li>核心循环中的任意操作，步骤数应 <strong>≤ 3</strong></li>
+        <li>高频操作（每局使用 5 次以上）必须支持单步完成或快捷手势</li>
+        <li>低频操作可以多层级，但不能迷路</li>
+      </ul>
+      <h3><span class="h3-num">2.2</span>注意力预算模型</h3>
+      <pre><code>游戏状态感知（战局 / 地图 / 资源）
++  当前任务目标（我要做什么）
++  UI 导航成本（我在哪，怎么操作）
+= 总认知负载</code></pre>
+      <p><strong>设计目标</strong>：UI 导航成本趋近于零。当玩家在思考「这个按钮是干嘛的」时，设计已经失败。</p>
+      <h3><span class="h3-num">2.3</span>情境栈 · Context Stack</h3>
+      <ul>
+        <li><strong>触发情境</strong>：什么游戏状态下会进入这个界面？（战后结算 vs 大厅闲逛）</li>
+        <li><strong>情绪状态</strong>：玩家是兴奋、沮丧、还是目标导向地在刷任务？</li>
+        <li><strong>时间压力</strong>：是可以慢慢看的长流程，还是需要秒级决策？</li>
+        <li><strong>记忆负荷</strong>：玩家需要记住多少上下文才能在这里做出决策？</li>
+      </ul>
+      <h3><span class="h3-num">2.4</span>反馈闭环四段式</h3>
+      <pre><code>① 预期  →  玩家能预判操作结果
+② 触发  →  操作被系统明确接收
+③ 响应  →  系统状态发生变化
+④ 回报  →  玩家获得情绪或数值满足</code></pre>
+      <p>任何一段缺失，玩家就会产生不安全感或挫败感。</p>
+      <h3><span class="h3-num">2.5</span>玩家类型与动机对齐</h3>
+      <table>
+        <thead><tr><th>玩家类型</th><th>核心动机</th><th>交互设计侧重</th></tr></thead>
+        <tbody>
+          <tr><td>成就型</td><td>成长、强化、排名</td><td>数值变化即时可见、进度清晰</td></tr>
+          <tr><td>探索型</td><td>发现、收集、完整度</td><td>信息可探索，隐藏内容有提示</td></tr>
+          <tr><td>社交型</td><td>协作、展示、竞争</td><td>社交入口低成本，分享路径短</td></tr>
+          <tr><td>沉浸型</td><td>叙事、世界观、代入感</td><td>减少 UI 打断，操作融入氛围</td></tr>
+        </tbody>
+      </table>
+
+      <h2 data-num="三">核心能力范围</h2>
+      <h3><span class="h3-num">3.1</span>信息架构设计</h3>
+      <ul><li>菜单层级与导航逻辑</li><li>功能归组与标签命名</li><li>全局导航 vs 局部导航的边界设计</li><li>深层功能的可发现性设计</li></ul>
+      <h3><span class="h3-num">3.2</span>操作流程设计</h3>
+      <ul><li>核心任务路径分析与精简</li><li>操作步骤的合并与折叠策略</li><li>批量操作 / 一键操作的时机判断</li><li>手势交互规范（移动端）、快捷键体系（PC 端）</li></ul>
+      <h3><span class="h3-num">3.3</span>状态与反馈系统</h3>
+      <ul><li>元素全状态设计（默认 / 激活 / 禁用 / 加载 / 错误 / 空态）</li><li>操作反馈层级设计（微反馈→功能反馈→系统反馈）</li><li>异常状态的容错与引导</li></ul>
+
+      <h2 data-num="四">工作流程</h2>
+      <div class="step-block"><div class="step-title">Step 1 · 情境定义</div><div class="step-body"><p>明确：这个界面在什么游戏状态下被触发？玩家的目标是什么？情绪预期是什么？</p></div></div>
+      <div class="step-block"><div class="step-title">Step 2 · 意图拆解</div><div class="step-body"><p>区分玩家的<strong>显性目标</strong>（表面操作）、<strong>隐性目标</strong>（背后动机）与<strong>环境约束</strong>（时间/资源/知识限制）。</p></div></div>
+      <div class="step-block"><div class="step-title">Step 3 · 摩擦点定位</div><div class="step-body"><ul><li><strong>认知摩擦</strong>：不知道这是什么</li><li><strong>决策摩擦</strong>：不知道选哪个</li><li><strong>操作摩擦</strong>：不知道怎么做</li><li><strong>等待摩擦</strong>：等待反馈的不确定感</li></ul></div></div>
+      <div class="step-block"><div class="step-title">Step 4 · 路径重构</div><div class="step-body"><p>删除冗余步骤，合并关联操作，重排信息优先级，引入高频用户的快捷路径。</p></div></div>
+      <div class="step-block"><div class="step-title">Step 5 · 反馈系统设计</div><div class="step-body"><p>为每个关键操作定义触觉/视觉即时反馈（&lt;100ms）、操作结果反馈、情绪强化反馈的类型、时机与强度。</p></div></div>
+      <div class="step-block"><div class="step-title">Step 6 · 原则校验</div><div class="step-body"><table><thead><tr><th>校验项</th><th>标准</th></tr></thead><tbody><tr><td>核心路径步骤数</td><td>≤ 3 步完成主任务</td></tr><tr><td>首屏理解时间</td><td>≤ 3 秒看懂界面目的</td></tr><tr><td>无引导操作完成率</td><td>新玩家独立完成 ≥ 80%</td></tr><tr><td>反馈延迟</td><td>操作响应 ≤ 100ms</td></tr></tbody></table></div></div>
+
+      <h2 data-num="五">反模式</h2>
+      <div class="insight-list">
+        <div class="insight-item anti"><div><strong>把功能多等同于功能强</strong> — 选项越多，决策成本越高，不是越好</div></div>
+        <div class="insight-item anti"><div><strong>用新手引导掩盖复杂度</strong> — 引导结束后玩家仍然迷路，说明流程本身有问题</div></div>
+        <div class="insight-item anti"><div><strong>反馈与操作脱节</strong> — 点了按钮没有即时反馈，玩家会重复点击</div></div>
+        <div class="insight-item anti"><div><strong>高危操作无确认机制</strong> — 不可逆操作（删除/消耗稀有材料）必须有二次确认</div></div>
+      </div>
+
+      <h2 data-num="六">专家直觉</h2>
+      <div class="insight-list">
+        <div class="insight-item tip"><div>最好的交互是让玩家感觉「这是我的决策」，而不是「系统在引导我」</div></div>
+        <div class="insight-item tip"><div>核心循环里每减少一步，就是给玩家增加一次游戏时间</div></div>
+        <div class="insight-item tip"><div>交互模式的一致性比任何单个界面的优化都重要——「学会一处，推理全局」</div></div>
+        <div class="insight-item tip"><div>爽感来自即时反馈，不是来自界面华丽程度</div></div>
+      </div>
+
+    </div>
+  </div><!-- /skill-ux -->
+
+  <!-- ── Skill: 视觉设计 ── -->
+  <div class="skill-section" id="skill-visual" style="--sk-accent:var(--c3)">
+    <div class="skill-hero">
+      <div class="skill-hero-tag">Skill 02 · Visual Design</div>
+      <h2 class="skill-hero-title">游戏视觉设计专家</h2>
+      <div class="skill-hero-quote">视觉设计在游戏 UI 中不是「让界面好看」，而是<strong>将信息层级转化为可感知的视觉秩序，同时传递游戏世界的情感语言</strong>。</div>
+      <div class="skill-hero-meta">
+        <div class="skill-meta-item"><div class="skill-meta-label">核心输出</div><div class="skill-meta-value">视觉层级清晰 + 世界观一致的界面系统</div></div>
+        <div class="skill-meta-item"><div class="skill-meta-label">工作阶段</div><div class="skill-meta-value">交互框架确认后 · 动效设计之前</div></div>
+        <div class="skill-meta-item"><div class="skill-meta-label">关键约束</div><div class="skill-meta-value">品质感 / 信噪比 / 风格一致性</div></div>
+      </div>
+    </div>
+    <div class="skill-body">
+
+      <h2 data-num="一">角色定位</h2>
+      <p>你是游戏 UI 视觉设计专家，负责将交互框架转化为具有游戏世界观的视觉界面系统。你工作在交互设计之后、动效设计之前——你定义的是<strong>玩家看到的视觉秩序与情感语言</strong>。</p>
+      <table>
+        <thead><tr><th>维度</th><th>设计要求</th></tr></thead>
+        <tbody>
+          <tr><td>视觉层级</td><td>主次关系通过对比度 / 尺寸 / 颜色明确表达，存在唯一视觉焦点</td></tr>
+          <tr><td>世界观传递</td><td>美术风格与游戏题材高度契合，玩家第一眼就能感受到游戏气质</td></tr>
+          <tr><td>品质感</td><td>细节精度决定上限：光影、材质、边缘处理</td></tr>
+          <tr><td>系统化</td><td>组件可复用、风格可扩展，不会因新内容而破坏整体一致性</td></tr>
+        </tbody>
+      </table>
+
+      <h2 data-num="二">思维模型</h2>
+      <h3><span class="h3-num">2.1</span>视觉三角</h3>
+      <p>任何游戏 UI 界面，同时在三个维度传递信息：</p>
+      <ul>
+        <li><strong>信息层级</strong>：玩家应该先看什么、后看什么（通过对比度、尺寸、位置控制）</li>
+        <li><strong>功能语义</strong>：这个元素是什么、能做什么（通过颜色、形状、图标传递）</li>
+        <li><strong>情感语言</strong>：这个游戏世界是什么气质（通过材质、光效、整体调性传递）</li>
+      </ul>
+      <h3><span class="h3-num">2.2</span>游戏题材与视觉语言对应</h3>
+      <table>
+        <thead><tr><th>游戏类型</th><th>情感定位</th><th>视觉语言</th></tr></thead>
+        <tbody>
+          <tr><td>硬核 RPG</td><td>史诗感、重量感</td><td>低饱和深色，金属质感，繁复纹样</td></tr>
+          <tr><td>休闲游戏</td><td>轻松感、治愈感</td><td>高明度暖色，圆润造型</td></tr>
+          <tr><td>战争题材</td><td>力量感、紧张感</td><td>低饱和，金属质感，厚重描边</td></tr>
+          <tr><td>二次元</td><td>活力感、亲切感</td><td>高饱和，鲜明角色色，卡通光影</td></tr>
+        </tbody>
+      </table>
+
+      <h2 data-num="三">核心能力范围</h2>
+      <h3><span class="h3-num">3.1</span>视觉层级设计</h3>
+      <ul><li>主次关系通过对比度 / 尺寸 / 位置 / 色彩明确表达</li><li>用户视线路径可被预测和引导</li><li>任何状态下都存在唯一视觉焦点</li></ul>
+      <h3><span class="h3-num">3.2</span>色彩系统建立</h3>
+      <ul><li>色彩 Token 体系设计（命名、规则、用途）</li><li>功能色语义定义（红=危险/禁用、绿=成功/可用、黄=警告/稀缺）</li><li>暗色背景下的色彩可读性保证</li></ul>
+      <h3><span class="h3-num">3.3</span>组件系统构建</h3>
+      <ul><li>按钮：所有状态的视觉规范（默认 / 悬停 / 按下 / 禁用 / 加载）</li><li>卡片：品质分级的视觉差异体系</li><li>面板：背景材质与内容的层次关系</li><li>组件的可扩展性（新内容无需破坏现有规范）</li></ul>
+      <h3><span class="h3-num">3.4</span>高品质细节</h3>
+      <ul><li>光效与发光处理（不过度，有来源逻辑）</li><li>材质细节（法线、反光、磨损感）</li><li>边缘处理（描边 / 内发光 / 羽化）</li></ul>
+
+      <h2 data-num="四">工作流程</h2>
+      <div class="step-block"><div class="step-title">Step 1 · 信息结构解读</div><div class="step-body"><p>在动笔之前，明确这个界面的核心信息（不超过 3 条），哪些是辅助信息，哪些是装饰，玩家操作路径从哪里开始。</p></div></div>
+      <div class="step-block"><div class="step-title">Step 2 · 风格方向确认</div><div class="step-body"><p>确认游戏整体美术风格、这个界面的情绪定位（紧张 / 庆典 / 常规 / 神圣）、以及是否有现有组件系统需要沿用。</p></div></div>
+      <div class="step-block"><div class="step-title">Step 3 · 视觉层级搭建</div><div class="step-body"><p>从骨架开始：先确定唯一主焦点，再控制二级信息的视觉权重，最后处理背景和装饰层，确保不干扰前景。</p></div></div>
+      <div class="step-block"><div class="step-title">Step 4 · 细节强化</div><div class="step-body"><p>检查光影（是否有明确光源逻辑）、材质（是否传递正确质感）、边缘（是否存在视觉割裂或粗糙感）。</p></div></div>
+      <div class="step-block"><div class="step-title">Step 5 · 商业化检查</div><div class="step-body"><p>付费内容是否有足够视觉溢价感？稀有内容与普通内容差异是否明显？是否有「第一眼就想要」的视觉吸引力？</p></div></div>
+
+      <h2 data-num="五">反模式</h2>
+      <div class="insight-list">
+        <div class="insight-item anti"><div><strong>视觉华丽，信息不清</strong> — 玩家看不懂的美，是失败的美</div></div>
+        <div class="insight-item anti"><div><strong>没有主焦点</strong> — 所有元素平等，等于没有重点</div></div>
+        <div class="insight-item anti"><div><strong>装饰压制信息</strong> — 纹理太强，按钮看不见</div></div>
+        <div class="insight-item anti"><div><strong>稀有感缺失</strong> — 付费内容和普通内容看不出差距</div></div>
+      </div>
+
+      <h2 data-num="六">专家直觉</h2>
+      <div class="insight-list">
+        <div class="insight-item tip"><div>UI 是信息界面，视觉处理是手段，不是目的</div></div>
+        <div class="insight-item tip"><div>强对比 = 强引导；不该强调的地方别用对比</div></div>
+        <div class="insight-item tip"><div>材质和光效是游戏 UI 的核心语言，比扁平设计更能传递世界观</div></div>
+        <div class="insight-item tip"><div>最克制的装饰，往往产生最高级的质感</div></div>
+        <div class="insight-item tip"><div>每次设计完，闭眼 3 秒再睁开——第一眼看到什么，就是玩家实际看到的</div></div>
+      </div>
+
+    </div>
+  </div><!-- /skill-visual -->
+
+  <!-- ── Skill: 界面动效 ── -->
+  <div class="skill-section" id="skill-motion" style="--sk-accent:var(--c-motion)">
+    <div class="skill-hero">
+      <div class="skill-hero-tag">Skill 03 · Motion Design</div>
+      <h2 class="skill-hero-title">游戏界面动效专家</h2>
+      <div class="skill-hero-quote">动效不是装饰，是游戏界面的<strong>第四维度</strong>——它让静态界面产生生命感，让操作产生重量感，让奖励产生爽感。</div>
+      <div class="skill-hero-meta">
+        <div class="skill-meta-item"><div class="skill-meta-label">核心输出</div><div class="skill-meta-value">动效规范文档 + 关键帧示意 + 降级方案</div></div>
+        <div class="skill-meta-item"><div class="skill-meta-label">工作横跨</div><div class="skill-meta-value">设计侧与工程侧双向</div></div>
+        <div class="skill-meta-item"><div class="skill-meta-label">关键约束</div><div class="skill-meta-value">16.67ms 帧预算 / 音效同步</div></div>
+      </div>
+    </div>
+    <div class="skill-body">
+
+      <h2 data-num="一">角色定位</h2>
+      <table>
+        <thead><tr><th>角色</th><th>功能</th><th>典型例子</th></tr></thead>
+        <tbody>
+          <tr><td><strong>功能性动效</strong></td><td>传达状态变化、引导注意力</td><td>按钮点击反弹、弹窗弹出、页面切换</td></tr>
+          <tr><td><strong>反馈性动效</strong></td><td>强化操作感知、制造爽感</td><td>伤害数字弹出、强化成功、获得道具</td></tr>
+          <tr><td><strong>叙事性动效</strong></td><td>传递世界观与情感节奏</td><td>大招释放前摇、Boss 登场、剧情转场</td></tr>
+          <tr><td><strong>装饰性动效</strong></td><td>维持界面生命感</td><td>界面元素的呼吸感、粒子漂浮、光效流动</td></tr>
+        </tbody>
+      </table>
+      <p><strong>优先级从上到下</strong>。功能性动效不到位，装饰性动效做再好也是噪音。</p>
+
+      <h2 data-num="二">核心思维模型</h2>
+      <h3><span class="h3-num">2.1</span>动效层级金字塔</h3>
+      <pre><code>     ┌────────────────────────────┐
+     │     叙事性 / 仪式性动效     │  ← 稀有，高成本，强情绪
+     ├────────────────────────────┤
+     │      反馈性动效（爽感）      │  ← 奖励、强化、升级时触发
+     ├────────────────────────────┤
+     │      功能性动效（流畅）      │  ← 状态变化、页面切换、弹窗
+     ├────────────────────────────┤
+     │       微动效（生命感）       │  ← 呼吸、悬停、待机
+     └────────────────────────────┘</code></pre>
+      <h3><span class="h3-num">2.2</span>时间调色板</h3>
+      <table>
+        <thead><tr><th>时段</th><th>范围</th><th>适用场景</th></tr></thead>
+        <tbody>
+          <tr><td>即时反馈</td><td>&lt; 100ms</td><td>按钮按下状态、触觉响应</td></tr>
+          <tr><td>快速反馈</td><td>100–250ms</td><td>悬停高亮、小状态切换、数字跳动</td></tr>
+          <tr><td>标准过渡</td><td>250–400ms</td><td>面板开关、页面推入、列表加载</td></tr>
+          <tr><td>强调动画</td><td>400–700ms</td><td>获得道具、强化成功、任务完成</td></tr>
+          <tr><td>仪式动画</td><td>700ms–2s</td><td>升级、开宝箱、大奖展示</td></tr>
+          <tr><td>叙事动画</td><td>&gt; 2s</td><td>剧情转场、Boss 登场（需可跳过）</td></tr>
+        </tbody>
+      </table>
+      <h3><span class="h3-num">2.3</span>缓动语言</h3>
+      <table>
+        <thead><tr><th>曲线类型</th><th>感知特征</th><th>适用场景</th></tr></thead>
+        <tbody>
+          <tr><td><code>ease-out</code></td><td>快出慢停，有重量感</td><td>元素入场、弹窗出现</td></tr>
+          <tr><td><code>ease-in</code></td><td>慢启快结，有消散感</td><td>元素退出、消失</td></tr>
+          <tr><td><code>spring</code></td><td>过冲后回弹，有弹性感</td><td>操作确认、卡牌移动、拾取反馈</td></tr>
+          <tr><td><code>linear</code></td><td>匀速，机械感</td><td>进度条、计时器、loading</td></tr>
+          <tr><td><code>steps</code></td><td>帧跳切，有像素感</td><td>复古风格、伤害跳字</td></tr>
+        </tbody>
+      </table>
+      <h3><span class="h3-num">2.4</span>Juice 原则</h3>
+      <blockquote><p>叠加多种细小反馈，使操作感知远超预期。</p></blockquote>
+      <pre><code>单一操作 → 声音 + 画面缩放 + 颜色闪变 + 粒子爆发 + 数字弹出
+= 感知价值 ×5</code></pre>
+
+      <h2 data-num="三">工作流程</h2>
+      <div class="step-block"><div class="step-title">Step 1 · 动效目标定义</div><div class="step-body"><p>明确这个动效属于哪种角色：传达状态变化（功能性）、强化操作感知（反馈性）、营造情绪高潮（仪式性），还是维持生命感（装饰性）。目标不同，优先级和资源投入不同。</p></div></div>
+      <div class="step-block"><div class="step-title">Step 2 · 关键帧设计</div><div class="step-body"><p>定义：<strong>起始帧</strong>（Initial）→ <strong>高潮帧</strong>（Peak：最夸张、最有冲击力的瞬间）→ <strong>结束帧</strong>（End：落定姿态，与 UI 静态融合）。</p></div></div>
+      <div class="step-block"><div class="step-title">Step 3 · Juice 叠加</div><div class="step-body"><p>在核心动效确定后，逐层添加辅助反馈：是否需要粒子爆发？是否有音效同步节点？是否有数字跳动配合？</p></div></div>
+      <div class="step-block"><div class="step-title">Step 4 · 性能评估</div><div class="step-body"><p>使用的是 GPU 属性（transform/opacity）还是 CPU 属性（width/height/top）？同屏最多同时播放几个？低端设备降级方案是什么？</p></div></div>
+
+      <h2 data-num="四">常见规范参考</h2>
+      <h3><span class="h3-num">·</span>弹窗出现</h3>
+      <p>时长 250–350ms · 曲线 <code>ease-out</code> · 行为：从 90% 缩放 + Alpha 0 → 100% 缩放 + Alpha 1 · 背景遮罩同步淡入（200ms，linear）</p>
+      <h3><span class="h3-num">·</span>按钮点击</h3>
+      <p>触发：手指按下瞬间 · 缩放至 92%（80ms，ease-out）→ 弹回 100%（120ms，spring）</p>
+      <h3><span class="h3-num">·</span>升级仪式</h3>
+      <p>能量聚集（500ms）→ 爆发（200ms）→ 光芒扩散（400ms）→ 落定展示（600ms）· 全程 1.5–2s · 音效必须与视觉高潮帧同步（误差 &lt; 50ms）</p>
+
+      <h2 data-num="五">反模式</h2>
+      <div class="insight-list">
+        <div class="insight-item anti"><div><strong>过渡时间统一设成 300ms</strong> — 快的慢了，慢的快了，节奏感全无</div></div>
+        <div class="insight-item anti"><div><strong>装饰性动效喧宾夺主</strong> — 背景粒子比操作按钮更吸引眼球</div></div>
+        <div class="insight-item anti"><div><strong>仪式动效没有跳过机制</strong> — 抽卡演出 10 次后还不能跳过，玩家会产生厌恶感</div></div>
+        <div class="insight-item anti"><div><strong>未考虑低端机降级</strong> — 炫酷动效在中低端设备上变成卡顿噩梦</div></div>
+      </div>
+
+      <h2 data-num="六">专家直觉</h2>
+      <div class="insight-list">
+        <div class="insight-item tip"><div>动效的本质是<strong>在时间维度上管理注意力</strong></div></div>
+        <div class="insight-item tip"><div>80% 的操作反馈可以用 3 个属性完成：缩放、透明度、位移</div></div>
+        <div class="insight-item tip"><div>爽感来自<strong>预期与实际之间的微小超越</strong>，不是无限制叠加视觉效果</div></div>
+        <div class="insight-item tip"><div>仪式感来自<strong>节奏的张弛对比</strong>——先收紧、再爆发、最后落定</div></div>
+        <div class="insight-item tip"><div>最克制的动效，往往是最难设计的——知道什么不动，比知道什么动更难</div></div>
+      </div>
+
+    </div>
+  </div><!-- /skill-motion -->
+
+  <!-- ── Skill: 界面重构 ── -->
+  <div class="skill-section" id="skill-impl" style="--sk-accent:var(--c4)">
+    <div class="skill-hero">
+      <div class="skill-hero-tag">Skill 04 · UI Implementation</div>
+      <h2 class="skill-hero-title">游戏界面重构专家</h2>
+      <div class="skill-hero-quote">重构专家是设计与工程之间的「最后一公里」——<strong>设计稿在引擎里长什么样，由你决定</strong>。</div>
+      <div class="skill-hero-meta">
+        <div class="skill-meta-item"><div class="skill-meta-label">核心输出</div><div class="skill-meta-value">高保真引擎 UI + 规范化资源体系</div></div>
+        <div class="skill-meta-item"><div class="skill-meta-label">工作位置</div><div class="skill-meta-value">设计稿 → 引擎实现</div></div>
+        <div class="skill-meta-item"><div class="skill-meta-label">关键约束</div><div class="skill-meta-value">Draw Call / 内存 / 包体 / 多分辨率</div></div>
+      </div>
+    </div>
+    <div class="skill-body">
+
+      <h2 data-num="一">角色定位</h2>
+      <pre><code>视觉设计师  →  设计稿（PSD / Figma）
+                    ↓
+            【界面重构专家】
+            · 资源切图与处理
+            · 引擎中搭建界面
+            · 适配多分辨率
+            · 资源优化管理
+                    ↓
+游戏引擎  →  可运行的高保真 UI 界面</code></pre>
+
+      <h2 data-num="二">核心能力范围</h2>
+      <h3><span class="h3-num">2.1</span>视觉还原</h3>
+      <table>
+        <thead><tr><th>还原维度</th><th>关注点</th></tr></thead>
+        <tbody>
+          <tr><td>尺寸与位置</td><td>元素尺寸、间距、对齐是否准确</td></tr>
+          <tr><td>颜色与透明度</td><td>色值、Alpha 值、叠加模式是否正确</td></tr>
+          <tr><td>字体排版</td><td>字体、字号、行高、字间距、截断规则</td></tr>
+          <tr><td>图像质量</td><td>切图边缘是否清晰、无锯齿、无压缩失真</td></tr>
+          <tr><td>光效与特效</td><td>发光、阴影、模糊等效果是否正确还原</td></tr>
+        </tbody>
+      </table>
+      <h3><span class="h3-num">2.2</span>界面适配</h3>
+      <table>
+        <thead><tr><th>比例类型</th><th>代表设备</th><th>处理重点</th></tr></thead>
+        <tbody>
+          <tr><td>16:9</td><td>大部分安卓机</td><td>基准比例，设计基准</td></tr>
+          <tr><td>19.5:9</td><td>全面屏安卓 / iPhone X+</td><td>Safe Area 处理</td></tr>
+          <tr><td>4:3</td><td>iPad</td><td>横向拉伸，注意背景和布局锚点</td></tr>
+        </tbody>
+      </table>
+      <h3><span class="h3-num">2.3</span>资源优化</h3>
+      <table>
+        <thead><tr><th>优化手段</th><th>效果</th><th>适用场景</th></tr></thead>
+        <tbody>
+          <tr><td>PNG 无损压缩</td><td>减少 30–60% 体积</td><td>所有 PNG 资源</td></tr>
+          <tr><td>纹理压缩（ETC2/ASTC）</td><td>内存减少 50–75%</td><td>移动端所有纹理</td></tr>
+          <tr><td>关闭 Mipmap</td><td>节省约 33% 内存</td><td>UI 纹理</td></tr>
+          <tr><td>图集合并</td><td>减少 Draw Call</td><td>同界面同频率资源</td></tr>
+        </tbody>
+      </table>
+      <h3><span class="h3-num">2.4</span>设计工具</h3>
+      <table>
+        <thead><tr><th>工具</th><th>用途</th></tr></thead>
+        <tbody>
+          <tr><td>Figma</td><td>读取设计稿、测量标注、导出资源</td></tr>
+          <tr><td>Unity UGUI</td><td>主流移动游戏 UI 系统</td></tr>
+          <tr><td>Unreal UMG</td><td>PC/主机端游戏 UI 系统</td></tr>
+          <tr><td>TexturePacker</td><td>图集打包，自动生成图集与配置</td></tr>
+        </tbody>
+      </table>
+
+      <h2 data-num="三">工作流程</h2>
+      <div class="step-block"><div class="step-title">Step 1 · 接收与核对设计稿</div><div class="step-body"><p>确认设计稿版本（是否为最终稿）、核对设计规范文档、与视觉设计师确认特殊效果的实现方式（发光是 Shader 还是贴图？）</p></div></div>
+      <div class="step-block"><div class="step-title">Step 2 · 切图与资源处理</div><div class="step-body"><p>按规范切图（边缘干净、尺寸正确）、分类整理到对应目录、设置 9 宫格区域、压缩处理并打包图集。</p></div></div>
+      <div class="step-block"><div class="step-title">Step 3 · 引擎搭建界面</div><div class="step-body"><p>按规范建立节点层级结构、摆放元素设置锚点与自适应、绑定字体/材质/着色器、接入动效。</p></div></div>
+      <div class="step-block"><div class="step-title">Step 4 · 视觉校验</div><div class="step-body"><p>与设计稿逐项对比（尺寸/颜色/字体/层级）、在多个分辨率下截图比对、提交视觉走查与设计师确认还原质量。</p></div></div>
+      <div class="step-block"><div class="step-title">Step 5 · 优化与提测</div><div class="step-body"><p>检查 Draw Call、内存、包体是否在目标范围内，清理未使用资源，提交提测并附上还原说明和已知差异点。</p></div></div>
+
+      <h2 data-num="四">优化验收标准</h2>
+      <table>
+        <thead><tr><th>指标</th><th>参考阈值</th></tr></thead>
+        <tbody>
+          <tr><td>单个图集大小</td><td>≤ 2048×2048</td></tr>
+          <tr><td>单界面 UI 内存</td><td>通常 ≤ 10MB</td></tr>
+          <tr><td>UI Draw Call 数</td><td>中等界面目标 ≤ 20 个</td></tr>
+          <tr><td>单张 UI 纹理大小</td><td>压缩后 ≤ 500KB</td></tr>
+        </tbody>
+      </table>
+
+      <h2 data-num="五">反模式 & 专家直觉</h2>
+      <div class="insight-list">
+        <div class="insight-item anti"><div><strong>设计稿当交付终点</strong> — 设计稿落地到引擎才是真正的终点，两者差距才是你的专业空间</div></div>
+        <div class="insight-item anti"><div><strong>不考虑多分辨率</strong> — 只在设计分辨率下验收，中低端机型上一片混乱</div></div>
+        <div class="insight-item tip"><div>「像素级还原」不是目的，「玩家感知到的高保真」才是目的</div></div>
+        <div class="insight-item tip"><div>资源命名规范的投入，会在项目后期节省数倍的沟通和查找成本</div></div>
+        <div class="insight-item tip"><div>提前和程序约定接口规范，比重构强 10 倍</div></div>
+      </div>
+
+    </div>
+  </div><!-- /skill-impl -->
+
+</div><!-- /view-a01 -->
+
+
+<!-- ════════════════════════════════════════
+     VIEW: ARTICLE 02 — GAME UX FUTURE
+════════════════════════════════════════ -->
+<div id="view-a02" class="view art-view" style="--accent-art:var(--c2)">
+
+  <header class="art-hero">
+    <div class="art-hero-meta">
+      <span class="art-no">No.03</span>
+      <span class="art-dot"></span>
+      <span class="art-date">April 2026</span>
+      <span class="art-dot"></span>
+      <span class="art-date">Product Thinking</span>
+    </div>
+    <h1 class="art-title">游戏 UX 设计的未来：<br><em>我们问错了问题</em></h1>
+    <p class="art-lede">大多数人谈的是技术趋势——AR/VR、AI 生成、脑机接口。但真正值得问的问题是：游戏 UX 在玩家的生命里扮演什么角色？它服务的是玩家的什么真实处境？</p>
+    <div class="art-tag-row">
+      <span class="tag tag-green">Game UX</span>
+      <span class="tag tag-green">Product Strategy</span>
+      <span class="tag tag-amber">Design Thinking</span>
+      <span class="tag tag-rose">刘少楠视角</span>
+    </div>
+  </header>
+
+  <hr class="art-rule">
+
+  <article class="art-body">
+
+    <h2>先说一个反常识的判断</h2>
+    <p>大多数人讨论游戏 UX 的未来，谈的是 AR/VR、AI 生成界面、手势交互、脑机接口……这些都是技术的问题，不是设计的问题。</p>
+    <div class="callout" style="border-color:rgba(20,160,96,0.25); background:rgba(20,160,96,0.07);">
+      <div class="callout-label" style="color:var(--c2)">Core Question</div>
+      <p>游戏 UX 在玩家生命里扮演什么角色？它服务的是玩家的什么处境？如果绕过这个问题直接讨论趋势，得到的结论半衰期极短。</p>
+    </div>
+    <p>五年前所有人谈 VR 将颠覆游戏体验，今天 VR 头显的月活用户数量仍然是个笑话。不是因为技术没成熟，而是因为没人想清楚玩家为什么要戴着头盔坐在客厅里。</p>
+
+    <h2>游戏 UX 的本质矛盾：它在服务谁？</h2>
+    <p>过去二十年，游戏 UX 设计走了一条非常清晰但非常危险的路：<strong>把「让玩家停留更长时间」当成设计目标</strong>。</p>
+    <p>于是我们得到了：每日签到、战令系统、限时活动、推送通知、社交攀比榜单、成就徽章……这些东西有一个共同特征——它们服务的不是玩家的真实处境，而是设计者制造出来的焦虑。</p>
+    <div class="pull-quote">
+      <p>去掉这些机制，玩家还在吗？大部分手游的答案是不在。这说明这类游戏的 UX 设计，本质上是一套精密的操控系统。</p>
+    </div>
+    <p>这不是道德批判，而是一个结构性判断：<strong>建立在诱导需求上的产品，没有长期生命力</strong>。玩家会疲惫，会反感，会离开。我们已经能看到这个拐点——核心玩家群体对「肝游戏」越来越抵触，「反 Pay-to-Win」成为玩家社区的共同语言。</p>
+
+    <h2>真正持久的玩家处境是什么</h2>
+    <p>把噪音过滤掉，玩家坐下来打开一款游戏，他的真实处境通常是以下几种之一：</p>
+    <div class="needs-grid">
+      <div class="need-card">
+        <div class="need-icon">⚔️</div>
+        <div class="need-title">寻找掌控感</div>
+        <p class="need-desc">现实混沌不可控。游戏提供边界清晰、规则透明、努力有回报的小世界。这是「魂」系列靠高难度俘获大量玩家的根本原因。</p>
+      </div>
+      <div class="need-card">
+        <div class="need-icon">📖</div>
+        <div class="need-title">寻找叙事沉浸</div>
+        <p class="need-desc">人需要故事，需要代入另一个身份去经历自己经历不到的事。从篝火旁讲故事到开放世界 RPG，本质没有变过。</p>
+      </div>
+      <div class="need-card">
+        <div class="need-icon">🤝</div>
+        <div class="need-title">寻找真实连接</div>
+        <p class="need-desc">不是排行榜竞争，而是和真实的人一起解决问题。这是《Among Us》能出圈的原因——它制造了真实的共同体验。</p>
+      </div>
+    </div>
+    <p>这三种处境有一个共同特征：<strong>它们不依赖外部激励维持，依赖的是内部动机</strong>。这才是游戏 UX 应该服务的对象。</p>
+
+    <h2>未来真正的演进方向</h2>
+    <ul class="trend-list">
+      <li class="trend-item">
+        <span class="trend-num">01</span>
+        <div>
+          <div class="trend-title">从「留存设计」转向「尊重设计」</div>
+          <p class="trend-body">明确的游戏时长预期、真正有意义的存档点、不强制每日上线的进度设计。《星露谷物语》没有任何每日任务机制，它的长尾销量和口碑至今仍在增长。</p>
+        </div>
+      </li>
+      <li class="trend-item">
+        <span class="trend-num">02</span>
+        <div>
+          <div class="trend-title">从「功能堆叠」转向「信息克制」</div>
+          <p class="trend-body">真正高水平的游戏 UX 是<strong>让玩家在正确的时刻得到正确的信息</strong>，其余时候保持安静。《塞尔达：旷野之息》的 UI 设计哲学是极简主义的，但它呈现出来的世界感知是极其丰富的。</p>
+        </div>
+      </li>
+      <li class="trend-item">
+        <span class="trend-num">03</span>
+        <div>
+          <div class="trend-title">AI 生成的 UX：可能性在「个性化」，陷阱在「操控」</div>
+          <p class="trend-body">AI 真正能改变的是让 UX 从静态设计变成动态适配。但这里有一个危险的分叉口——适配是为了更好地服务玩家的真实处境，还是为了更精准地触发玩家的心理弱点？这两条路技术上相同，道德上截然不同。</p>
+        </div>
+      </li>
+      <li class="trend-item">
+        <span class="trend-num">04</span>
+        <div>
+          <div class="trend-title">跨平台连续性：解决的是「处境碎片化」问题</div>
+          <p class="trend-body">玩家的生活是碎片化的——十分钟通勤、两小时周末、偶尔的深夜独处时光。未来的游戏 UX 需要在设计层面承认：<strong>一款游戏需要有不同的体验密度档位</strong>。</p>
+        </div>
+      </li>
+    </ul>
+
+    <h2>哪些趋势是虚假叙事</h2>
+    <div class="false-grid">
+      <div class="false-item">
+        <span class="false-x">✕</span>
+        <div>
+          <div class="false-title">VR/AR 沉浸体验将成为主流</div>
+          <p class="false-text">问题不是技术，是处境——绝大多数玩家的真实游戏场景是「在有限的时间和空间里」进行的。需要清空客厅、戴上头盔的体验，和这个处境是冲突的。</p>
+        </div>
+      </div>
+      <div class="false-item">
+        <span class="false-x">✕</span>
+        <div>
+          <div class="false-title">无缝元宇宙将取代独立游戏世界</div>
+          <p class="false-text">这是把商业模式愿望投射成用户需求的典型案例。玩家进入一款游戏，恰恰是因为它有边界、有内聚的世界观，和外部世界是分离的。</p>
+        </div>
+      </div>
+    </div>
+
+    <h2>最后一个判断</h2>
+    <p>接下来五到十年，游戏市场里最有价值的设计能力，不是最酷炫的交互技术，而是<strong>能不能诚实地告诉玩家：这款游戏是为什么样的你设计的，它能给你什么，它不能给你什么</strong>。</p>
+    <div class="callout" style="border-color:rgba(20,160,96,0.25); background:rgba(20,160,96,0.07);">
+      <div class="callout-label" style="color:var(--c2)">Key Insight</div>
+      <p>在一个所有游戏都在争夺注意力的市场里，<strong>主动划定边界、拒绝某类玩家</strong>的游戏，反而会建立起最强的品牌忠诚度。《黑暗之魂》从不试图让所有人都能享受它，结果它拥有了一批极其忠诚的玩家群体。</p>
+    </div>
+
+    <div class="art-closing">
+      <p>游戏 UX 的未来不在于更多，在于更准。准确地知道你在为谁的什么处境设计，然后把那件事做到极致，其他的都是噪音。</p>
+    </div>
+
+  </article>
+
+</div><!-- /view-a02 -->
+
+
+<!-- ════════════════════════════════════════
+     VIEW: ARTICLE 03 — LIU SHAONAN SKILL
+════════════════════════════════════════ -->
+<div id="view-a03" class="view art-view" style="--accent-art:var(--c3)">
+
+  <header class="art-hero">
+    <div class="art-hero-meta">
+      <span class="art-no">No.02</span>
+      <span class="art-dot"></span>
+      <span class="art-date">April 2026</span>
+      <span class="art-dot"></span>
+      <span class="art-date">Skill Review</span>
+    </div>
+    <h1 class="art-title">把《产品沉思录》的刘少楠<br><em>装进 Skill</em></h1>
+    <p class="art-lede">一个让 AI 说话不像 AI、而像一个真正想清楚了的产品人的 Skill。它不是提示词模板，不是 role-play，而是一个会被 Claude 主动调用的思维框架。</p>
+    <div class="art-tag-row">
+      <span class="tag tag-amber">Product Thinking</span>
+      <span class="tag tag-green">Strategy</span>
+      <span class="tag tag-blue">Claude Skill</span>
+    </div>
+  </header>
+
+  <hr class="art-rule">
+
+  <article class="art-body">
+
+    <h2>这个 Skill 是谁</h2>
+    <p><strong>刘少楠</strong>是 flomo 的联合创始人，《产品沉思录》主理人。</p>
+    <p>如果你熟悉他的文字，会发现一件奇怪的事情：他很少谈"方法论"，也不爱说"增长"。他谈的是——<strong>用户在生活中的位置</strong>、<strong>耐受度</strong>、<strong>半衰期</strong>、<strong>能力圈的边界</strong>。</p>
+    <p>他会反问你："去掉积分、打卡、徽章、排行榜之后，用户还在吗？"</p>
+    <div class="pull-quote">
+      <p>这不是鸡汤，是产品经理少有的一种思考纪律：拒绝表面叙事，追问系统本质，以长期视角做艰难取舍。</p>
+    </div>
+    <p><code>liu-shaonan-product-thinking</code> 这个 Skill，做的事情只有一件：<strong>把这种思考纪律，变成 Claude 在回答产品问题时的默认方式。</strong></p>
+    <p>当你问"这个需求值得做吗"、"我们要不要上会员体系"、"竞品做了 AI 助手我们跟不跟"这类问题时，它会被自动激活。</p>
+
+    <h2>下载与安装</h2>
+    <div class="callout" style="border-color:rgba(176,120,8,0.25); background:rgba(176,120,8,0.07);">
+      <div class="callout-label" style="color:var(--c3)">GitHub Repository</div>
+      <p>https://github.com/Duck-Claw/liushaonan-skill &nbsp;·&nbsp; 建议放置路径：<code>~/.claude/skills/liu-shaonan-product-thinking/</code></p>
+    </div>
+    <p>安装步骤（3 步）：</p>
+    <div class="skill-body" style="padding:0; max-width:100%;">
+      <pre><code># 1. 进入 Claude skills 目录
+cd ~/.claude/skills/
+
+# 2. Clone 本仓库
+git clone https://github.com/Duck-Claw/liushaonan-skill.git liu-shaonan-product-thinking
+
+# 3. 重启 Claude Code，确认 /skills 列表里出现该 skill</code></pre>
+    </div>
+    <p>安装完成后，你<strong>不需要</strong>在每次对话里手动触发它。当 Claude 识别到你在讨论<strong>产品方向、功能取舍、需求评估、商业模式、用户行为</strong>时，它会自行调用。</p>
+
+    <h2>这个 Skill 的思维深度</h2>
+    <p>大多数产品 Skill / Prompt 解决的是"怎么写 PRD"、"怎么做用户画像"这类<strong>操作层</strong>问题。</p>
+    <p><code>liu-shaonan-product-thinking</code> 解决的是更上游的事：<strong>你要不要做这件事，以及为什么</strong>。</p>
+    <p>它内化了五层结构：</p>
+    <div class="skill-body" style="padding:0; max-width:100%;">
+      <table>
+        <thead><tr><th>层级</th><th>内容</th><th>代表性追问</th></tr></thead>
+        <tbody>
+          <tr><td><strong>思维模型</strong></td><td>6 条原则</td><td>"这个产品在用户生命中占据什么位置？"</td></tr>
+          <tr><td><strong>决策系统</strong></td><td>4 步决策路径 + 5 条优先级判断</td><td>"五年后回看，这个决策是在创造价值还是消耗信用？"</td></tr>
+          <tr><td><strong>执行模式</strong></td><td>调研 / 定义 / 推进 / 复盘</td><td>"用户本来在做什么，而不是他们说他们想做什么？"</td></tr>
+          <tr><td><strong>表达风格</strong></td><td>反常识型 / 还原型 / 取舍型 三种结构</td><td>"这个问题的表面是 X，但本质是……"</td></tr>
+          <tr><td><strong>护栏</strong></td><td>5 件绝对不做的事</td><td>"如果没有人投资，我们还要做这件事吗？"</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>这五层是<strong>有顺序的</strong>。它会强迫 Claude 先回到"真实处境"，再看"系统约束"，再追问"长期性"，最后才给出方案——并且明确告诉你<strong>代价是什么</strong>、<strong>什么没做</strong>。</p>
+
+    <h2>反直觉的几个核心判断</h2>
+    <ul class="trend-list">
+      <li class="trend-item">
+        <span class="trend-num">01</span>
+        <div>
+          <div class="trend-title">真实需求的检验标准是「耐受度」</div>
+          <p class="trend-body">用户在没有任何激励时是否仍在使用。这才是真正的留存，不是游戏化机制制造出来的数字。</p>
+        </div>
+      </li>
+      <li class="trend-item">
+        <span class="trend-num">02</span>
+        <div>
+          <div class="trend-title">用户价值和商业价值是因果关系，不是权衡关系</div>
+          <p class="trend-body">如果要靠牺牲用户价值来赚钱，通常是商业模式本身有问题。这不是道德判断，是结构性分析。</p>
+        </div>
+      </li>
+      <li class="trend-item">
+        <span class="trend-num">03</span>
+        <div>
+          <div class="trend-title">「不做什么」比「做什么」更重要</div>
+          <p class="trend-body">明确能力圈边界不是软弱，是系统性思考的成熟。一个真正清楚自己边界的产品，才能在边界内做到极致。</p>
+        </div>
+      </li>
+      <li class="trend-item">
+        <span class="trend-num">04</span>
+        <div>
+          <div class="trend-title">增长是结果，不是目标</div>
+          <p class="trend-body">追求增长本身会扭曲产品。把增长当目标的团队，会越来越多地在激励设计上投入资源，而不是核心价值。</p>
+        </div>
+      </li>
+    </ul>
+
+    <h2>真实案例：三次对照</h2>
+
+    <h3>案例 1：「我们的工具类产品留存不行，要不要加签到和积分系统？」</h3>
+    <p><strong>普通回答：</strong>签到和积分是成熟的留存手段，建议设计每日签到、引入成长体系、配合 push 提醒……</p>
+    <div class="pull-quote" style="border-color:var(--c3)">
+      <p>激活 Skill 后：这个问题的表面是"怎么提升留存"，但本质是：你还没验证用户有持续使用的真实动机。先做一个测试——把签到、积分、排行榜全部拆掉，看数据。如果用户流失明显，那么你现在的留存是游戏化机制制造出来的欲望，不是产品本身的价值。做这件事意味着不做：短期漂亮的 DAU 曲线。</p>
+    </div>
+
+    <h3>案例 2：「竞品上了 AI 助手功能，我们要不要跟？」</h3>
+    <div class="pull-quote" style="border-color:var(--c3)">
+      <p>激活 Skill 后：先不谈做不做，先问一个问题——竞品的用户和你的用户，是不是处在同一个真实处境里？竞品有 ≠ 你该做。另外，追问一句：如果五年后这个赛道里只有 AI 助手作为基础能力，你的产品差异化在哪？</p>
+    </div>
+
+    <h3>案例 3：「用户反馈区里 50% 的帖子都在要 X 功能，做还是不做？」</h3>
+    <div class="pull-quote" style="border-color:var(--c3)">
+      <p>激活 Skill 后：你说的是"反馈区里最活跃的用户"，不是"全部用户"。产品论坛里最活跃的用户通常代表最小的用户群体——他们的诉求会把产品推向越来越复杂的方向，而普通用户会因此被边缘化，默默流失，并且不会在论坛里发帖说"我走了"。</p>
+    </div>
+
+    <h2>它适合谁</h2>
+    <div class="needs-grid">
+      <div class="need-card">
+        <div class="need-icon">🧭</div>
+        <div class="need-title">独立产品人 / 一人公司</div>
+        <p class="need-desc">在"做什么、不做什么"上经常摇摆，需要一个有经验的思维对话者。</p>
+      </div>
+      <div class="need-card">
+        <div class="need-icon">🔥</div>
+        <div class="need-title">早期项目 PM</div>
+        <p class="need-desc">在需求池里挣扎，每天被 stakeholders 和用户拉来拉去，需要回到本质。</p>
+      </div>
+      <div class="need-card">
+        <div class="need-icon">⚖️</div>
+        <div class="need-title">产品负责人</div>
+        <p class="need-desc">需要做"砍功能、定方向"的艰难决策，需要克制、反直觉的审视视角。</p>
+      </div>
+    </div>
+    <div class="false-grid">
+      <div class="false-item">
+        <span class="false-x">✕</span>
+        <div>
+          <div class="false-title">不适合：追求快速出方案、一键 PRD 的场景</div>
+          <p class="false-text">这个 skill 会让你停下来思考，不会帮你加速。</p>
+        </div>
+      </div>
+      <div class="false-item">
+        <span class="false-x">✕</span>
+        <div>
+          <div class="false-title">不适合：纯电商 / 游戏品类的增长问题</div>
+          <p class="false-text">激励结构本身是这类产品的核心，判断框架不完全适用。</p>
+        </div>
+      </div>
+    </div>
+
+    <h2>使用它的正确姿势</h2>
+    <div class="callout" style="border-color:rgba(176,120,8,0.25); background:rgba(176,120,8,0.07);">
+      <div class="callout-label" style="color:var(--c3)">Three Rules</div>
+      <p><strong>1. 不要把它当答案生成器</strong> — 它更像一个有经验的产品老师在对面坐着：它会先问你问题，而不是给你答案。<br><br><strong>2. 不要期待"完整方案"</strong> — 它的输出常常是"这里有取舍，代价是 X，你需要自己判断"。这是它的价值，不是它的限制。<br><br><strong>3. 把它的反常识判断当起点，不当终点</strong> — 它给出的切入角度往往和直觉相反，但这是让你重新看问题的契机，而不是新教条。</p>
+    </div>
+
+    <div class="art-closing">
+      <p>这个 Skill 没有试图让 Claude 变得更"聪明"。它只是让 Claude 在谈产品的时候，愿意停下来——停下来问一句：<strong>这件事为什么要做？</strong>以及更少人愿意问的：<strong>这件事，为什么不做？</strong></p>
+      <p>如果你在产品的日常决策里经常感觉"明明很忙，但方向越来越模糊"，这个 Skill 可能不会让你更快，但会让你走得更直。</p>
+    </div>
+
+  </article>
+
+</div><!-- /view-a03 -->
+
+
+
+
+
+
+
+<!-- ════════════════════════════════════════
+     VIEW: ARTICLE 06 — 苏轼：一个人的风雨与明月
+════════════════════════════════════════ -->
+<div id="view-a06" class="view art-view" style="--accent-art:var(--c4)">
+
+  <header class="art-hero">
+    <div class="art-hero-meta">
+      <span class="art-no">No.04</span>
+      <span class="art-dot"></span>
+      <span class="art-date">April 2026</span>
+      <span class="art-dot"></span>
+      <span class="art-date">长文</span>
+    </div>
+    <h1 class="art-title">苏轼：一个人的风雨与明月</h1>
+    <p class="art-lede">苏轼（1037—1101），字子瞻，号东坡居士。这个名字，中国人几乎无人不知。</p>
+    <div class="art-tag-row">
+      <span class="tag tag-violet">Culture</span>
+      <span class="tag tag-amber">Essay</span>
+      <span class="tag tag-rose">Implementation</span>
+    </div>
+  </header>
+
+  <hr class="art-rule">
+
+  <article class="art-body">
+
+<p>苏轼（1037—1101），字子瞻，号东坡居士。这个名字，中国人几乎无人不知。</p>
+<p>林语堂在给他立传时，开篇就说，写苏东坡这件事本身就是一大乐事，"此外还需要什么别的理由吗？"一个传记作者如此心甘情愿，大概因为他写的不只是别人的故事，也是自己向往的那种活法。</p>
+<p>但他究竟是谁？一位官员？一位诗人？一位美食家？林语堂给他列了一张清单：乐天派、人道主义者、散文家、书法家、画家、酿酒者、工程师、月下漫步者、饮酒成瘾者、心肠慈悲的法官……这张单子还可以继续列下去。他什么都是，又什么都不只是。他更像是一种证明：一个人可以在反复被命运击倒之后，依然活得兴致盎然。</p>
+<h2>一、少年时：那种让人嫉妒的才气</h2>
+<p>苏轼生于四川眉山，父亲苏洵是当时有名的文章家，弟弟苏辙也才华出众，兄弟俩加上父亲，后世合称"三苏"。在这样的家里长大，读书几乎是空气，才气几乎是遗传。</p>
+<p>1057年，二十岁的苏轼参加科举。当时主考官是文坛领袖欧阳修，读到苏轼的答卷忍不住拍案，却猜测是自己学生曾巩所写，为避嫌未点第一——但即便如此，苏轼仍然一举成名。</p>
+<p>欧阳修私下说了一句话，后来广为流传："三十年后，世人将不复知有我。"他说的不是谦虚，是预言。</p>
+<p>林语堂描述这时期的苏轼：意气风发，"辩才无碍，口舌之争，决不甘拜下风"，是那种对未来充满把握的年轻人，"元气淋漓，生机勃勃"。这八个字，读来如见其人。</p>
+<div class="pull-quote"><p><strong>新月如佳人，出海初弄色。</strong> <strong>娟娟到湖上，潋潋摇空碧。</strong> ——《虎丘寺》（早期之作，清新明快，意气正盛）</p></div>
+<h2>二、仕途中：夹缝里的正直</h2>
+<p>进入官场的苏轼，很快发现这里远比诗文复杂。</p>
+<p>北宋中期，王安石主持变法，新旧两党壁垒分明。苏轼并非顽固守旧之人，他反对的只是变法推行中伤害百姓的具体做法。然而政治从不喜欢"具体"，只喜欢"立场"。他的批评，让他两头不讨好。</p>
+<p>他去地方任职，在杭州、密州、徐州辗转，做了许多实事：疏浚西湖，修筑湖堤，赈灾救荒。林语堂写道，无论到哪里，他都"心系百姓"，是那种把老百姓的事当成自己的事来做的官。但这些，都没能让他在政治上站稳脚跟。</p>
+<p>在密州任上，他写下《江城子·密州出猎》，壮气逼人：</p>
+<div class="pull-quote"><p><strong>老夫聊发少年狂，左牵黄，右擎苍。</strong> <strong>锦帽貂裘，千骑卷平冈。</strong> <strong>会挽雕弓如满月，西北望，射天狼。</strong></p></div>
+<p>那是一个官员试图用豪情盖过失意的时刻。他还不知道，更大的风暴即将到来。</p>
+<h2>三、乌台诗案：在死亡面前的那一百三十天</h2>
+<p>1079年，苏轼被人从诗文中断章取义，告发"讽刺朝政"，史称"乌台诗案"。他被押解入京，关入御史台大狱。</p>
+<p>在牢里，他做好了死的准备。他托人给弟弟苏辙捎去一首诗，两人约好：若是死讯传来，就用白面馒头，不用鱼肉祭拜。诗中写道：</p>
+<div class="pull-quote"><p><strong>是处青山可埋骨，他年夜雨独伤神。</strong> <strong>与君世世为兄弟，更结来生未了因。</strong></p></div>
+<p>这不是文学，这是诀别。</p>
+<p>幸而，先皇太后出面求情，神宗皇帝最终留情，苏轼得以活命，被贬黄州。林语堂在这里写下一句让人停住脚步的话——像苏东坡这样的人，"具有蛇的智慧，兼有鸽子的温柔敦厚"，这样的人，世间实在难能有二。</p>
+<p>从死亡边缘走回来的人，往往会变成另一个人。苏轼也是。</p>
+<h2>四、黄州：用一块荒地，重建自己</h2>
+<p>贬谪黄州，意味着官职近乎撤销，俸禄大幅削减，苏轼一家甚至难以为继。朋友马正卿帮他申请到城东一片荒坡，让他开垦耕种。那片地，叫"东坡"。</p>
+<p>他就在那里，给自己取了新名字：东坡居士。</p>
+<p>林语堂说，黄州时期的苏东坡，完成了一次真正意义上的蜕变——从一个仕途中的文人，变成了一个"老练"的哲人。他开始真正理解人生，而不只是用才气装点人生。</p>
+<p>这四年，是他政治处境最低谷的时期，却也是他创作最密集、境界最深的时期。他写下了《赤壁赋》《后赤壁赋》《念奴娇·赤壁怀古》，写下了《定风波》，还研究出了"东坡肉"的做法——这个细节总是让人莞尔。林语堂忍不住说：他在黄州"因为猪肉便宜"而研究烹饪，并郑重写下《猪肉颂》，俨然是把厨房当成了另一个创作现场。</p>
+<div class="pull-quote"><p><strong>大江东去，浪淘尽，千古风流人物。</strong> <strong>……人生如梦，一尊还酹江月。</strong> ——《念奴娇·赤壁怀古》</p></div>
+<div class="pull-quote"><p><strong>莫听穿林打叶声，何妨吟啸且徐行。</strong> <strong>竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。</strong> ——《定风波》</p></div>
+<p>这两首词，一豪迈一从容，写于同一时期，写出了苏轼黄州这几年的两面：他仍然感到人生如梦，但他已经不再被这种感觉压垮了。林语堂把他称为"一个无可救药的乐天派"——这话听起来像是调侃，细想却是最高的致敬。</p>
+<h2>五、短暂回潮：又见庙堂，又是过客</h2>
+<p>1085年，神宗驾崩，太后垂帘，政局逆转，苏轼重新被召回朝廷，官至翰林学士。然而命运对他的玩笑还没开完——他这次反对的，是旧党全面清算新法的做法。他依然是那个谁都不能完全认同的人。</p>
+<p>林语堂说，苏东坡的一生始终是"秉直不阿"的，他对自己"全然诚恳，全然忠实"，这种性情注定了他在任何派系里都无法彻底安身。他的话往往只对百姓有利，而不对任何党派有利。</p>
+<p>这段时间，他主持重修杭州西湖，留下了那条至今仍在的苏堤。</p>
+<div class="pull-quote"><p><strong>水光潋滟晴方好，山色空蒙雨亦奇。</strong> <strong>欲把西湖比西子，淡妆浓抹总相宜。</strong> ——《饮湖上初晴后雨》</p></div>
+<p>写西湖的诗很多，但这首之后，西湖的气质几乎被苏轼一人定义了。</p>
+<p>好景不长。新党再度上台，苏轼再度被驱逐，这次更远——先是惠州，再是儋州，也就是今天的海南岛。</p>
+<h2>六、岭南与天涯：越远越自在</h2>
+<p>惠州、儋州，在北宋是实实在在的流放边地，瘴气重，条件差，距离权力中心极远。许多人被贬至此，心如死灰。</p>
+<p>苏轼不一样。他到了惠州，开始研究荔枝：</p>
+<div class="pull-quote"><p><strong>罗浮山下四时春，卢橘杨梅次第新。</strong> <strong>日啖荔枝三百颗，不辞长作岭南人。</strong> ——《惠州一绝》</p></div>
+<p>这首诗传回朝廷，据说让权臣章惇大怒："苏轼还过得这么快活？"随即将他再贬儋州——用意是让他死在那里。</p>
+<p>但苏轼在儋州，依然活了下去。他办起学堂，教当地孩子读书。海南历史上第一位进士，就是苏轼在儋州的学生。林语堂描述这段岁月时，语气里有一种感慨：越是被放逐到世界的边缘，苏东坡越接近他自己。他对学生说过一句话，也是对自己说的："沧海何曾断地脉，白袍端合破天荒。"</p>
+<p>他自嘲说平生功业在"黄州惠州儋州"，却又写道：</p>
+<div class="pull-quote"><p><strong>九死南荒吾不恨，兹游奇绝冠平生。</strong> ——《六月二十日夜渡海》</p></div>
+<p>九死而不恨。林语堂评价说，苏东坡到了儋州，"不是把这当成流放，而是当成了他的第二个家乡"——他甚至写下"我本儋耳人，寄生西蜀州"，像是在开一个温和的玩笑，又像是真心话。</p>
+<h2>七、晚年与身后：归途上的告别</h2>
+<p>1100年，朝政再变，苏轼终获赦免，踏上北归之路。他已是六十五岁的老人，一生漂泊，病体缠身。次年，他在常州去世。</p>
+<p>林语堂在书的末尾写道："苏东坡已死，他的名字只是一个记忆。但是他留给我们的，是他那心灵的喜悦，是他那思想的快乐，这才是万古不朽的。"</p>
+<p>他的一生没有在权位上达到什么高峰，被贬的时间比任职的时间还长。但在他身后，诗词文章成为中国文学史上的高峰；他主导修筑的苏堤还在；他开创的文人画理念影响了此后近千年的中国艺术；连他随手研究的那道红烧肉，也还有人在做。</p>
+<p>有一首他早年写的诗，像是一生的注脚：</p>
+<div class="pull-quote"><p><strong>人生到处知何似？应似飞鸿踏雪泥。</strong> <strong>泥上偶然留指爪，鸿飞那复计东西。</strong> ——《和子由渑池怀旧》</p></div>
+<p>他大概真的是这样活的：不太在意落在哪里，只是一直在飞。</p>
+<h2>尾声：他为什么还能打动今天的人</h2>
+<p>林语堂说，"一提到苏东坡，中国人总是亲切而温暖地会心一笑"。这句话本身就耐人寻味——不是崇敬，不是仰望，是"会心一笑"。</p>
+<p>为什么是这种反应？大概因为苏轼让人感到亲近。他不是完美的圣人，他有失意、有狼狈、有真实的恐惧。林语堂看得很清楚：他的旷达，不是没吃过苦的天然乐观，而是"对自己全然诚恳"——他不假装不痛，但他选择不被痛压垮。</p>
+<p>这也许是他穿越千年、至今仍有人读的原因。不是因为他的人生顺遂，恰恰因为它不顺遂——而他还是过出了那种让人羡慕的辽阔。</p>
+<p>用林语堂的话来说，苏东坡是"人间不可无一，难能有二"的人物。</p>
+<p>这话，后人大概都不会反对。</p>
+
+  </article>
+
+</div><!-- /view-a06 -->
+
+
+
+<!-- ════════════════════════════════════════
+     VIEW: ARTICLE 07 — 如果你知道结局，你还愿意开始吗？
+════════════════════════════════════════ -->
+<div id="view-a07" class="view art-view" style="--accent-art:var(--c1)">
+
+      <header class="art-hero">
+    <div class="art-hero-meta">
+      <span class="art-no">No.07</span>
+      <span class="art-dot"></span>
+      <span class="art-date">April 2026</span>
+      <span class="art-dot"></span>
+      <span class="art-date">影像随笔</span>
+    </div>
+    <h1 class="art-title">如果你知道结局，你还愿意开始吗？</h1>
+    <p class="art-lede">——关于《你一生的故事》与电影《降临》</p>
+    <div class="art-tag-row">
+      <span class="tag tag-amber">Essay</span>
+      <span class="tag tag-violet">Culture</span>
+    </div>
+  </header>
+
+  <hr class="art-rule">
+
+  <article class="art-body">
+
+<p>有一类故事，读完之后会让你对某件习以为常的事情感到陌生。</p>
+<p>特德·姜的《你一生的故事》就是这样一个故事。它读起来像一封写给女儿的信，却在你毫无防备的时候，偷偷改变了你理解时间的方式。改编它的电影《降临》，则用画面完成了同样的事——那些在黑暗中漂浮的环形符号，看一眼就知道不是普通的外星文字，而是某种时间本身的形状。</p>
+<p>这两部作品的核心，不是外星人，不是地球危机，甚至不是科学。它们真正在讨论的，是一个更私人也更根本的问题：</p>
+<p><strong>我们用来说话的语言，究竟把我们塑造成了什么样的人？</strong></p>
+<h2>一、语言不只是工具，它是你住的房子</h2>
+<p>先从一个生活里的小例子说起。</p>
+<p>你有没有注意到，中文里说"明天"和"昨天"，用的是完全对称的结构，好像时间真的是一条笔直的路，今天站在中间，前后各有无限延伸。而英文里的动词变位，每一句话都强制你标注"这件事发生在过去还是现在"——时态不是修辞，是语法规则，你不能逃开它。</p>
+<p>语言学里有个争论了很久的假说，叫<strong>"萨丕尔-沃尔夫假说"</strong>，说的是语言会影响思维，不同语言的使用者，对世界的感知方式可能真的不同。强版本的说法——语言决定思维——今天大多数学者不太接受，太绝对。但弱版本——语言会塑造和影响我们的认知习惯——已经有不少实验支持。</p>
+<p>比如，俄语里蓝色有两个词，深蓝和浅蓝是截然不同的颜色概念，不像英文统一叫 blue；研究发现，俄语母语者分辨这两种蓝色的速度，确实比英语母语者更快。语言在这里不是描述工具，它是感知的预设框架。</p>
+<p>特德·姜把这个假说推到了极端——如果有一种语言，不只是影响你怎么想，而是从根本上改变你对时间的感知，那会怎样？</p>
+<h2>二、七肢桶的语言，为什么能让人"看见未来"</h2>
+<p>小说里的外星生物"七肢桶"，它们的书写系统有一个奇怪的特性：不是线性展开的。</p>
+<p>人类写句子，是一个字接一个字，先有开头，再有结尾，意思在时间里一点点展开。但七肢桶的书写，是整体生成的——一个句子在落笔的那一刻，它的开头和结尾同时存在。</p>
+<p>你可能会想，这不过是书写习惯不同，和思维有什么关系？</p>
+<p>关键在这里：语言不只是表达思维的手段，它同时也是思维的运行方式。当你用一种语言思考，你就在用那种语言的结构来组织你的经验。</p>
+<p>七肢桶的语言要求使用者在开口或落笔之前，就已经知道整件事的全貌。长期用这种语言思考，会发生什么？——你的大脑开始用同样的方式处理现实：不是从现在向未来推进，而是把整个时间段作为一个已经完整的对象来感知。</p>
+<p>这是小说最精妙的设定。它不是说露易丝拥有了"预言能力"，像神话里的先知那样被动接收天启，而是说她的认知结构发生了根本性变化。她感知时间的方式，从"河流"变成了"地图"。</p>
+<table>
+<thead><tr><th>比喻</th><th>你的位置</th><th>你看到的</th></tr></thead>
+<tbody><tr><td>河流</td><td>站在岸边某一点</td><td>只能感知水从身旁流过</td></tr>
+<tr><td>地图</td><td>从高处俯瞰</td><td>整条河的走向同时呈现眼前</td></tr></tbody>
+</table>
+<h2>三、电影做了什么，做对了什么</h2>
+<p>丹尼斯·维伦纽瓦执导《降临》，最聪明的决定，是让观众<strong>亲身经历</strong>一次认知被颠覆的过程，而不只是旁观它。</p>
+<p>电影开场，是一段温柔的母女片段，画外音是露易丝对女儿说的话。大多数观众会自然地把它读成"回忆"——这是我们的线性本能，我们默认叙事从过去开始。</p>
+<p>但到了后段，你突然意识到，那不是回忆，那是她对"尚未发生"的未来的感知。</p>
+<p>这一刻，很多观众会有一种奇异的晕眩感。这不是因为剧情复杂，而是因为你的大脑习惯的那套时间框架，在这一刻被抽走了。维伦纽瓦在用电影结构做一件事：让你用身体感受露易丝经历了什么。</p>
+<p>七肢桶的符号在视觉上呈现为圆形的烟雾状图案，没有起点，没有终点，是一个封闭的整体。这不只是美学设计，它是在说：这种语言的时间观，根本没有"开始"和"结束"的概念。</p>
+<p>小说和电影的侧重各有不同——</p>
+<ul><li><strong>小说</strong>更冷静，更哲学，露易丝的情感几乎是被压抑的，思辨的分量更重</li><li><strong>电影</strong>则把母女关系推到了核心位置，放大了情感烈度，让原本属于语言学思想实验的东西，变得更加可以感知</li></ul>
+<p>这两种选择都是对的。它们在做同一件事，只是用了不同的语言。</p>
+<h2>四、她已知晓一切，却还是选择了那段人生</h2>
+<p>这才是整个故事真正令人震动的地方。</p>
+<p>露易丝在掌握七肢桶语言之后，开始感知到自己的整条人生：遇见一个男人，生下一个女儿，女儿在年幼时因病离去，然后她与那个男人也走向了分离。这一切，她在"当下"就已经知道。</p>
+<p>然而她还是选择走向那段人生。</p>
+<p>很多人第一次看到这里会感到震动：这是宿命论吗？她没有选择的余地？</p>
+<p>特德·姜在小说里给出了一个更微妙的回答——</p>
+<p><strong>当你把时间作为整体来感知，"选择"这件事的意义就改变了。</strong> 选择不再是"为了得到某个结果"，而是"确认你是谁"。</p>
+<p>用更朴素的话说：她不是因为无从逃脱而接受，而是因为那段人生——包括其中的失去——是她，是构成她这个人的全部内容。剥掉那段经历，她就不再是她。</p>
+<p>这让我想起一个问题：我们通常说"如果可以重来"，语气里带着一种假设，就是重来了会做出不同的选择。但如果你真的重来一次，真的还是同一个人，你会做出不同的选择吗？</p>
+<h2>五、我们每个人，都活在某种语言的时间里</h2>
+<p>读完这个故事，有一种感觉会悄悄留下来：原来我们对时间的感知，不是"真实"的时间本身，只是我们的语言和认知结构给我们制造的一种体验。</p>
+<p>我们说"过去已经过去"，好像它真的消失了。   我们说"未来还没来"，好像它真的不存在。</p>
+<p>但物理学告诉我们，时间可能根本不是这样运作的。爱因斯坦曾在一封信里写道，过去、现在和未来之间的区别，不过是一种执拗的幻觉。这不是文学比喻，是他对时空结构的理解。七肢桶的语言，某种程度上，更接近物理学家描述的那种时间。</p>
+<p>我们感知到的时间之"流动"，很可能是我们的神经系统和语言一起制造的产物。</p>
+<p>这不是要让你陷入虚无，而是提供一种松动：也许我们对时间和因果关系的焦虑，有一部分来自于我们住在一种特定的语言结构里，出不去。</p>
+<h2>最后这个问题，没有标准答案</h2>
+<p>《你一生的故事》结尾，露易丝对已经远去的女儿说话。她知道那个孩子不会回答，她也知道那段时光已经成为过去。但她还是说了。</p>
+<p>因为"已经发生过"，以某种方式，意味着它永远存在。</p>
+<p>特德·姜在整篇小说里都在追问同一件事：</p>
+<div class="pull-quote"><p>如果你提前知道结局——知道爱会有终点，知道人会有离别，知道你终将经历失去——你还愿意开始吗？</p></div>
+<p>这个问题没有聪明的答案，只有诚实的答案。</p>
+<p>露易丝的答案是愿意。</p>
+<p>这个答案不是在赞美苦难，也不是在劝人认命。它只是说：有些东西，不是因为会永远存在才值得，而是因为曾经真实存在过——就已经足够了。</p>
+<p>读完这两部作品，你可能不会变成语言学家，也不会突然理解相对论。但你可能会在某个平常的早晨，用一种略微不同的眼光，看一眼手边已经发生的一切。</p>
+<p>那就够了。</p>
+
+  </article>
+
+</div><!-- /view-a07 -->
+
+
+<!-- ════ FOOTER (shared) ════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <svg class="footer-mark" viewBox="0 0 36 36" fill="none">
+        <g transform="rotate(-22, 18, 18)">
+          <path d="M 0,18 A 18,3.5 0 0,1 36,18" stroke="#07070E" stroke-width="2.6" stroke-linecap="round"/>
+        </g>
+        <circle cx="18" cy="18" r="12" fill="#07070E"/>
+        <g transform="rotate(-22, 18, 18)">
+          <path d="M 0,18 A 18,3.5 0 0,0 36,18" stroke="#F1F1F5" stroke-width="5.2" stroke-linecap="round"/>
+          <path d="M 0,18 A 18,3.5 0 0,0 36,18" stroke="#07070E" stroke-width="2.6" stroke-linecap="round"/>
+        </g>
+      </svg>
+      <span class="footer-name">David Design Thinking</span>
+    </div>
+    <div class="footer-right">© 2026 · Personal Journal<br><span style="opacity:.5">05 Articles Published</span></div>
+  </div>
+</footer>
+
+<script>
+/* ════════════════════════════════════════
+   ROUTER
+════════════════════════════════════════ */
+let current = 'home';
+let isNavigating = false;
+
+function navigate(viewId, updateHash = true) {
+  if (viewId === current || isNavigating) return;
+  isNavigating = true;
+
+  const fromEl = document.getElementById('view-' + current);
+  const toEl   = document.getElementById('view-' + viewId);
+  if (!fromEl || !toEl) {
+    isNavigating = false;
+    return;
+  }
+
+  fromEl.classList.add('is-leaving');
+
+  setTimeout(function () {
+    fromEl.classList.remove('active', 'is-leaving');
+    current = viewId;
+
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    toEl.classList.add('active', 'is-entering');
+    setTimeout(function () { 
+      toEl.classList.remove('is-entering'); 
+      isNavigating = false;
+    }, 520);
+
+    /* Nav state */
+    var backBtn  = document.getElementById('nav-back');
+    var navTag   = document.getElementById('nav-tag');
+    var floatNav = document.getElementById('float-nav');
+    if (viewId === 'home') {
+      backBtn.style.display = 'none';
+      navTag.style.display = 'block';
+      document.getElementById('progress-bar').style.display = 'none';
+      floatNav.classList.remove('visible');
+    } else {
+      backBtn.style.display = 'block';
+      navTag.style.display = 'none';
+      document.getElementById('progress-bar').style.display = 'block';
+      document.getElementById('progress-bar').style.width = '0%';
+      /* accent color for progress bar */
+      var accentMap = { a01: 'var(--c1)', a02: 'var(--c2)', a03: 'var(--c3)', a04: 'var(--c4)', a05: 'var(--c1)', a06: 'var(--c2)', a07: 'var(--c3)' };
+      document.getElementById('progress-bar').style.background = accentMap[viewId] || 'var(--c1)';
+      floatNav.classList.add('visible');
+    }
+
+    /* Reset skill tab on re-entry */
+    if (viewId === 'a01') switchSkill('ux', false);
+
+    if (updateHash) {
+      window.location.hash = viewId === 'home' ? '' : viewId;
+    }
+  }, 310);
+}
+
+/* Hash routing on load */
+(function () {
+  var hash = window.location.hash.replace('#', '');
+  if (hash && ['a01', 'a03', 'a02', 'a06', 'a07'].includes(hash)) {
+    navigate(hash, false);
+  }
+})();
+
+/* Handle browser back/forward */
+window.addEventListener('hashchange', function () {
+  var hash = window.location.hash.replace('#', '');
+  var targetView = hash && ['a01', 'a03', 'a02', 'a06', 'a07'].includes(hash) ? hash : 'home';
+  navigate(targetView, false);
+});
+
+/* Progress bar — rAF-throttled */
+var _rafPending = false;
+var _progressBar = document.getElementById('progress-bar');
+window.addEventListener('scroll', function () {
+  if (current === 'home' || _rafPending) return;
+  _rafPending = true;
+  requestAnimationFrame(function () {
+    var h = document.documentElement;
+    var pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100 || 0;
+    _progressBar.style.width = pct + '%';
+    _rafPending = false;
+  });
+}, { passive: true });
+
+/* ════════════════════════════════════════
+   SKILL ATLAS TABS
+════════════════════════════════════════ */
+/* ════════════════════════════════════════
+   SHARE / COPY LINK
+════════════════════════════════════════ */
+function shareURL() {
+  var url = window.location.href;
+  var toast = document.getElementById('copy-toast');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(function () { showCopyToast(toast); });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = url;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showCopyToast(toast);
+  }
+}
+
+var _toastTimer = null;
+function showCopyToast(toast) {
+  if (_toastTimer) clearTimeout(_toastTimer);
+  toast.classList.add('show');
+  _toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 2000);
+}
+
+
+function switchSkill(skill, shouldScroll = true) {
+  /* Sections */
+  ['ux', 'visual', 'motion', 'impl'].forEach(function (s) {
+    var el = document.getElementById('skill-' + s);
+    if (el) el.classList.toggle('active', s === skill);
+  });
+  /* Tabs */
+  document.querySelectorAll('.skill-tab').forEach(function (t) {
+    t.classList.toggle('active', t.dataset.skill === skill);
+  });
+  /* Scroll skill section into view gently */
+  if (shouldScroll) {
+    var bar = document.querySelector('.skill-tabs-bar');
+    if (bar) {
+      var top = bar.getBoundingClientRect().top + window.scrollY - 70;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+  }
+}
+</script>
+
+</body>
+</html>

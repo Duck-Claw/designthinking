@@ -5,9 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>David Design Thinking</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Cg transform='rotate(-22, 18, 18)'%3E%3Cpath d='M 0,18 A 18,3.5 0 0,1 36,18' stroke='%2307070E' stroke-width='2.6' stroke-linecap='round'/%3E%3C/g%3E%3Ccircle cx='18' cy='18' r='12' fill='%2307070E'/%3E%3Cg transform='rotate(-22, 18, 18)'%3E%3Cpath d='M 0,18 A 18,3.5 0 0,0 36,18' stroke='%23F1F1F5' stroke-width='5.2' stroke-linecap='round'/%3E%3Cpath d='M 0,18 A 18,3.5 0 0,0 36,18' stroke='%2307070E' stroke-width='2.6' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E">
+<script>if(localStorage.getItem('v70-theme')==='light')document.documentElement.setAttribute('data-theme','light');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 
 /* ════════════════════════════════════════
@@ -17,6 +18,56 @@
 html { scroll-behavior: smooth; }
 
 :root {
+  /* ── Dark theme (default) ── */
+  --bg:        #08080F;
+  --surface-s: #111118;
+  --surface-m: #18181F;
+  --surface-h: #1E1E27;
+  --border:    rgba(255,255,255,0.09);
+  --border-m:  rgba(255,255,255,0.16);
+  --tx-hi:     #F4F1EA;
+  --tx-1:      #E0DCD2;
+  --tx-2:      #C0BDB4;
+  --tx-3:      #8C8880;
+  --tx-4:      #5E5A54;
+
+  --c1: #7B9EFF;
+  --c2: #4FC98A;
+  --c3: #D4A847;
+  --c4: #E87060;
+  --c-motion: #B47EFF;
+
+  /* Theme-specific UI tokens */
+  --nav-bg:              rgba(8,8,15,0.88);
+  --nav-border:          rgba(255,255,255,0.07);
+  --float-bg:            rgba(20,20,32,0.82);
+  --float-bg-hover:      rgba(30,30,46,0.96);
+  --float-border:        rgba(255,255,255,0.10);
+  --float-border-hover:  rgba(255,255,255,0.18);
+  --toast-bg:            rgba(240,237,230,0.95);
+  --toast-color:         #08080F;
+  --logo-planet:         #D4A847;
+  --logo-ring-hi:        #F0EDE6;
+  --logo-ring-mask:      #08080F;
+
+  --tag-blue-c:  #7B9EFF; --tag-blue-b:  rgba(123,158,255,.22); --tag-blue-bg:  rgba(123,158,255,.07);
+  --tag-green-c: #4FC98A; --tag-green-b: rgba(79,201,138,.22);  --tag-green-bg: rgba(79,201,138,.07);
+  --tag-amber-c: #D4A847; --tag-amber-b: rgba(212,168,71,.22);  --tag-amber-bg: rgba(212,168,71,.07);
+  --tag-rose-c:  #E87060; --tag-rose-b:  rgba(232,112,96,.22);  --tag-rose-bg:  rgba(232,112,96,.07);
+  --tag-violet-c:#B47EFF; --tag-violet-b:rgba(180,126,255,.22); --tag-violet-bg:rgba(180,126,255,.07);
+
+  --card-border-base:   rgba(255,255,255,0.07);
+  --card-shadow:        0 1px 3px rgba(0,0,0,.3), 0 4px 14px rgba(0,0,0,.4), 0 14px 36px rgba(0,0,0,.3);
+  --card-shadow-feat:   0 2px 6px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.5), 0 22px 52px rgba(0,0,0,.4);
+  --card-shadow-hover:  0 4px 10px rgba(0,0,0,.5), 0 16px 44px rgba(0,0,0,.5), 0 40px 88px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.05);
+
+  --radius: 10px;
+  --max-w:  900px;
+  --col-w:  700px;
+}
+
+/* ── Light theme overrides ── */
+[data-theme="light"] {
   --bg:        #F1F1F5;
   --surface-s: #FFFFFF;
   --surface-m: #E8E8ED;
@@ -29,16 +80,48 @@ html { scroll-behavior: smooth; }
   --tx-3:      #606075;
   --tx-4:      #9898B0;
 
-  /* skill / article accent palette — darkened for light background */
-  --c1: #4455E0;   /* UX — indigo */
-  --c2: #14A060;   /* Strategy — mint */
-  --c3: #B07808;   /* Visual — amber */
-  --c4: #C84040;   /* Impl — rose */
-  --c-motion: #6828D8; /* Motion — violet */
+  --c1: #4455E0;
+  --c2: #14A060;
+  --c3: #B07808;
+  --c4: #C84040;
+  --c-motion: #6828D8;
 
-  --radius: 10px;
-  --max-w:  900px;
-  --col-w:  700px;
+  --nav-bg:              rgba(241,241,245,0.94);
+  --nav-border:          rgba(0,0,0,0.08);
+  --float-bg:            rgba(255,255,255,0.78);
+  --float-bg-hover:      rgba(255,255,255,0.96);
+  --float-border:        rgba(0,0,0,0.08);
+  --float-border-hover:  rgba(0,0,0,0.14);
+  --toast-bg:            #07070E;
+  --toast-color:         #F1F1F5;
+  --logo-planet:         #07070E;
+  --logo-ring-hi:        #07070E;
+  --logo-ring-mask:      #F1F1F5;
+
+  --tag-blue-c:  #4455E0; --tag-blue-b:  rgba(68,85,224,.25);   --tag-blue-bg:  rgba(68,85,224,.08);
+  --tag-green-c: #14A060; --tag-green-b: rgba(20,160,96,.25);   --tag-green-bg: rgba(20,160,96,.08);
+  --tag-amber-c: #B07808; --tag-amber-b: rgba(176,120,8,.25);   --tag-amber-bg: rgba(176,120,8,.08);
+  --tag-rose-c:  #C84040; --tag-rose-b:  rgba(200,64,64,.25);   --tag-rose-bg:  rgba(200,64,64,.08);
+  --tag-violet-c:#6828D8; --tag-violet-b:rgba(104,40,216,.25);  --tag-violet-bg:rgba(104,40,216,.08);
+
+  --card-border-base:   rgba(0,0,0,0.12);
+  --card-shadow:        0 1px 3px rgba(0,0,0,.05), 0 4px 14px rgba(0,0,0,.08), 0 14px 36px rgba(0,0,0,.07);
+  --card-shadow-feat:   0 2px 6px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.10), 0 22px 52px rgba(0,0,0,.08);
+  --card-shadow-hover:  0 4px 10px rgba(0,0,0,.10), 0 16px 44px rgba(0,0,0,.12), 0 40px 88px rgba(0,0,0,.08), inset 0 1px 0 rgba(255,255,255,.90);
+}
+
+/* ── Theme transition (only active during switch) ── */
+html.theme-switching,
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition:
+    background-color 0.38s cubic-bezier(0.4,0,0.2,1),
+    color            0.38s cubic-bezier(0.4,0,0.2,1),
+    border-color     0.38s cubic-bezier(0.4,0,0.2,1),
+    fill             0.38s cubic-bezier(0.4,0,0.2,1),
+    stroke           0.38s cubic-bezier(0.4,0,0.2,1),
+    box-shadow       0.38s cubic-bezier(0.4,0,0.2,1) !important;
 }
 
 body {
@@ -50,6 +133,29 @@ body {
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
 }
+
+/* Atmospheric background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 10%, rgba(123,158,255,0.05) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(212,168,71,0.04) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  opacity: 0.028;
+  pointer-events: none;
+  z-index: 0;
+}
+.view { position: relative; z-index: 1; }
 
 /* ════════════════════════════════════════
    PAGE / VIEW TRANSITIONS
@@ -73,9 +179,9 @@ body {
 ════════════════════════════════════════ */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 300;
-  background: rgba(241,241,245,0.94);
+  background: var(--nav-bg);
   backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--nav-border);
   transform: translateZ(0);
 }
 .nav-inner {
@@ -95,23 +201,23 @@ nav {
 }
 .logo-text { display: flex; flex-direction: column; gap: 1px; line-height: 1; }
 .logo-name {
-  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px;
-  color: var(--tx-hi); letter-spacing: -0.02em;
+  font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 17px;
+  color: var(--tx-hi); letter-spacing: 0.04em;
 }
 .logo-sub {
-  font-family: 'JetBrains Mono', monospace; font-size: 8.5px;
+  font-family: 'Space Mono', monospace; font-size: 7.5px;
   color: var(--tx-4); letter-spacing: 0.16em; text-transform: uppercase;
 }
 
 /* ── Nav right ── */
 .nav-right { display: flex; align-items: center; gap: 20px; }
 .nav-tag {
-  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  font-family: 'Space Mono', monospace; font-size: 10px;
   color: var(--tx-4); letter-spacing: 0.12em; text-transform: uppercase;
 }
 #nav-back {
   display: none;
-  font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+  font-family: 'Space Mono', monospace; font-size: 10.5px;
   color: var(--tx-3); letter-spacing: 0.06em;
   cursor: pointer; transition: color 0.2s;
   background: none; border: none; padding: 0;
@@ -144,11 +250,11 @@ footer {
   width: 22px; height: 22px; opacity: 0.30;
 }
 .footer-name {
-  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 12px;
+  font-family: 'Cormorant Garamond', serif; font-weight: 800; font-size: 12px;
   color: var(--tx-4);
 }
 .footer-right {
-  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  font-family: 'Space Mono', monospace; font-size: 10px;
   color: var(--tx-4); letter-spacing: 0.06em;
   text-align: right;
 }
@@ -160,23 +266,23 @@ footer {
   max-width: var(--max-w); margin: 0 auto; padding: 130px 36px 36px;
 }
 .home-eyebrow {
-  font-family: 'JetBrains Mono', monospace; font-size: 10px;
-  color: var(--c1); letter-spacing: 0.18em; text-transform: uppercase;
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  color: var(--c3); letter-spacing: 0.18em; text-transform: uppercase;
   display: flex; align-items: center; gap: 10px; margin-bottom: 22px;
 }
 .home-eyebrow::before {
   content: ''; display: block; width: 22px; height: 1px;
-  background: var(--c1); opacity: 0.55;
+  background: var(--c3); opacity: 0.55;
 }
 .home-title {
-  font-family: 'Syne', sans-serif; font-weight: 800;
-  font-size: clamp(36px, 5.2vw, 64px);
-  color: var(--tx-hi); letter-spacing: -0.03em; line-height: 1.05;
+  font-family: 'Cormorant Garamond', serif; font-weight: 700;
+  font-size: clamp(48px, 6.5vw, 88px);
+  color: var(--tx-hi); letter-spacing: -0.01em; line-height: 1.0;
   margin-bottom: 20px;
 }
 .home-title em { font-style: normal; color: var(--c1); }
 .home-sub {
-  font-size: 16px; color: var(--tx-3); max-width: 480px; line-height: 1.75;
+  font-size: 16px; color: var(--tx-2); max-width: 480px; line-height: 1.75;
 }
 
 /* ── Article Cards ── */
@@ -187,7 +293,7 @@ footer {
   display: flex; align-items: center; gap: 16px; margin-bottom: 36px;
 }
 .articles-head-label {
-  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  font-family: 'Space Mono', monospace; font-size: 10px;
   color: var(--tx-4); letter-spacing: 0.14em; text-transform: uppercase;
   white-space: nowrap;
 }
@@ -198,25 +304,25 @@ footer {
 .art-card {
   --accent: var(--c1);
   position: relative; display: flex; flex-direction: column;
-  background: color-mix(in srgb, var(--accent) 3%, #FFFFFF);
-  border: 1px solid color-mix(in srgb, var(--accent) 12%, var(--border-m));
+  background: color-mix(in srgb, var(--accent) 5%, var(--surface-s));
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--card-border-base));
   border-radius: 18px;
   overflow: hidden;
   cursor: pointer;
-  box-shadow: 0 1px 3px rgba(0,0,0,.05), 0 4px 14px rgba(0,0,0,.08), 0 14px 36px rgba(0,0,0,.07);
+  box-shadow: var(--card-shadow);
   transition: transform 0.5s cubic-bezier(0.22,1,0.36,1),
               box-shadow 0.5s cubic-bezier(0.22,1,0.36,1),
               border-color 0.35s ease;
   will-change: transform;
 }
 .art-card.featured {
-  box-shadow: 0 2px 6px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.10), 0 22px 52px rgba(0,0,0,.08);
+  box-shadow: var(--card-shadow-feat);
 }
 .art-card:hover {
   animation: none;
   transform: translateY(-11px) rotateX(1.2deg);
-  border-color: rgba(0,0,0,0.20);
-  box-shadow: 0 4px 10px rgba(0,0,0,.12), 0 16px 44px rgba(0,0,0,.14), 0 40px 88px rgba(0,0,0,.10), inset 0 1px 0 rgba(255,255,255,.90);
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  box-shadow: var(--card-shadow-hover);
 }
 .art-card::before {
   content: ''; position: absolute; top: 0; left: 0; bottom: 0;
@@ -232,7 +338,7 @@ footer {
   display: flex; align-items: baseline; gap: 14px; margin-bottom: 20px;
 }
 .card-num {
-  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-family: 'Cormorant Garamond', serif; font-weight: 800;
   font-size: 30px; line-height: 1; letter-spacing: -0.04em;
   color: var(--accent);
   text-shadow: 0 0 36px color-mix(in srgb, var(--accent) 28%, transparent);
@@ -247,30 +353,30 @@ footer {
 }
 .art-card:hover .card-num-line { opacity: 0.45; max-width: 100px; }
 .card-num-meta {
-  font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+  font-family: 'Space Mono', monospace; font-size: 9.5px;
   color: var(--tx-4); letter-spacing: 0.1em; text-transform: uppercase;
   margin-bottom: 4px; align-self: flex-end;
 }
 .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
 .tag {
-  font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+  font-family: 'Space Mono', monospace; font-size: 9.5px;
   letter-spacing: 0.07em; padding: 2px 8px; border-radius: 4px; border: 1px solid;
 }
-.tag-blue  { color: #4455E0; border-color: rgba(68,85,224,.25); background: rgba(68,85,224,.08); }
-.tag-green { color: #14A060; border-color: rgba(20,160,96,.25);  background: rgba(20,160,96,.08); }
-.tag-amber { color: #B07808; border-color: rgba(176,120,8,.25);  background: rgba(176,120,8,.08); }
-.tag-rose  { color: #C84040; border-color: rgba(200,64,64,.25);  background: rgba(200,64,64,.08); }
-.tag-violet{ color: #6828D8; border-color: rgba(104,40,216,.25); background: rgba(104,40,216,.08); }
+.tag-blue  { color: var(--tag-blue-c);   border-color: var(--tag-blue-b);   background: var(--tag-blue-bg); }
+.tag-green { color: var(--tag-green-c);  border-color: var(--tag-green-b);  background: var(--tag-green-bg); }
+.tag-amber { color: var(--tag-amber-c);  border-color: var(--tag-amber-b);  background: var(--tag-amber-bg); }
+.tag-rose  { color: var(--tag-rose-c);   border-color: var(--tag-rose-b);   background: var(--tag-rose-bg); }
+.tag-violet{ color: var(--tag-violet-c); border-color: var(--tag-violet-b); background: var(--tag-violet-bg); }
 
 .card-title {
-  font-family: 'Syne', sans-serif; font-weight: 700;
-  font-size: 16px; color: var(--tx-1); letter-spacing: -0.02em;
-  line-height: 1.35; margin-bottom: 8px;
+  font-family: 'Noto Serif SC', serif; font-weight: 500;
+  font-size: 15.5px; color: var(--tx-1); letter-spacing: 0;
+  line-height: 1.5; margin-bottom: 8px;
   transition: color 0.25s;
 }
 .art-card:hover .card-title { color: var(--tx-hi); }
 .card-excerpt {
-  font-size: 12.5px; color: var(--tx-3); line-height: 1.75; margin-bottom: 0;
+  font-size: 13px; color: var(--tx-2); line-height: 1.8; margin-bottom: 0;
 }
 .art-card-footer {
   display: flex; align-items: center; justify-content: space-between;
@@ -279,8 +385,8 @@ footer {
 }
 .card-meta { display: flex; gap: 18px; }
 .card-meta span {
-  font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
-  color: var(--tx-4); letter-spacing: 0.07em;
+  font-family: 'Space Mono', monospace; font-size: 9.5px;
+  color: var(--tx-3); letter-spacing: 0.07em;
 }
 .card-arrow {
   font-size: 15px; color: var(--accent);
@@ -333,17 +439,17 @@ footer {
   display: grid; grid-template-columns: 1fr auto; gap: 72px; align-items: start;
 }
 .about-label {
-  font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+  font-family: 'Space Mono', monospace; font-size: 9.5px;
   color: var(--tx-4); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 13px;
 }
-.about-text { font-size: 14px; color: var(--tx-3); line-height: 1.85; max-width: 440px; }
+.about-text { font-size: 14px; color: var(--tx-2); line-height: 1.85; max-width: 440px; }
 .home-stats { display: flex; gap: 48px; }
 .stat-num {
-  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 30px;
+  font-family: 'Cormorant Garamond', serif; font-weight: 800; font-size: 30px;
   color: var(--tx-hi); letter-spacing: -0.03em; line-height: 1;
 }
 .stat-label {
-  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  font-family: 'Space Mono', monospace; font-size: 9px;
   color: var(--tx-4); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 5px;
 }
 
@@ -359,23 +465,23 @@ footer {
   display: flex; align-items: center; gap: 14px; margin-bottom: 28px;
 }
 .art-no {
-  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  font-family: 'Space Mono', monospace; font-size: 11px;
   color: var(--accent-art); letter-spacing: 0.1em;
 }
 .art-dot { width: 3px; height: 3px; background: var(--tx-4); border-radius: 50%; }
 .art-date {
-  font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--tx-4); letter-spacing: 0.08em;
+  font-family: 'Space Mono', monospace; font-size: 11px; color: var(--tx-4); letter-spacing: 0.08em;
 }
 .art-title {
-  font-family: 'Syne', sans-serif; font-weight: 800;
-  font-size: clamp(28px, 4vw, 44px);
-  color: var(--tx-hi); letter-spacing: -0.025em; line-height: 1.1;
+  font-family: 'Cormorant Garamond', serif; font-weight: 700;
+  font-size: clamp(36px, 5vw, 58px);
+  color: var(--tx-hi); letter-spacing: -0.01em; line-height: 1.05;
   margin-bottom: 22px;
 }
 .art-title em { font-style: normal; color: var(--accent-art); }
 .art-lede {
-  font-size: 17px; color: var(--tx-3); line-height: 1.75; margin-bottom: 28px;
-  font-weight: 300; max-width: 580px;
+  font-size: 17px; color: var(--tx-2); line-height: 1.75; margin-bottom: 28px;
+  font-weight: 400; max-width: 580px;
 }
 .art-tag-row { display: flex; gap: 7px; flex-wrap: wrap; }
 
@@ -384,16 +490,16 @@ footer {
 /* Article body */
 .art-body { max-width: var(--col-w); margin: 0 auto; padding: 56px 40px 100px; }
 .art-body h2 {
-  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 22px;
+  font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 22px;
   color: var(--tx-hi); letter-spacing: -0.02em; line-height: 1.25;
   margin: 60px 0 18px; padding-top: 44px; border-top: 1px solid var(--border);
 }
 .art-body h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
 .art-body h3 {
-  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 17px;
+  font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 17px;
   color: var(--tx-1); letter-spacing: -0.01em; margin: 36px 0 12px;
 }
-.art-body p { margin-bottom: 18px; color: var(--tx-2); }
+.art-body p { margin-bottom: 18px; color: var(--tx-1); }
 .art-body strong { color: var(--tx-1); font-weight: 600; }
 
 .pull-quote {
@@ -406,11 +512,11 @@ footer {
 
 .callout {
   margin: 36px 0; padding: 24px 28px;
-  background: rgba(68,85,224,0.06);
-  border: 1px solid rgba(68,85,224,0.20); border-radius: 12px;
+  background: rgba(123,158,255,0.06);
+  border: 1px solid rgba(123,158,255,0.18); border-radius: 12px;
 }
 .callout-label {
-  font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--c1);
+  font-family: 'Space Mono', monospace; font-size: 9.5px; color: var(--c1);
   letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 9px;
 }
 .callout p { font-size: 15.5px; color: var(--tx-1); margin: 0; line-height: 1.8; }
@@ -422,7 +528,7 @@ footer {
 }
 .need-icon { font-size: 20px; margin-bottom: 9px; }
 .need-title {
-  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px;
+  font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 13px;
   color: var(--tx-1); margin-bottom: 6px;
 }
 .need-desc { font-size: 13px; color: var(--tx-3); line-height: 1.65; margin: 0; }
@@ -433,9 +539,9 @@ footer {
   padding: 18px 0; border-bottom: 1px solid var(--border); align-items: start;
 }
 .trend-item:first-child { border-top: 1px solid var(--border); }
-.trend-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--tx-4); padding-top: 3px; }
+.trend-num { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--tx-4); padding-top: 3px; }
 .trend-title {
-  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15.5px;
+  font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 15.5px;
   color: var(--tx-1); letter-spacing: -0.01em; margin-bottom: 7px;
 }
 .trend-body { font-size: 14px; color: var(--tx-3); line-height: 1.8; margin: 0; }
@@ -443,15 +549,122 @@ footer {
 .false-grid { display: grid; gap: 10px; margin: 20px 0; }
 .false-item {
   padding: 18px 22px; background: var(--surface-s);
-  border: 1px solid rgba(200,64,64,0.18); border-radius: 10px;
+  border: 1px solid rgba(232,112,96,0.18); border-radius: 10px;
   display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start;
 }
-.false-x { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #C84040; opacity: 0.75; padding-top: 2px; }
-.false-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13.5px; color: var(--tx-1); margin-bottom: 5px; }
+.false-x { font-family: 'Space Mono', monospace; font-size: 13px; color: #E87060; opacity: 0.75; padding-top: 2px; }
+.false-title { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 13.5px; color: var(--tx-1); margin-bottom: 5px; }
 .false-text { font-size: 13.5px; color: var(--tx-3); line-height: 1.7; margin: 0; }
 
 .art-closing { margin-top: 64px; padding-top: 28px; border-top: 1px solid var(--border); }
 .art-closing p { font-size: 15px; color: var(--tx-3); font-style: italic; line-height: 1.85; }
+
+/* ════════════════════════════════════════
+   ── TAG DISPLAY: SMALL CARDS ──
+   Keep tags on a single row, no wrapping
+════════════════════════════════════════ */
+.art-card:not(.featured) .card-tags {
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+.art-card:not(.featured) .tag {
+  white-space: nowrap;
+  font-size: 8.5px;
+  padding: 2px 6px;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+/* ── Violet card accent (article 06) ── */
+.ac-violet { --accent: var(--c-motion); }
+
+/* ════════════════════════════════════════
+   ── ARTICLE BODY: RICH ELEMENTS ──
+   Links, lists, code, tables
+════════════════════════════════════════ */
+.art-body a {
+  color: var(--accent-art);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent-art) 38%, transparent);
+  transition: color 0.2s, border-bottom-color 0.2s;
+}
+.art-body a:hover {
+  color: color-mix(in srgb, var(--accent-art) 75%, var(--tx-hi));
+  border-bottom-color: var(--accent-art);
+}
+
+.art-body ul, .art-body ol {
+  margin: 14px 0 18px;
+  padding-left: 22px;
+  color: var(--tx-1);
+}
+.art-body li {
+  line-height: 1.8;
+  margin-bottom: 6px;
+}
+.art-body li:last-child { margin-bottom: 0; }
+.art-body ul li { list-style-type: disc; }
+.art-body ol li { list-style-type: decimal; }
+
+.art-body code {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.82em;
+  background: var(--surface-h);
+  color: var(--tx-1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--border-m);
+  word-break: break-word;
+}
+
+.art-body pre {
+  background: var(--surface-s);
+  border: 1px solid var(--border);
+  border-left: 2.5px solid color-mix(in srgb, var(--accent-art, var(--c1)) 60%, transparent);
+  border-radius: 0 10px 10px 0;
+  padding: 18px 22px;
+  overflow-x: auto;
+  margin: 22px 0;
+}
+.art-body pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 12.5px;
+  color: var(--tx-1);
+  line-height: 1.85;
+  word-break: normal;
+}
+
+.art-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-size: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.art-body thead { background: var(--surface-m); }
+.art-body th {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tx-3);
+  padding: 11px 18px;
+  text-align: left;
+  font-weight: 400;
+  border-bottom: 1px solid var(--border-m);
+}
+.art-body td {
+  padding: 12px 18px;
+  color: var(--tx-1);
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  line-height: 1.65;
+}
+.art-body tr:last-child td { border-bottom: none; }
 
 /* ════════════════════════════════════════
    ── ARTICLE 01: SKILL ATLAS ──
@@ -491,17 +704,17 @@ footer {
 }
 .skill-tab.active::after { opacity: 1; }
 .stab-num {
-  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 10px;
+  font-family: 'Cormorant Garamond', serif; font-weight: 800; font-size: 10px;
   color: var(--tab-color); letter-spacing: 0.12em;
 }
 .stab-name {
-  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px;
+  font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 15px;
   color: var(--tx-2); line-height: 1.2;
   transition: color 0.2s;
 }
 .skill-tab.active .stab-name, .skill-tab:hover .stab-name { color: var(--tx-hi); }
 .stab-en {
-  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  font-family: 'Space Mono', monospace; font-size: 9px;
   color: var(--tx-4); letter-spacing: 0.1em; text-transform: uppercase;
   margin-top: 1px;
 }
@@ -516,11 +729,11 @@ footer {
   border-bottom: 1px solid var(--border);
 }
 .skill-hero-tag {
-  font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em;
+  font-family: 'Space Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em;
   text-transform: uppercase; color: var(--sk-accent); margin-bottom: 10px;
 }
 .skill-hero-title {
-  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px;
+  font-family: 'Cormorant Garamond', serif; font-weight: 800; font-size: 26px;
   color: var(--tx-hi); letter-spacing: -0.02em; margin-bottom: 12px;
 }
 .skill-hero-quote {
@@ -531,7 +744,7 @@ footer {
 .skill-hero-meta { display: flex; gap: 32px; flex-wrap: wrap; }
 .skill-meta-item {}
 .skill-meta-label {
-  font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--tx-4);
+  font-family: 'Space Mono', monospace; font-size: 9px; color: var(--tx-4);
   letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 3px;
 }
 .skill-meta-value { font-size: 13px; color: var(--tx-2); line-height: 1.5; }
@@ -539,22 +752,22 @@ footer {
 /* Skill body — same max-width, internal */
 .skill-body { max-width: var(--col-w); margin: 0 auto; padding: 40px 40px 80px; }
 .skill-body h2 {
-  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px;
+  font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 18px;
   color: var(--tx-hi); letter-spacing: -0.01em;
   margin: 48px 0 14px; padding-top: 36px; border-top: 1px solid var(--border);
 }
 .skill-body h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
 .skill-body h2::before {
   content: attr(data-num); display: inline-block;
-  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  font-family: 'Space Mono', monospace; font-size: 9px;
   color: var(--sk-accent); letter-spacing: 0.1em; margin-right: 10px;
   opacity: 0.9; vertical-align: middle;
 }
 .skill-body h3 {
-  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px;
+  font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 15px;
   color: var(--tx-1); margin: 28px 0 10px;
 }
-.skill-body p { margin-bottom: 16px; color: var(--tx-2); font-size: 15px; line-height: 1.9; }
+.skill-body p { margin-bottom: 16px; color: var(--tx-1); font-size: 15px; line-height: 1.9; }
 .skill-body strong { color: var(--tx-1); }
 
 .skill-body table {
@@ -562,7 +775,7 @@ footer {
   border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
 }
 .skill-body th {
-  font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
+  font-family: 'Cormorant Garamond', serif; font-size: 10px; font-weight: 700;
   letter-spacing: 0.12em; text-transform: uppercase; color: var(--tx-3);
   text-align: left; padding: 10px 14px;
   background: var(--surface-m); border-bottom: 1px solid var(--border-m);
@@ -590,7 +803,7 @@ footer {
   margin: 18px 0;
 }
 .skill-body code {
-  font-family: 'JetBrains Mono', monospace; font-size: 12.5px;
+  font-family: 'Space Mono', monospace; font-size: 12.5px;
   color: var(--tx-2); line-height: 1.7;
 }
 .skill-body pre code { background: none; }
@@ -607,7 +820,7 @@ footer {
   border-left: 2.5px solid var(--sk-accent);
 }
 .step-title {
-  font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+  font-family: 'Cormorant Garamond', serif; font-size: 11px; font-weight: 700;
   letter-spacing: 0.1em; color: var(--sk-accent); margin-bottom: 8px;
 }
 .step-body { color: var(--tx-2); font-size: 14px; line-height: 1.85; }
@@ -627,16 +840,16 @@ footer {
 .insight-item:hover { background: var(--surface-h); border-color: var(--border-m); }
 .insight-item.anti { border-left: 2px solid var(--c4); }
 .insight-item.anti::before {
-  content: '✕'; font-family: 'JetBrains Mono', monospace;
+  content: '✕'; font-family: 'Space Mono', monospace;
   font-size: 10px; color: var(--c4); margin-top: 2px; flex-shrink: 0;
 }
 .insight-item.tip { border-left: 2px solid var(--sk-accent); }
 .insight-item.tip::before {
-  content: '→'; font-family: 'JetBrains Mono', monospace;
+  content: '→'; font-family: 'Space Mono', monospace;
   font-size: 10px; color: var(--sk-accent); margin-top: 2px; flex-shrink: 0;
 }
 .h3-num {
-  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  font-family: 'Space Mono', monospace; font-size: 10px;
   color: var(--tx-4); margin-right: 6px;
 }
 
@@ -688,32 +901,21 @@ footer {
   pointer-events: auto;
 }
 .float-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.78);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(0,0,0,0.08);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 14px rgba(0,0,0,0.07);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--tx-4);
-  transition:
-    background 0.22s,
-    border-color 0.22s,
-    box-shadow 0.22s,
-    transform 0.28s cubic-bezier(0.22,1,0.36,1),
-    color 0.22s;
+  width: 38px; height: 38px; border-radius: 10px;
+  background: var(--float-bg);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--float-border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 4px 14px rgba(0,0,0,0.15);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  color: var(--tx-3);
+  transition: background 0.22s, border-color 0.22s, box-shadow 0.22s,
+              transform 0.28s cubic-bezier(0.22,1,0.36,1), color 0.22s;
 }
 .float-btn:hover {
-  background: rgba(255,255,255,0.96);
-  border-color: rgba(0,0,0,0.14);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.09), 0 8px 26px rgba(0,0,0,0.10);
-  transform: translateY(-2px);
-  color: var(--tx-1);
+  background: var(--float-bg-hover);
+  border-color: var(--float-border-hover);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15), 0 8px 26px rgba(0,0,0,0.12);
+  transform: translateY(-2px); color: var(--tx-1);
 }
 .float-btn:active {
   transform: translateY(0px);
@@ -735,9 +937,9 @@ footer {
   bottom: 36px;
   left: 50%;
   transform: translateX(-50%) translateY(6px);
-  background: var(--tx-hi);
-  color: #F1F1F5;
-  font-family: 'JetBrains Mono', monospace;
+  background: var(--toast-bg);
+  color: var(--toast-color);
+  font-family: 'Space Mono', monospace;
   font-size: 11px;
   letter-spacing: 0.08em;
   padding: 8px 18px;
@@ -757,9 +959,152 @@ footer {
   .float-nav { display: none; }
 }
 
+/* ════════════════════════════════════════
+   FLOATING TOC (LEFT SIDE)
+════════════════════════════════════════ */
+.toc-panel {
+  position: fixed;
+  left: max(12px, calc(50vw - 540px));
+  top: 50%;
+  transform: translateY(-50%);
+  width: 172px;
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s cubic-bezier(0.22,1,0.36,1);
+  border: none;
+  background: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.toc-panel.visible { opacity: 1; pointer-events: auto; }
+
+
+/* "目录" eyebrow */
+.toc-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--tx-4);
+  text-align: right;
+  padding-right: 20px;
+  margin-bottom: 14px;
+  opacity: 0.7;
+}
+
+.toc-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.toc-item { position: relative; }
+
+.toc-link {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 8px 22px 8px 0;
+  text-decoration: none;
+  cursor: pointer;
+}
+.toc-label {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 148px;
+  color: var(--tx-4);
+  transition: color 0.22s;
+}
+
+/* Ring dot — sits exactly on the rail */
+.toc-dot {
+  position: absolute;
+  right: -4px; top: 50%;
+  transform: translateY(-50%);
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-m);
+  background: var(--bg);
+  transition: border-color 0.22s, background 0.22s,
+              width 0.3s cubic-bezier(0.22,1,0.36,1),
+              height 0.3s cubic-bezier(0.22,1,0.36,1),
+              right 0.3s cubic-bezier(0.22,1,0.36,1);
+}
+/* Outer pulse ring on active */
+.toc-dot::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid var(--c-toc, var(--c1));
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.22,1,0.36,1);
+}
+
+.toc-item:hover .toc-label { color: var(--tx-1); }
+.toc-item:hover .toc-dot   { border-color: var(--tx-3); background: var(--surface-h); }
+
+.toc-item.active .toc-label {
+  color: var(--c-toc, var(--c1));
+  font-weight: 400;
+}
+.toc-item.active .toc-dot {
+  border-color: var(--c-toc, var(--c1));
+  background: var(--c-toc, var(--c1));
+  width: 9px; height: 9px; right: -5px;
+}
+.toc-item.active .toc-dot::after {
+  opacity: 0.3;
+  transform: scale(1);
+}
+
+@media (max-width: 1090px) { .toc-panel { display: none; } }
+
+/* ── Logo SVG theme tokens ── */
+.logo-planet    { fill:   var(--logo-planet); }
+.logo-ring-hi   { stroke: var(--logo-ring-hi); }
+.logo-ring-mask { stroke: var(--logo-ring-mask); }
+
+/* ── Theme Toggle Button ── */
+#theme-toggle {
+  width: 34px; height: 34px;
+  border-radius: 9px;
+  background: var(--float-bg);
+  border: 1px solid var(--float-border);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--tx-3);
+  flex-shrink: 0;
+  transition: background 0.22s, border-color 0.22s, color 0.22s,
+              transform 0.28s cubic-bezier(0.22,1,0.36,1);
+}
+#theme-toggle:hover {
+  background: var(--float-bg-hover);
+  border-color: var(--float-border-hover);
+  color: var(--tx-1);
+  transform: scale(1.08);
+}
+#theme-toggle svg { pointer-events: none; }
+.icon-sun  { display: none; }
+.icon-moon { display: block; }
+[data-theme="light"] .icon-sun  { display: block; }
+[data-theme="light"] .icon-moon { display: none; }
+
 </style>
 </head>
 <body>
+
+<!-- ════ FLOATING TOC (LEFT) ════ -->
+<nav class="toc-panel" id="toc-panel" aria-label="文章目录"></nav>
 
 <!-- ════ FLOATING SIDE NAV ════ -->
 <div class="float-nav" id="float-nav">
@@ -804,12 +1149,12 @@ footer {
       <!-- Logo mark: Saturn planet -->
       <svg class="logo-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g transform="rotate(-22, 18, 18)">
-          <path d="M 0,18 A 18,3.5 0 0,1 36,18" stroke="#07070E" stroke-width="2.6" stroke-linecap="round"/>
+          <path class="logo-ring-hi" d="M 0,18 A 18,3.5 0 0,1 36,18" stroke-width="2.6" stroke-linecap="round"/>
         </g>
-        <circle cx="18" cy="18" r="12" fill="#07070E"/>
+        <circle class="logo-planet" cx="18" cy="18" r="12"/>
         <g transform="rotate(-22, 18, 18)">
-          <path d="M 0,18 A 18,3.5 0 0,0 36,18" stroke="#F1F1F5" stroke-width="5.2" stroke-linecap="round"/>
-          <path d="M 0,18 A 18,3.5 0 0,0 36,18" stroke="#07070E" stroke-width="2.6" stroke-linecap="round"/>
+          <path class="logo-ring-mask" d="M 0,18 A 18,3.5 0 0,0 36,18" stroke-width="5.2" stroke-linecap="round"/>
+          <path class="logo-ring-hi" d="M 0,18 A 18,3.5 0 0,0 36,18" stroke-width="2.6" stroke-linecap="round"/>
         </g>
       </svg>
       <div class="logo-text">
@@ -820,6 +1165,15 @@ footer {
     <div class="nav-right">
       <span class="nav-tag" id="nav-tag">Thinking · Craft · Systems</span>
       <button id="nav-back" onclick="navigate('home')">← All Articles</button>
+      <button id="theme-toggle" onclick="toggleTheme()" title="切换主题">
+        <svg class="icon-moon" width="15" height="15" viewBox="0 0 15 15" fill="none">
+          <path d="M7.5 1.5A6 6 0 1 0 13 8.5a4.2 4.2 0 0 1-5.5-5.5 6 6 0 0 0 0-1.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+        </svg>
+        <svg class="icon-sun" width="15" height="15" viewBox="0 0 15 15" fill="none">
+          <circle cx="7.5" cy="7.5" r="2.5" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M7.5 1v1.5M7.5 12.5V14M14 7.5h-1.5M2.5 7.5H1M11.7 3.3l-1.1 1.1M4.4 10.6l-1.1 1.1M11.7 11.7l-1.1-1.1M4.4 4.4L3.3 3.3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+      </button>
     </div>
   </div>
 </nav>
@@ -837,7 +1191,7 @@ footer {
 
   <section class="articles-wrap">
     <div class="articles-head">
-      <span class="articles-head-label">All Articles — 05 Published</span>
+      <span class="articles-head-label">All Articles — 06 Published</span>
       <span class="articles-head-rule"></span>
     </div>
 
@@ -936,7 +1290,6 @@ footer {
           <span class="card-arrow">→</span>
         </div>
       </div>
-      <!-- Card 05 -->
       <div class="art-card ac1" data-tags="essay,culture" onclick="navigate('a07')">
         <div class="art-card-inner">
           <div class="card-num-row">
@@ -959,6 +1312,29 @@ footer {
           <span class="card-arrow">→</span>
         </div>
       </div>
+      <!-- Card 06 -->
+      <div class="art-card ac-violet" data-tags="product-thinking,implementation" onclick="navigate('a08')">
+        <div class="art-card-inner">
+          <div class="card-num-row">
+            <span class="card-num">06</span>
+            <span class="card-num-line"></span>
+            <span class="card-num-meta">Product · 软件开发</span>
+          </div>
+          <div class="card-tags">
+            <span class="tag tag-amber">Product Thinking</span>
+      <span class="tag tag-rose">Implementation</span>
+          </div>
+          <div class="card-title">我做了一只会陪你打字的狗</div>
+          <p class="card-excerpt">前段时间刷到 Bongo Cat。</p>
+        </div>
+        <div class="art-card-footer">
+          <div class="card-meta">
+            <span>2026 · Apr</span>
+            <span>软件开发</span>
+          </div>
+          <span class="card-arrow">→</span>
+        </div>
+      </div>
 
     </div>
   </section>
@@ -970,7 +1346,7 @@ footer {
         <p class="about-text">这是一份由AI主导生成的设计思考记录。每篇文章在内容构建与呈现设计上均由AI一体化生成，感谢Claude Code、Chatgpt、Trae的贡献与智慧。</p>
       </div>
       <div class="home-stats">
-        <div><div class="stat-num">05</div><div class="stat-label">Articles</div></div>
+        <div><div class="stat-num">06</div><div class="stat-label">Articles</div></div>
         <div><div class="stat-num">∞</div><div class="stat-label">In Progress</div></div>
       </div>
     </div>
@@ -1731,7 +2107,7 @@ git clone https://github.com/Duck-Claw/liushaonan-skill.git liu-shaonan-product-
       <span class="art-dot"></span>
       <span class="art-date">长文</span>
     </div>
-    <h1 class="art-title">苏轼：一个人的风雨与明月</h1>
+    <h1 class="art-title">苏轼：一个人的<br><em>风雨与明月</em></h1>
     <p class="art-lede">苏轼（1037—1101），字子瞻，号东坡居士。这个名字，中国人几乎无人不知。</p>
     <div class="art-tag-row">
       <span class="tag tag-violet">Culture</span>
@@ -1818,13 +2194,13 @@ git clone https://github.com/Duck-Claw/liushaonan-skill.git liu-shaonan-product-
 
       <header class="art-hero">
     <div class="art-hero-meta">
-      <span class="art-no">No.07</span>
+      <span class="art-no">No.05</span>
       <span class="art-dot"></span>
       <span class="art-date">April 2026</span>
       <span class="art-dot"></span>
       <span class="art-date">影像随笔</span>
     </div>
-    <h1 class="art-title">如果你知道结局，你还愿意开始吗？</h1>
+    <h1 class="art-title">如果你知道结局，<br><em>你还愿意开始吗？</em></h1>
     <p class="art-lede">——关于《你一生的故事》与电影《降临》</p>
     <div class="art-tag-row">
       <span class="tag tag-amber">Essay</span>
@@ -1898,6 +2274,153 @@ git clone https://github.com/Duck-Claw/liushaonan-skill.git liu-shaonan-product-
 </div><!-- /view-a07 -->
 
 
+
+<!-- ════════════════════════════════════════
+     VIEW: ARTICLE 08 — 我做了一只会陪你打字的狗
+════════════════════════════════════════ -->
+<div id="view-a08" class="view art-view" style="--accent-art:var(--c-motion)">
+
+  <header class="art-hero">
+    <div class="art-hero-meta">
+      <span class="art-no">No.06</span>
+      <span class="art-dot"></span>
+      <span class="art-date">April 2026</span>
+      <span class="art-dot"></span>
+      <span class="art-date">软件开发</span>
+    </div>
+    <h1 class="art-title">我做了一只<br><em>会陪你打字的狗</em></h1>
+    <p class="art-lede">前段时间刷到 Bongo Cat。</p>
+    <div class="art-tag-row">
+      <span class="tag tag-amber">Product Thinking</span>
+      <span class="tag tag-rose">Implementation</span>
+    </div>
+  </header>
+
+  <hr class="art-rule">
+
+  <article class="art-body">
+
+<p>前段时间刷到 <strong>Bongo Cat</strong>。</p>
+<p>就是那只很有名的小猫：你敲键盘，它就在桌子上拍来拍去。它不是效率工具，也不解决什么严肃问题，但你只要看一眼，就会懂它为什么让人喜欢。</p>
+<p>它把打字这件很日常的小事，变成了一个有人回应你的动作。</p>
+<p>看完之后，我脑子里一直有个念头没散：</p>
+<div class="pull-quote"><p>能不能做一只狗？<br>而且不是拍桌子，是比大拇指。</p></div>
+<p>于是花了几天时间，做了一个小东西，叫 <strong>Bongo Dog</strong>。</p>
+<div class="pull-quote"><p><strong>项目地址：</strong> <a href="https://github.com/Duck-Claw/bongo-dog" target="_blank">Duck-Claw / bongo-dog</a><br><strong>下载地址：</strong> <a href="https://github.com/Duck-Claw/bongo-dog/releases" target="_blank">Bongo Dog Releases</a></p></div>
+<h2>一只会给你反馈的小狗</h2>
+<p><strong>Bongo Dog</strong> 是一个桌面小挂件。</p>
+<p>它会悬浮在屏幕角落，透明背景，永远置顶。你打字的时候，它不会发出声音，也不会跳出来打扰你，只是安静地做一件事：</p>
+<ul><li>你按左手区的键，它左手大拇指弹起来；</li><li>你按右手区的键，它右手大拇指弹起来；</li><li>你连续快速打字，它两个拇指就会一直撑着；</li><li>等你停下来，它再慢慢收回去。</li></ul>
+<p>这件事非常小。</p>
+<p>但正因为它小，反而刚刚好。</p>
+<p>它不会把自己包装成“生产力工具”，也不会用一堆弹窗告诉你今天效率如何。它只是把你已经在做的动作，变成了一个可见的、可爱的反馈。</p>
+<p>打字不再只是键盘上的声音，而是屏幕角落里那只狗正在回应你。</p>
+<h2>为什么做成狗</h2>
+<p><strong>Bongo Cat</strong> 的魅力在于“同步”。</p>
+<p>你打字，它拍桌子。动作非常直接，像一个可爱的节拍器。</p>
+<p><strong>Bongo Dog</strong> 我更想做成“鼓励”。</p>
+<p>所以它不是拍桌子，而是比大拇指。</p>
+<p>这个差异很小，但情绪完全不一样。</p>
+<table>
+<thead><tr><th>动作</th><th>感觉</th></tr></thead>
+<tbody><tr><td>拍桌子</td><td>像是在陪你一起工作</td></tr>
+<tr><td>比大拇指</td><td>像是在说：可以，继续</td></tr></tbody>
+</table>
+<p>我不想让它太吵，也不想让它太像一个任务管理工具。</p>
+<p>它最好是那种你不需要的时候可以忽略，需要的时候又刚好在那里的东西。</p>
+<p>所以它没有复杂菜单，没有成长系统，没有任务奖励。</p>
+<p>它只是：</p>
+<div class="pull-quote"><p>一只狗。<br>一只会因为你打字而给你点赞的狗。</p></div>
+<h2>它意外有点上瘾</h2>
+<p>我一开始做它，真的只是觉得好玩。</p>
+<p>但用了一段时间之后，发现它有一种很奇怪的陪伴感。</p>
+<p>每天打开电脑，它就在那里。</p>
+<p>你写东西，它比大拇指。<br>你改代码，它也比大拇指。<br>你在文档里删删改改，它还是一副”干得不错”的样子。</p>
+<p>这不是那种强情绪的陪伴，更像桌面上放了一个小摆件。</p>
+<p>平时你不会一直盯着它看，但余光扫到的时候，会觉得电脑没那么冷。</p>
+<p>后来我又加了一个小功能：<strong>打字统计</strong>。</p>
+<p>点击左下角的 <code>🐾</code>，会弹出一个小浮层，显示最近 7 天每天打了多少键。今天的数据会实时累计，关掉重开也不会丢；到了第二天凌晨，它会自动归零，开始新的一天。</p>
+<p>这个功能比我想象中更有意思。</p>
+<p>因为：</p>
+<div class=”pull-quote”><p>”我今天好像写了很多东西”是一种感觉。<br>但”今天敲了 3000 多下键盘”是一个事实。</p></div>
+<p>周末少一截，工作日多一截，某天突然爆高，大概率就是那天真的在赶东西。</p>
+<p>它不评价你，也不提醒你，只是把你和键盘相处过的时间，轻轻记录下来。</p>
+<p>数据本身没有压力。</p>
+<p>但它会让你意识到：原来今天确实做了一些事情。</p>
+<h2>怎么使用</h2>
+<p>现在已经上传了 Release，可以直接下载使用。</p>
+<div class="pull-quote"><p><strong>下载入口：</strong> <a href="https://github.com/Duck-Claw/bongo-dog/releases" target="_blank">Bongo Dog Releases</a></p></div>
+<p>进入 Release 页面后，下载对应系统的压缩包即可。</p>
+<h3>macOS</h3>
+<p>下载 macOS 版本的 <code>.zip</code> 文件，解压之后，把 <code>Bongo Dog.app</code> 拖进：</p>
+<pre><code>应用程序</code></pre>
+<p>第一次打开时，macOS 可能会拦截。可以到这里允许打开：</p>
+<pre><code>系统设置 → 隐私与安全性 → 仍要打开</code></pre>
+<p>打开之后，它会提示你开启辅助功能权限：</p>
+<pre><code>系统设置 → 隐私与安全性 → 辅助功能 → 开启 Bongo Dog</code></pre>
+<p>这个权限是为了让它能在全局监听键盘。</p>
+<p>如果不开，也不是完全不能用，只是只有你点击到小狗窗口之后，它才会响应输入。</p>
+<h3>Windows</h3>
+<p>下载 Windows 版本的 <code>.zip</code> 文件，解压之后，双击运行：</p>
+<pre><code>Bongo Dog.exe</code></pre>
+<p>因为现在还没有签名证书，Windows SmartScreen 可能会弹出警告。可以点击：</p>
+<pre><code>更多信息 → 仍要运行</code></pre>
+<p>Windows 不需要额外权限，全局键盘监听可以直接工作。</p>
+<h2>使用方式</h2>
+<p>Bongo Dog 的操作很简单：</p>
+<table>
+<thead><tr><th>操作</th><th>说明</th></tr></thead>
+<tbody><tr><td>拖动小狗</td><td>移动窗口位置</td></tr>
+<tr><td>点击右上角小点</td><td>退出程序</td></tr>
+<tr><td>点击左下角 <code>🐾</code></td><td>查看最近 7 天打字历史</td></tr>
+<tr><td>点击其他区域</td><td>关闭历史浮层</td></tr></tbody>
+</table>
+<p>它不需要登录，也不需要配置账号。</p>
+<p>打开之后，把它放在屏幕角落就行。</p>
+<h2>技术上怎么做的</h2>
+<p><strong>Bongo Dog</strong> 是用 <strong>Electron</strong> 写的。</p>
+<p>窗口是：</p>
+<ul><li>透明的；</li><li>无边框的；</li><li>始终置顶的；</li><li>可以拖动的；</li><li>不抢屏幕注意力的。</li></ul>
+<p>所以它可以像贴纸一样放在桌面任意位置。</p>
+<p>小狗本体主要用 <strong>CSS</strong> 绘制，没有依赖复杂素材，体积也比较轻。</p>
+<p>真正麻烦的地方，是 <strong>全局键盘监听</strong>。</p>
+<p>在 macOS 上，应用想监听全局键盘事件，必须经过系统的无障碍权限，也就是 macOS 的 <strong>TCC 权限机制</strong>。这个地方踩了不少坑。</p>
+<p>最后的解决方案是写了一个 C 程序，用系统原生的 <code>CGEventTap</code> 去监听键盘事件，再通过 <code>stdout</code> 把键码传给 Electron 主进程。</p>
+<p>这个思路有点像 <strong>Karabiner-Elements</strong>：</p>
+<div class="pull-quote"><p>底层用更接近系统的方式拿事件，<br>上层再负责界面和动画。</p></div>
+<p>Windows 上相对简单一些，直接用 <code>uiohook-napi</code> 做全局输入监听，不需要额外授权。</p>
+<p>打字历史则存在 <code>localStorage</code> 里。</p>
+<p>没有数据库，也不会往电脑里乱写一堆文件。它需要记录的东西很少：</p>
+<div class="pull-quote"><p>每天敲了多少键，仅此而已。</p></div>
+<h2>代码也开源了</h2>
+<p>Bongo Dog 已经开源在 GitHub，使用 <strong>MIT License</strong>。</p>
+<div class="pull-quote"><p><strong>GitHub 仓库：</strong> <a href="https://github.com/Duck-Claw/bongo-dog" target="_blank">Duck-Claw / bongo-dog</a></p></div>
+<p>如果你只是想用它，去 <a href="https://github.com/Duck-Claw/bongo-dog/releases" target="_blank">Releases</a> 下载就行。</p>
+<p>如果你想研究它是怎么实现的，或者想改成别的小动物，也可以直接 clone 下来自己折腾。</p>
+<pre><code>git clone https://github.com/Duck-Claw/bongo-dog.git
+cd bongo-dog
+npm install</code></pre>
+<p>macOS 需要先编译键盘监听程序：</p>
+<pre><code>clang -O2 -o key-monitor key-monitor.c -framework ApplicationServices
+npm start</code></pre>
+<p>Windows 可以直接运行：</p>
+<pre><code>npm start</code></pre>
+<h2>最后</h2>
+<p><strong>Bongo Dog</strong> 不是一个大软件。</p>
+<p>它没有复杂功能，也没有宏大的目标。它只是我从 <strong>Bongo Cat</strong> 得到一点灵感之后，做出来的一只小狗。</p>
+<p>但我还挺喜欢这种小东西。</p>
+<p>很多时候，软件不一定非要“提升效率”才有价值。</p>
+<p>让桌面多一点生命感，让工作的时候少一点冰冷，也是一种价值。</p>
+<p>如果你也是那种需要一点东西陪着，才能更安心写字、改代码、做文档的人，可以试试。</p>
+<p>把它放在屏幕右下角。</p>
+<p>不碍事。</p>
+<p>但它一直在那儿。</p>
+
+  </article>
+
+</div><!-- /view-a08 -->
+
+
 <!-- ════ FOOTER (shared) ════ -->
 <footer>
   <div class="footer-inner">
@@ -1914,7 +2437,7 @@ git clone https://github.com/Duck-Claw/liushaonan-skill.git liu-shaonan-product-
       </svg>
       <span class="footer-name">David Design Thinking</span>
     </div>
-    <div class="footer-right">© 2026 · Personal Journal<br><span style="opacity:.5">05 Articles Published</span></div>
+    <div class="footer-right">© 2026 · Personal Journal<br><span style="opacity:.5">06 Articles Published</span></div>
   </div>
 </footer>
 
@@ -1958,15 +2481,16 @@ function navigate(viewId, updateHash = true) {
       navTag.style.display = 'block';
       document.getElementById('progress-bar').style.display = 'none';
       floatNav.classList.remove('visible');
+      hideTOC();
     } else {
       backBtn.style.display = 'block';
       navTag.style.display = 'none';
       document.getElementById('progress-bar').style.display = 'block';
       document.getElementById('progress-bar').style.width = '0%';
-      /* accent color for progress bar */
-      var accentMap = { a01: 'var(--c1)', a02: 'var(--c2)', a03: 'var(--c3)', a04: 'var(--c4)', a05: 'var(--c1)', a06: 'var(--c2)', a07: 'var(--c3)' };
+      var accentMap = { a01: 'var(--c1)', a02: 'var(--c2)', a03: 'var(--c3)', a04: 'var(--c4)', a05: 'var(--c1)', a06: 'var(--c2)', a07: 'var(--c3)', a08: 'var(--c-motion)' };
       document.getElementById('progress-bar').style.background = accentMap[viewId] || 'var(--c1)';
       floatNav.classList.add('visible');
+      buildTOC(viewId);
     }
 
     /* Reset skill tab on re-entry */
@@ -1978,18 +2502,38 @@ function navigate(viewId, updateHash = true) {
   }, 310);
 }
 
-/* Hash routing on load */
+/* Hash routing on load — direct activation, no animation */
 (function () {
+  var VALID = ['a01', 'a03', 'a02', 'a06', 'a07', 'a08'];
   var hash = window.location.hash.replace('#', '');
-  if (hash && ['a01', 'a03', 'a02', 'a06', 'a07'].includes(hash)) {
-    navigate(hash, false);
-  }
+  if (!hash || !VALID.includes(hash)) return;
+
+  document.getElementById('view-home').classList.remove('active');
+  var toEl = document.getElementById('view-' + hash);
+  if (!toEl) return;
+  toEl.classList.add('active');
+  current = hash;
+
+  var backBtn  = document.getElementById('nav-back');
+  var navTag   = document.getElementById('nav-tag');
+  var floatNav = document.getElementById('float-nav');
+  backBtn.style.display  = 'block';
+  navTag.style.display   = 'none';
+  var pb = document.getElementById('progress-bar');
+  pb.style.display = 'block';
+  pb.style.width   = '0%';
+  var accentMap = { a01: 'var(--c1)', a02: 'var(--c2)', a03: 'var(--c3)', a04: 'var(--c4)', a05: 'var(--c1)', a06: 'var(--c2)', a07: 'var(--c3)', a08: 'var(--c-motion)' };
+  pb.style.background = accentMap[hash] || 'var(--c1)';
+  floatNav.classList.add('visible');
+
+  if (hash === 'a01') switchSkill('ux', false);
+  buildTOC(hash);
 })();
 
 /* Handle browser back/forward */
 window.addEventListener('hashchange', function () {
   var hash = window.location.hash.replace('#', '');
-  var targetView = hash && ['a01', 'a03', 'a02', 'a06', 'a07'].includes(hash) ? hash : 'home';
+  var targetView = hash && ['a01', 'a03', 'a02', 'a06', 'a07', 'a08'].includes(hash) ? hash : 'home';
   navigate(targetView, false);
 });
 
@@ -2031,6 +2575,115 @@ function shareURL() {
   }
 }
 
+/* ════════════════════════════════════════
+   FLOATING TOC
+════════════════════════════════════════ */
+var tocObserver = null;
+var tocAccentMap = {
+  a01: 'var(--c1)', a02: 'var(--c2)', a03: 'var(--c3)',
+  a06: 'var(--c4)', a07: 'var(--c1)', a08: 'var(--c-motion)'
+};
+
+function buildTOC(viewId) {
+  var panel = document.getElementById('toc-panel');
+  if (tocObserver) { tocObserver.disconnect(); tocObserver = null; }
+  panel.innerHTML = '';
+
+  /* a01: headings from the currently active skill section */
+  if (viewId === 'a01') {
+    buildTOCForSkill(panel);
+    return;
+  }
+
+  /* Regular articles: scan h2 in .art-body */
+  var view = document.getElementById('view-' + viewId);
+  if (!view) return;
+  var headings = view.querySelectorAll('.art-body h2');
+  if (!headings.length) { panel.classList.remove('visible'); return; }
+
+  panel.style.setProperty('--c-toc', tocAccentMap[viewId] || 'var(--c1)');
+  renderTOCList(panel, headings, true);
+}
+
+function buildTOCForSkill(panel) {
+  if (tocObserver) { tocObserver.disconnect(); tocObserver = null; }
+  panel.innerHTML = '';
+  panel.style.setProperty('--c-toc', 'var(--c1)');
+
+  var activeSection = document.querySelector('.skill-section.active');
+  if (!activeSection) return;
+  var headings = activeSection.querySelectorAll('.skill-body h2');
+  if (!headings.length) { panel.classList.remove('visible'); return; }
+
+  renderTOCList(panel, headings, true);
+}
+
+function renderTOCList(panel, headings, activateFirst) {
+  /* eyebrow */
+  var eyebrow = document.createElement('div');
+  eyebrow.className = 'toc-eyebrow'; eyebrow.textContent = '目录';
+  panel.appendChild(eyebrow);
+
+  var ul = document.createElement('ul');
+  ul.className = 'toc-list';
+
+  headings.forEach(function(h2, i) {
+    if (!h2.id) h2.id = 'toc-h-' + i + '-' + Date.now();
+    var id = h2.id;
+    var li = document.createElement('li');
+    li.className = 'toc-item'; li.dataset.target = id;
+    var a = document.createElement('a');
+    a.className = 'toc-link'; a.href = '#' + id;
+    a.onclick = function(e) {
+      e.preventDefault();
+      var el = document.getElementById(id);
+      if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+    };
+    var label = document.createElement('span');
+    label.className = 'toc-label';
+    label.textContent = h2.textContent.replace(/^[一二三四五六七八九十]+[、.．]\s*/, '');
+    var dot = document.createElement('span'); dot.className = 'toc-dot';
+    a.appendChild(label); li.appendChild(a); li.appendChild(dot); ul.appendChild(li);
+  });
+
+  panel.appendChild(ul);
+  panel.classList.add('visible');
+
+  if (activateFirst && ul.firstChild) ul.firstChild.classList.add('active');
+
+  /* Scroll spy */
+  tocObserver = new IntersectionObserver(function(entries) {
+    var best = null;
+    entries.forEach(function(e) { if (e.isIntersecting) best = e.target.id; });
+    if (!best) return;
+    document.querySelectorAll('.toc-item[data-target]').forEach(function(item) {
+      item.classList.toggle('active', item.dataset.target === best);
+    });
+    var activeItem = panel.querySelector('.toc-item.active');
+    if (activeItem) activeItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+
+  headings.forEach(function(h2) { tocObserver.observe(h2); });
+}
+
+function hideTOC() {
+  var panel = document.getElementById('toc-panel');
+  panel.classList.remove('visible');
+  if (tocObserver) { tocObserver.disconnect(); tocObserver = null; }
+  setTimeout(function() { panel.innerHTML = ''; }, 420);
+}
+
+/* ── Theme Toggle ── */
+function toggleTheme() {
+  var html = document.documentElement;
+  html.classList.add('theme-switching');
+  var next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+  if (next === 'dark') html.removeAttribute('data-theme');
+  else html.setAttribute('data-theme', 'light');
+  localStorage.setItem('v70-theme', next);
+  setTimeout(function () { html.classList.remove('theme-switching'); }, 420);
+}
+
 var _toastTimer = null;
 function showCopyToast(toast) {
   if (_toastTimer) clearTimeout(_toastTimer);
@@ -2049,6 +2702,11 @@ function switchSkill(skill, shouldScroll = true) {
   document.querySelectorAll('.skill-tab').forEach(function (t) {
     t.classList.toggle('active', t.dataset.skill === skill);
   });
+  /* Rebuild TOC only when currently viewing a01 */
+  if (current === 'a01') {
+    var panel = document.getElementById('toc-panel');
+    if (panel) buildTOCForSkill(panel);
+  }
   /* Scroll skill section into view gently */
   if (shouldScroll) {
     var bar = document.querySelector('.skill-tabs-bar');

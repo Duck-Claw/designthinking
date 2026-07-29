@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#101820"/>
+      <stop offset="1" stop-color="#172632"/>
+    </linearGradient>
+    <radialGradient id="scan">
+      <stop stop-color="#71c9d4" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#71c9d4" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <g stroke="#83cbd4" stroke-opacity=".08">
+    <path d="M0 90h1600M0 180h1600M0 270h1600M0 360h1600M0 450h1600M0 540h1600M0 630h1600M0 720h1600M0 810h1600"/>
+    <path d="M100 0v900M200 0v900M300 0v900M400 0v900M500 0v900M600 0v900M700 0v900M800 0v900M900 0v900M1000 0v900M1100 0v900M1200 0v900M1300 0v900M1400 0v900M1500 0v900"/>
+  </g>
+  <circle cx="1190" cy="430" r="330" fill="url(#scan)"/>
+  <g transform="translate(1190 430)" fill="none" stroke="#83cbd4">
+    <circle r="210" opacity=".24"/><circle r="140" opacity=".3"/><circle r="68" opacity=".52"/>
+    <path d="M-270 0h540M0-270v540" opacity=".3"/>
+    <path d="M-18 0h36M0-18v36" stroke-width="4"/>
+  </g>
+  <g transform="translate(86 100)" font-family="Arial,sans-serif">
+    <text fill="#83cbd4" font-size="20" letter-spacing="8">FPS + MOBA · CORE EXPERIENCE</text>
+    <text y="110" fill="#edf4f4" font-size="78" font-weight="700">12 dimensions.</text>
+    <text y="196" fill="#edf4f4" font-size="78" font-weight="700">One connected lens.</text>
+    <text y="252" fill="#7f9ca4" font-size="18" letter-spacing="3">PLAYER · FEEL · GROWTH · SOCIAL · DATA</text>
+    <g transform="translate(0 360)">
+      <path d="M0 48h170l74-84h168l74 84h180" fill="none" stroke="#83cbd4" stroke-width="3" stroke-dasharray="10 10" opacity=".65"/>
+      <g fill="#101820" stroke="#83cbd4" stroke-width="3">
+        <circle cx="0" cy="48" r="16"/><circle cx="244" cy="-36" r="16"/><circle cx="486" cy="48" r="16"/><circle cx="666" cy="48" r="16"/>
+      </g>
+      <g fill="#9db5bb" font-size="13" letter-spacing="2">
+        <text y="92">WHO PLAYS</text><text x="204" y="-74">WHAT THEY FEEL</text><text x="448" y="92">WHY THEY STAY</text><text x="624" y="92">HOW TO ITERATE</text>
+      </g>
+    </g>
+  </g>
+  <g transform="translate(1190 430)" fill="#83cbd4" font-family="Arial,sans-serif" font-size="18" font-weight="700">
+    <text x="-14" y="-226">A</text><text x="168" y="-124">B</text><text x="178" y="146">C</text>
+    <text x="-18" y="238">D</text><text x="-205" y="142">E</text>
+  </g>
+  <rect x="92" y="750" width="328" height="42" rx="21" fill="#83cbd4" fill-opacity=".08" stroke="#83cbd4" stroke-opacity=".55"/>
+  <text x="256" y="778" text-anchor="middle" fill="#83cbd4" font-family="Arial,sans-serif" font-size="14" letter-spacing="4">12 DIMENSIONS · 5 LAYERS</text>
+</svg>

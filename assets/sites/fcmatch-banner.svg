@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#11131a"/>
+      <stop offset="1" stop-color="#1b1d25"/>
+    </linearGradient>
+    <linearGradient id="lime" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#c8ff4a"/>
+      <stop offset="1" stop-color="#7efc8d"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="20" stdDeviation="26" flood-color="#000" flood-opacity=".55"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <g fill="none" stroke="#fff" stroke-opacity=".055">
+    <path d="M80 0l460 900M250 0l460 900M420 0l460 900M590 0l460 900M760 0l460 900M930 0l460 900"/>
+  </g>
+  <g transform="translate(92 92)" font-family="Arial,sans-serif">
+    <text fill="#baff4a" font-size="22" letter-spacing="8">PITCH · MATCH CENTER</text>
+    <text y="112" fill="#fff" font-size="90" font-weight="800">Every match.</text>
+    <text y="202" fill="#fff" font-size="90" font-weight="800">One clean view.</text>
+    <text y="264" fill="#9095a3" font-size="20" letter-spacing="3">LIVE FIXTURES · SCORES · TABLES</text>
+  </g>
+  <g transform="translate(770 102)" filter="url(#shadow)">
+    <rect width="710" height="620" rx="32" fill="#181a22" stroke="#fff" stroke-opacity=".12"/>
+    <rect x="28" y="26" width="654" height="86" rx="20" fill="#22252e"/>
+    <circle cx="68" cy="69" r="20" fill="url(#lime)"/>
+    <path d="M58 69h20M68 59v20" stroke="#14161c" stroke-width="4"/>
+    <text x="106" y="62" fill="#fff" font-family="Arial,sans-serif" font-size="16" font-weight="700">PREMIER LEAGUE</text>
+    <text x="106" y="84" fill="#858a99" font-family="Arial,sans-serif" font-size="12" letter-spacing="2">MATCHWEEK 01</text>
+    <text x="596" y="76" fill="#baff4a" font-family="Arial,sans-serif" font-size="16" font-weight="700">LIVE</text>
+    <g transform="translate(28 138)" font-family="Arial,sans-serif">
+      <rect width="654" height="126" rx="20" fill="#22252e"/>
+      <circle cx="58" cy="63" r="30" fill="#e7444c"/><text x="48" y="71" fill="#fff" font-size="24" font-weight="700">A</text>
+      <text x="108" y="55" fill="#fff" font-size="18" font-weight="700">ARSENAL</text>
+      <text x="108" y="80" fill="#858a99" font-size="12">EMIRATES STADIUM</text>
+      <text x="530" y="55" fill="#fff" font-size="18" font-weight="700">03:00</text>
+      <text x="530" y="80" fill="#baff4a" font-size="12">AUG 22</text>
+      <rect y="142" width="654" height="126" rx="20" fill="#22252e"/>
+      <circle cx="58" cy="205" r="30" fill="#5aa4f7"/><text x="48" y="213" fill="#fff" font-size="24" font-weight="700">M</text>
+      <text x="108" y="197" fill="#fff" font-size="18" font-weight="700">MAN CITY</text>
+      <text x="108" y="222" fill="#858a99" font-size="12">ETIHAD STADIUM</text>
+      <text x="530" y="197" fill="#fff" font-size="18" font-weight="700">23:30</text>
+      <text x="530" y="222" fill="#baff4a" font-size="12">AUG 23</text>
+      <rect y="284" width="654" height="126" rx="20" fill="#22252e"/>
+      <circle cx="58" cy="347" r="30" fill="#f2c950"/><text x="48" y="355" fill="#15171c" font-size="24" font-weight="700">L</text>
+      <text x="108" y="339" fill="#fff" font-size="18" font-weight="700">LIVERPOOL</text>
+      <text x="108" y="364" fill="#858a99" font-size="12">ANFIELD</text>
+      <text x="530" y="339" fill="#fff" font-size="18" font-weight="700">19:30</text>
+      <text x="530" y="364" fill="#baff4a" font-size="12">AUG 29</text>
+    </g>
+  </g>
+  <g transform="translate(108 612)">
+    <rect width="460" height="188" rx="20" fill="none" stroke="#baff4a" stroke-opacity=".35" stroke-width="2"/>
+    <path d="M230 0v188M0 94h460M180 94a50 50 0 1 0 100 0 50 50 0 1 0-100 0M0 45h70v98H0M390 45h70v98h-70" fill="none" stroke="#baff4a" stroke-opacity=".35" stroke-width="2"/>
+  </g>
+</svg>

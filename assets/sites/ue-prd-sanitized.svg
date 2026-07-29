@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">脱敏的信息架构图示例</title>
+  <desc id="desc">一个通用产品系统的信息架构示例，展示入口、页面、任务、资源、状态和外部依赖。</desc>
+  <defs>
+    <pattern id="dotGrid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#dfe4ea" stroke-width="1" opacity="0.55"/>
+      <circle cx="4" cy="4" r="1" fill="#cfd7df" opacity="0.55"/>
+    </pattern>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#1c2533" flood-opacity="0.12"/>
+    </filter>
+    <style>
+      .title { font: 800 42px "PingFang SC", "Microsoft YaHei", sans-serif; fill: #111827; letter-spacing: 1px; }
+      .root { font: 800 31px "PingFang SC", "Microsoft YaHei", sans-serif; fill: #fff; }
+      .card-title { font: 800 25px "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .item { font: 500 18px "PingFang SC", "Microsoft YaHei", sans-serif; fill: #263241; }
+      .risk-title { font: 800 27px "PingFang SC", "Microsoft YaHei", sans-serif; fill: #111827; }
+      .risk-text { font: 500 20px "PingFang SC", "Microsoft YaHei", sans-serif; fill: #253044; }
+      .badge { font: 800 18px "PingFang SC", "Microsoft YaHei", sans-serif; fill: #fff; }
+      .legend { font: 600 17px "PingFang SC", "Microsoft YaHei", sans-serif; fill: #718096; }
+      .line { stroke: #6f7d8c; stroke-width: 4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1000" fill="#f7f8f5"/>
+  <rect x="54" y="52" width="1492" height="896" rx="26" fill="#fff" filter="url(#softShadow)"/>
+  <rect x="78" y="76" width="1444" height="848" rx="18" fill="url(#dotGrid)" opacity="0.88"/>
+
+  <text x="800" y="150" class="title" text-anchor="middle">通用系统信息架构</text>
+  <rect x="606" y="185" width="388" height="76" rx="8" fill="#111827"/>
+  <text x="800" y="234" class="root" text-anchor="middle">核心系统</text>
+
+  <path class="line" d="M800 261 V313"/>
+  <path class="line" d="M157 313 H1443"/>
+  <path class="line" d="M197 313 V360"/>
+  <path class="line" d="M437 313 V360"/>
+  <path class="line" d="M677 313 V360"/>
+  <path class="line" d="M917 313 V360"/>
+  <path class="line" d="M1157 313 V360"/>
+  <path class="line" d="M1397 313 V360"/>
+
+  <g transform="translate(102 360)">
+    <rect width="190" height="230" rx="8" fill="#eaf3ff" stroke="#2563eb" stroke-width="4"/>
+    <text x="22" y="42" class="card-title" fill="#1e40af">入口与导航</text>
+    <text x="22" y="82" class="item">主入口/活动入口</text>
+    <text x="22" y="118" class="item">入口显隐条件</text>
+    <text x="22" y="154" class="item">新手可见路径</text>
+    <text x="22" y="190" class="item">返回与退出</text>
+  </g>
+
+  <g transform="translate(342 360)">
+    <rect width="190" height="230" rx="8" fill="#eafaf0" stroke="#16a34a" stroke-width="4"/>
+    <text x="22" y="42" class="card-title" fill="#166534">页面结构</text>
+    <rect x="132" y="22" width="42" height="28" rx="13" fill="#e32929"/>
+    <text x="153" y="42" class="badge" text-anchor="middle">P0</text>
+    <text x="22" y="82" class="item">首页/列表页</text>
+    <text x="22" y="118" class="item">详情页/弹窗</text>
+    <text x="22" y="154" class="item">二级 Tab/筛选</text>
+    <text x="22" y="190" class="item">空态与满态</text>
+  </g>
+
+  <g transform="translate(582 360)">
+    <rect width="190" height="230" rx="8" fill="#fff7df" stroke="#f59e0b" stroke-width="4"/>
+    <text x="22" y="42" class="card-title" fill="#9a4b0b">任务流程</text>
+    <text x="22" y="82" class="item">领取/提交</text>
+    <text x="22" y="118" class="item">进行中状态</text>
+    <text x="22" y="154" class="item">完成反馈</text>
+    <text x="22" y="190" class="item">失败/重试</text>
+  </g>
+
+  <g transform="translate(822 360)">
+    <rect width="190" height="230" rx="8" fill="#fff1f2" stroke="#f43f5e" stroke-width="4"/>
+    <text x="22" y="42" class="card-title" fill="#be123c">资源与奖励</text>
+    <rect x="132" y="22" width="42" height="28" rx="13" fill="#e32929"/>
+    <text x="153" y="42" class="badge" text-anchor="middle">P0</text>
+    <text x="22" y="82" class="item">获得/消耗</text>
+    <text x="22" y="118" class="item">不足提示</text>
+    <text x="22" y="154" class="item">奖励预览</text>
+    <text x="22" y="190" class="item">到账反馈</text>
+  </g>
+
+  <g transform="translate(1062 360)">
+    <rect width="190" height="230" rx="8" fill="#f3efff" stroke="#7c3aed" stroke-width="4"/>
+    <text x="22" y="42" class="card-title" fill="#5b21b6">状态反馈</text>
+    <text x="22" y="82" class="item">成功/失败</text>
+    <text x="22" y="118" class="item">冷却/锁定</text>
+    <text x="22" y="154" class="item">确认/撤销</text>
+    <text x="22" y="190" class="item">跨日刷新</text>
+  </g>
+
+  <g transform="translate(1302 360)">
+    <rect width="190" height="230" rx="8" fill="#ecfeff" stroke="#0891b2" stroke-width="4"/>
+    <text x="22" y="42" class="card-title" fill="#155e75">外部依赖</text>
+    <text x="22" y="82" class="item">背包/商城</text>
+    <text x="22" y="118" class="item">邮件/消息</text>
+    <text x="22" y="154" class="item">排行榜/好友</text>
+    <text x="22" y="190" class="item">配置表/埋点</text>
+  </g>
+
+  <rect x="184" y="660" width="1232" height="168" rx="10" fill="#fff" stroke="#cbd5e1" stroke-width="3"/>
+  <text x="220" y="715" class="risk-title">UE 高风险节点</text>
+  <text x="220" y="762" class="risk-text">P0：入口分流、关键页面结构、资源变化、失败反馈、跨系统跳转需要优先确认。</text>
+  <text x="220" y="805" class="risk-text">P1：空态文案、状态刷新、返回路径、动效反馈、引导时机影响实际游玩感受。</text>
+
+  <rect x="220" y="846" width="248" height="46" rx="8" fill="#fff0f0" stroke="#ef4444" stroke-width="3"/>
+  <text x="344" y="876" class="item" text-anchor="middle" fill="#b91c1c">P0 = 阻塞 UE 结构</text>
+  <rect x="506" y="846" width="270" height="46" rx="8" fill="#f8fafc" stroke="#64748b" stroke-width="3" stroke-dasharray="6 6"/>
+  <text x="641" y="876" class="item" text-anchor="middle">虚线 = 状态/异常节点</text>
+  <rect x="814" y="846" width="292" height="46" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="3"/>
+  <text x="960" y="876" class="item" text-anchor="middle" fill="#075985">蓝色 = 外部系统依赖</text>
+
+  <text x="800" y="934" class="legend" text-anchor="middle">脱敏示例：仅表达通用模块关系；实际内容由 PRD 原文生成。</text>
+</svg>

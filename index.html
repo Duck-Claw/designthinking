@@ -8,7 +8,7 @@
 <script>if(localStorage.getItem('v70-theme')!=='dark')document.documentElement.setAttribute('data-theme','light');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500;600;700&family=Noto+Serif+SC:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 
 /* ════════════════════════════════════════
@@ -369,12 +369,17 @@ footer {
 .tag-violet{ color: var(--tag-violet-c); border-color: var(--tag-violet-b); background: var(--tag-violet-bg); }
 
 .card-title {
-  font-family: 'Noto Serif SC', serif; font-weight: 500;
-  font-size: 15.5px; color: var(--tx-1); letter-spacing: 0;
-  line-height: 1.5; margin-bottom: 8px;
-  transition: color 0.25s;
+  font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-weight: 700; font-size: 17px;
+  color: var(--tx-hi); letter-spacing: -0.025em;
+  line-height: 1.38; margin-bottom: 10px;
+  text-wrap: balance;
+  transition: color 0.25s, transform 0.38s cubic-bezier(0.22,1,0.36,1);
 }
-.art-card:hover .card-title { color: var(--tx-hi); }
+.art-card:hover .card-title {
+  color: color-mix(in srgb, var(--accent) 22%, var(--tx-hi));
+  transform: translateX(2px);
+}
 .card-excerpt {
   font-size: 13px; color: var(--tx-2); line-height: 1.8; margin-bottom: 0;
 }
@@ -408,7 +413,10 @@ footer {
 .art-card.featured .card-num { font-size: 44px; }
 .art-card.featured .card-num-line { display: block; }
 .art-card.featured .card-num-meta { align-self: flex-end; margin-bottom: 4px; }
-.art-card.featured .card-title { font-size: 22px; line-height: 1.25; margin-bottom: 12px; }
+.art-card.featured .card-title {
+  font-size: 25px; line-height: 1.22; letter-spacing: -0.035em;
+  margin-bottom: 14px;
+}
 .art-card.featured .card-excerpt { font-size: 14px; line-height: 1.8; }
 .art-card.featured .art-card-footer { padding: 14px 36px 20px; }
 
@@ -420,7 +428,7 @@ footer {
 .art-card:not(.featured) .card-tags { margin-bottom: 10px; }
 .art-card:not(.featured) .card-tags .tag:nth-child(n+3) { display: none; }
 .art-card:not(.featured) .card-title {
-  font-size: 15px; line-height: 1.4; margin-bottom: 8px;
+  font-size: 16.5px; line-height: 1.36; margin-bottom: 10px;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
 .art-card:not(.featured) .card-excerpt {
@@ -429,6 +437,211 @@ footer {
 }
 .art-card:not(.featured) .art-card-footer { padding: 10px 22px 14px; }
 .art-card:not(.featured):hover { transform: translateY(-7px) rotateX(0.8deg); }
+
+/* ── Website Banners ── */
+.sites-wrap {
+  max-width: var(--max-w); margin: 0 auto; padding: 0 36px 110px;
+}
+.sites-divider {
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  gap: 16px; margin-bottom: 48px;
+}
+.sites-divider-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-m));
+}
+.sites-divider-line:last-child {
+  background: linear-gradient(90deg, var(--border-m), transparent);
+}
+.sites-divider-mark {
+  width: 7px; height: 7px; border: 1px solid var(--tx-4);
+  border-radius: 50%; position: relative; opacity: .65;
+}
+.sites-divider-mark::after {
+  content: ''; position: absolute; width: 15px; height: 5px;
+  border: 1px solid var(--tx-4); border-radius: 50%;
+  left: 50%; top: 50%; transform: translate(-50%,-50%) rotate(-22deg);
+}
+.sites-intro {
+  display: grid; grid-template-columns: 1fr minmax(240px, 340px);
+  gap: 48px; align-items: end; margin-bottom: 28px;
+}
+.sites-kicker {
+  font-family: 'Space Mono', monospace; font-size: 9.5px;
+  color: var(--c1); letter-spacing: .16em; text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.sites-title {
+  font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 56px);
+  font-weight: 700; line-height: .95; letter-spacing: -.025em; color: var(--tx-hi);
+}
+.sites-title em { color: var(--c1); font-style: italic; font-weight: 400; }
+.sites-note {
+  color: var(--tx-3); font-size: 13px; line-height: 1.8;
+  padding-bottom: 3px;
+}
+.site-grid {
+  display: grid; grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 16px;
+}
+.site-groups { display: grid; gap: 54px; }
+.site-group { min-width: 0; }
+.site-group-head {
+  display: flex; align-items: center; gap: 14px; margin: 0 0 16px;
+}
+.site-group-no, .site-group-name, .site-group-count {
+  font-family: 'Space Mono', monospace; text-transform: uppercase;
+}
+.site-group-no {
+  font-size: 9px; color: var(--c1); letter-spacing: .1em;
+}
+.site-group-name {
+  font-size: 9.5px; color: var(--tx-3); letter-spacing: .15em;
+}
+.site-group-rule { height: 1px; background: var(--border); flex: 1; }
+.site-group-count {
+  font-size: 8.5px; color: var(--tx-4); letter-spacing: .1em;
+}
+.site-card {
+  --site-accent: var(--c1);
+  --site-surface: #11131f;
+  --site-ink: #f5f2ea;
+  min-height: 300px; position: relative; display: flex; overflow: hidden;
+  border-radius: 18px; color: var(--site-ink); text-decoration: none;
+  background:
+    radial-gradient(circle at 82% 18%, color-mix(in srgb, var(--site-accent) 38%, transparent), transparent 34%),
+    linear-gradient(145deg, color-mix(in srgb, var(--site-accent) 13%, var(--site-surface)), var(--site-surface));
+  border: 1px solid color-mix(in srgb, var(--site-accent) 28%, var(--card-border-base));
+  box-shadow: var(--card-shadow);
+  isolation: isolate;
+  transition: transform .55s cubic-bezier(.22,1,.36,1),
+              box-shadow .55s cubic-bezier(.22,1,.36,1),
+              border-color .35s ease;
+}
+.site-card.is-wide { grid-column: 1 / -1; min-height: 360px; }
+.site-card:hover {
+  transform: translateY(-8px);
+  border-color: color-mix(in srgb, var(--site-accent) 58%, transparent);
+  box-shadow: var(--card-shadow-hover);
+}
+.site-card:focus-visible {
+  outline: 2px solid var(--site-accent); outline-offset: 4px;
+}
+.site-banner-image {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; z-index: -3;
+  transition: transform 1.1s cubic-bezier(.22,1,.36,1), filter .5s ease;
+}
+.site-card:hover .site-banner-image { transform: scale(1.035); }
+.site-card::before {
+  content: ''; position: absolute; inset: 0; z-index: -2;
+  background:
+    linear-gradient(180deg, rgba(5,5,10,.08) 0%, rgba(5,5,10,.1) 30%, rgba(5,5,10,.82) 100%),
+    linear-gradient(90deg, color-mix(in srgb, var(--site-surface) 70%, transparent), transparent 70%);
+}
+.site-card::after {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(90deg, #000, transparent 68%);
+}
+.site-card-content {
+  width: 100%; min-height: inherit; padding: 24px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.site-card.is-wide .site-card-content { padding: 30px 34px; }
+.site-card-top {
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 20px;
+}
+.site-card-index, .site-card-type {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  letter-spacing: .13em; text-transform: uppercase;
+}
+.site-card-index { color: var(--site-accent); }
+.site-card-type {
+  color: color-mix(in srgb, var(--site-ink) 58%, transparent);
+  padding: 5px 8px; border: 1px solid color-mix(in srgb, var(--site-ink) 20%, transparent);
+  border-radius: 999px; backdrop-filter: blur(10px);
+}
+.site-card-bottom { max-width: 520px; }
+.site-card-name {
+  font-family: 'Noto Serif SC', serif; font-size: 25px; line-height: 1.25;
+  font-weight: 500; letter-spacing: -.02em; margin-bottom: 8px;
+}
+.site-card.is-wide .site-card-name { font-size: clamp(30px,4vw,44px); }
+.site-card-desc {
+  color: color-mix(in srgb, var(--site-ink) 72%, transparent);
+  font-size: 12.5px; line-height: 1.75; max-width: 460px;
+}
+.site-card-action {
+  position: absolute; right: 24px; bottom: 24px;
+  width: 38px; height: 38px; border-radius: 50%;
+  display: grid; place-items: center; font-size: 17px;
+  color: var(--site-ink); border: 1px solid color-mix(in srgb, var(--site-ink) 24%, transparent);
+  background: color-mix(in srgb, var(--site-surface) 52%, transparent);
+  backdrop-filter: blur(12px);
+  transition: transform .45s cubic-bezier(.22,1,.36,1),
+              background .3s, border-color .3s;
+}
+.site-card:hover .site-card-action {
+  transform: translate(3px,-3px);
+  background: var(--site-accent); border-color: var(--site-accent);
+}
+.site-card.is-soon {
+  cursor: default; border-style: dashed;
+  box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 12px 34px rgba(0,0,0,.12);
+}
+.site-card.is-soon .site-banner-image {
+  filter: saturate(.62) brightness(.72);
+}
+.site-card.is-soon::before {
+  background:
+    linear-gradient(180deg, rgba(5,5,10,.16) 0%, rgba(5,5,10,.2) 28%, rgba(5,5,10,.9) 100%),
+    linear-gradient(90deg, color-mix(in srgb, var(--site-surface) 82%, transparent), transparent 76%);
+}
+.site-card.is-soon:hover {
+  transform: none;
+  border-color: color-mix(in srgb, var(--site-accent) 30%, var(--card-border-base));
+  box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 12px 34px rgba(0,0,0,.12);
+}
+.site-card.is-soon .site-card-type { border-style: dashed; }
+.site-card.is-soon .site-card-action {
+  width: auto; min-width: 38px; padding: 0 12px; border-radius: 999px;
+  font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: .12em;
+  color: color-mix(in srgb, var(--site-ink) 72%, transparent);
+}
+.site-card.is-soon:hover .site-card-action {
+  transform: none;
+  color: color-mix(in srgb, var(--site-ink) 72%, transparent);
+  background: color-mix(in srgb, var(--site-surface) 52%, transparent);
+  border-color: color-mix(in srgb, var(--site-ink) 24%, transparent);
+}
+.sites-empty {
+  grid-column: 1 / -1; min-height: 230px; position: relative; overflow: hidden;
+  border: 1px dashed var(--border-m); border-radius: 18px;
+  background:
+    radial-gradient(circle at 78% 35%, color-mix(in srgb, var(--c1) 13%, transparent), transparent 24%),
+    radial-gradient(circle at 88% 78%, color-mix(in srgb, var(--c3) 12%, transparent), transparent 22%),
+    var(--surface-s);
+  display: grid; place-items: center; text-align: center; padding: 38px;
+}
+.sites-empty::before {
+  content: ''; position: absolute; width: 310px; height: 110px; right: -40px; top: 55px;
+  border: 1px solid var(--border-m); border-radius: 50%; transform: rotate(-18deg);
+  box-shadow: 0 0 0 22px color-mix(in srgb, var(--c1) 3%, transparent),
+              0 0 0 44px color-mix(in srgb, var(--c3) 2%, transparent);
+}
+.sites-empty-copy { position: relative; z-index: 1; max-width: 430px; }
+.sites-empty-label {
+  font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: .15em;
+  color: var(--c1); text-transform: uppercase; margin-bottom: 13px;
+}
+.sites-empty-title {
+  font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--tx-hi);
+  line-height: 1.1; margin-bottom: 8px;
+}
+.sites-empty-text { color: var(--tx-3); font-size: 12px; line-height: 1.7; }
 
 /* ── Home About ── */
 .home-about {
@@ -877,6 +1090,7 @@ footer {
 @media (max-width: 860px) {
   .card-grid { grid-template-columns: repeat(2, 1fr); }
   .art-card.featured { grid-column: span 2; }
+  .sites-intro { grid-template-columns: 1fr; gap: 18px; }
 }
 
 @media (max-width: 640px) {
@@ -884,10 +1098,20 @@ footer {
   .art-card.featured { grid-column: span 1; }
   .art-card.featured .art-card-inner { padding: 22px 22px 18px; }
   .art-card.featured .card-num { font-size: 30px; }
-  .art-card.featured .card-title { font-size: 17px; }
+  .art-card.featured .card-title { font-size: 20px; line-height: 1.3; }
   .art-card.featured .art-card-footer { padding: 12px 22px 16px; }
-  .home-hero, .articles-wrap { padding-left: 20px; padding-right: 20px; }
+  .home-hero, .articles-wrap, .sites-wrap { padding-left: 20px; padding-right: 20px; }
   .art-card-inner, .art-card-footer { padding-left: 18px; padding-right: 18px; }
+  .site-grid { grid-template-columns: 1fr; }
+  .site-card.is-wide { grid-column: auto; }
+  .site-card, .site-card.is-wide { min-height: 310px; }
+  .site-card-content, .site-card.is-wide .site-card-content { padding: 22px; }
+  .site-card-name, .site-card.is-wide .site-card-name { font-size: 24px; padding-right: 44px; }
+  .site-card-action { right: 20px; bottom: 20px; }
+  .site-groups { gap: 42px; }
+  .site-group-count { display: none; }
+  .sites-divider { margin-bottom: 38px; }
+  .sites-empty { min-height: 260px; padding: 28px; }
   .art-hero, .art-body, .skill-tabs-bar, .skill-hero, .skill-body { padding-left: 20px; padding-right: 20px; }
   .needs-grid { grid-template-columns: 1fr; }
   .home-about-inner { grid-template-columns: 1fr; gap: 28px; }
@@ -1354,6 +1578,36 @@ footer {
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <section class="sites-wrap" aria-labelledby="sites-title">
+    <div class="sites-divider" aria-hidden="true">
+      <span class="sites-divider-line"></span>
+      <span class="sites-divider-mark"></span>
+      <span class="sites-divider-line"></span>
+    </div>
+
+    <div class="sites-intro">
+      <div>
+        <div class="sites-kicker">Selected Websites · Digital Places</div>
+        <h2 class="sites-title" id="sites-title">Things I made<br><em>for the web.</em></h2>
+      </div>
+      <p class="sites-note">文章之外，也做一些可以被打开、游逛和使用的网站。按兴趣实验、设计工具与研究框架分组，每个入口保留自己的性格，同时共享这份日志的秩序。</p>
+    </div>
+
+    <div class="site-groups" id="site-groups">
+      <div class="site-group">
+        <div class="site-grid">
+          <div class="sites-empty">
+            <div class="sites-empty-copy">
+              <div class="sites-empty-label">Collection in progress</div>
+              <div class="sites-empty-title">The next places are being made.</div>
+              <p class="sites-empty-text">网站作品入口已经准备好，名称、链接与 Banner 到位后将在这里展开。</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -2672,6 +2926,262 @@ npm start</code></pre>
 </footer>
 
 <script>
+/* ════════════════════════════════════════
+   WEBSITE PROJECTS
+   Add future website entries here. Each entry can carry its own image and palette
+   without changing the article cards above.
+════════════════════════════════════════ */
+var WEBSITE_GROUPS = [
+  {
+    id: 'interest',
+    name: 'Interest & Play · 兴趣与实验'
+  },
+  {
+    id: 'tools',
+    name: 'Design Tools · 设计工具'
+  },
+  {
+    id: 'analysis',
+    name: 'Research & Frameworks · 研究与分析'
+  }
+];
+
+var WEBSITE_PROJECTS = [
+  {
+    group: 'interest',
+    name: '远方来信',
+    type: 'Travel Archive · 2026',
+    description: '把三段旅程与六十二张水彩记忆，一封封收藏进可以游逛的明信片档案。',
+    url: 'https://yuanfang-laixin-2026.netlify.app/#journeys',
+    image: 'https://yuanfang-laixin-2026.netlify.app/assets/world/day-30.jpg',
+    imagePosition: 'center center',
+    accent: '#d6b47a',
+    surface: '#0f2a24',
+    ink: '#f7f2e8',
+    wide: true
+  },
+  {
+    group: 'interest',
+    name: '穿越千年的灵魂',
+    type: 'Thought Experiment · 2026',
+    description: '邀请李白、苏轼、李清照等八位创作者来到今天，重新观察跨越时代的人格与情绪浓度。',
+    url: 'https://todaypoet.netlify.app/',
+    image: './assets/sites/todaypoet-banner.svg',
+    imagePosition: 'center center',
+    accent: '#d9ad66',
+    surface: '#08080a',
+    ink: '#f0ece4',
+    wide: true
+  },
+  {
+    group: 'interest',
+    name: 'Pocket Archive',
+    type: '3D · Interactive',
+    description: '一台可以旋转、插卡和游玩的复古掌机，把三个微小世界留在手边。',
+    url: 'https://pocket-archive-3d.netlify.app/',
+    image: './assets/sites/pocket-archive-banner.svg',
+    imagePosition: 'center center',
+    accent: '#f3cf5d',
+    surface: '#2d2b2a',
+    ink: '#f6f0e5'
+  },
+  {
+    group: 'interest',
+    name: 'PITCH · Match Center',
+    type: 'Football · Live',
+    description: '聚合赛程、赛果与比赛信息的足球中心，用一块干净的屏幕跟进每场比赛。',
+    url: 'https://fcmatch.netlify.app/',
+    image: './assets/sites/fcmatch-banner.svg',
+    imagePosition: 'center center',
+    accent: '#baff4a',
+    surface: '#11131a',
+    ink: '#ffffff'
+  },
+  {
+    group: 'tools',
+    name: 'Duck Claw · 游戏开发插件',
+    type: 'Workflow · Dev Tools',
+    description: '从 PSD 自动切图到 Unity UI 拼接还原，把重复的生产工作交给工具。',
+    url: 'https://uimaking.netlify.app/',
+    image: './assets/sites/uimaking-banner.svg',
+    imagePosition: 'center center',
+    accent: '#ff756d',
+    surface: '#111219',
+    ink: '#ffffff'
+  },
+  {
+    group: 'tools',
+    name: 'Game UI Review Skill',
+    type: 'Codex Skill · UX',
+    description: '面向游戏 UI 团队的 AI 专业评审，覆盖视觉层级、市场适配与工程落地风险。',
+    url: 'https://gameui-review.netlify.app/',
+    image: 'https://gameui-review.netlify.app/assets/game-ui-review-intro.png',
+    imagePosition: 'center center',
+    accent: '#72e3ad',
+    surface: '#091413',
+    ink: '#ecf3ef'
+  },
+  {
+    group: 'tools',
+    name: 'UE PRD Reviewer Feishu',
+    type: 'Codex Skill · Game UE',
+    description: '原生复制飞书 PRD，并增量加入 Quick Start、信息架构画板、UE 判断与评审问题清单。',
+    url: 'https://ue-prd-reviewer-feishu.netlify.app/',
+    image: './assets/sites/ue-prd-sanitized.svg',
+    imagePosition: 'center center',
+    accent: '#ffbc2e',
+    surface: '#10151f',
+    ink: '#ffffff'
+  },
+  {
+    group: 'tools',
+    name: 'VX Motion Master',
+    type: 'Unity Tool · Motion',
+    description: '把已有 UI 动效提炼成可搜索、可调参、可继续编辑的 AnimationClip，一键复用到新界面。',
+    url: 'https://vx-motion-master.netlify.app/',
+    image: 'https://vx-motion-master.netlify.app/vx-motion-master-poster.png',
+    imagePosition: 'center 16%',
+    accent: '#3e9cff',
+    surface: '#07101a',
+    ink: '#eef6ff'
+  },
+  {
+    group: 'analysis',
+    name: '《三角洲行动》体验链路诊断',
+    type: 'UX Research · FPS',
+    description: '从学习、战斗、信息、协作、成长、循环与情绪七层，拆解摩擦点与留存优先级。',
+    url: 'https://delta-force-analysis-report.netlify.app/',
+    image: './assets/sites/delta-force-report.svg',
+    imagePosition: 'center center',
+    accent: '#c65a45',
+    surface: '#1a1714',
+    ink: '#f5eee3'
+  },
+  {
+    group: 'analysis',
+    name: 'FPS + MOBA 游戏核心体验分析框架',
+    type: 'UX Framework · FPS / MOBA',
+    description: '从目标玩家到商业与数据，以 12 个核心维度、5 个体验层和 6 步流程系统定位体验问题。',
+    url: 'https://fps-moba-framework.netlify.app/',
+    image: './assets/sites/fps-moba-framework.svg',
+    imagePosition: 'center center',
+    accent: '#4f9eff',
+    surface: '#091421',
+    ink: '#dce7f4'
+  }
+];
+
+function renderWebsiteProjects() {
+  var groupsRoot = document.getElementById('site-groups');
+  if (!groupsRoot || !WEBSITE_PROJECTS.length) return;
+
+  groupsRoot.innerHTML = '';
+  WEBSITE_GROUPS.forEach(function (group, groupIndex) {
+    var sites = WEBSITE_PROJECTS.filter(function (site) { return site.group === group.id; });
+    if (!sites.length) return;
+
+    var groupEl = document.createElement('section');
+    groupEl.className = 'site-group';
+    groupEl.setAttribute('aria-labelledby', 'site-group-' + group.id);
+
+    var groupHead = document.createElement('div');
+    groupHead.className = 'site-group-head';
+    var groupNo = document.createElement('span');
+    groupNo.className = 'site-group-no';
+    groupNo.textContent = String(groupIndex + 1).padStart(2, '0');
+    var groupName = document.createElement('h3');
+    groupName.className = 'site-group-name';
+    groupName.id = 'site-group-' + group.id;
+    groupName.textContent = group.name;
+    var groupRule = document.createElement('span');
+    groupRule.className = 'site-group-rule';
+    groupRule.setAttribute('aria-hidden', 'true');
+    var groupCount = document.createElement('span');
+    groupCount.className = 'site-group-count';
+    var liveCount = sites.filter(function (site) { return site.status !== 'soon'; }).length;
+    var upcomingCount = sites.length - liveCount;
+    groupCount.textContent = liveCount + ' Live' + (upcomingCount ? ' · ' + upcomingCount + ' Upcoming' : '');
+    groupHead.appendChild(groupNo);
+    groupHead.appendChild(groupName);
+    groupHead.appendChild(groupRule);
+    groupHead.appendChild(groupCount);
+
+    var grid = document.createElement('div');
+    grid.className = 'site-grid';
+
+    sites.forEach(function (site) {
+    var index = WEBSITE_PROJECTS.indexOf(site);
+    var isSoon = site.status === 'soon';
+    var card = document.createElement(isSoon ? 'article' : 'a');
+    card.className = 'site-card' + (site.wide ? ' is-wide' : '') + (isSoon ? ' is-soon' : '');
+    if (isSoon) {
+      card.setAttribute('aria-label', site.name + '，开发中');
+    } else {
+      card.href = site.url;
+      card.target = '_blank';
+      card.rel = 'noopener noreferrer';
+      card.setAttribute('aria-label', '打开网站：' + site.name);
+    }
+    card.style.setProperty('--site-accent', site.accent || 'var(--c1)');
+    card.style.setProperty('--site-surface', site.surface || '#11131f');
+    card.style.setProperty('--site-ink', site.ink || '#f5f2ea');
+
+    if (site.image) {
+      var image = document.createElement('img');
+      image.className = 'site-banner-image';
+      image.src = site.image;
+      image.alt = '';
+      image.loading = index === 0 ? 'eager' : 'lazy';
+      image.decoding = 'async';
+      image.style.objectPosition = site.imagePosition || 'center';
+      card.appendChild(image);
+    }
+
+    var content = document.createElement('div');
+    content.className = 'site-card-content';
+
+    var top = document.createElement('div');
+    top.className = 'site-card-top';
+    var number = document.createElement('span');
+    number.className = 'site-card-index';
+    number.textContent = 'SITE ' + String(index + 1).padStart(2, '0');
+    var type = document.createElement('span');
+    type.className = 'site-card-type';
+    type.textContent = site.type || 'Website';
+    top.appendChild(number);
+    top.appendChild(type);
+
+    var bottom = document.createElement('div');
+    bottom.className = 'site-card-bottom';
+    var name = document.createElement('h3');
+    name.className = 'site-card-name';
+    name.textContent = site.name;
+    var description = document.createElement('p');
+    description.className = 'site-card-desc';
+    description.textContent = site.description || '';
+    bottom.appendChild(name);
+    bottom.appendChild(description);
+
+    var action = document.createElement('span');
+    action.className = 'site-card-action';
+    action.setAttribute('aria-hidden', 'true');
+    action.textContent = isSoon ? 'IN PROGRESS' : '↗';
+
+    content.appendChild(top);
+    content.appendChild(bottom);
+    card.appendChild(content);
+    card.appendChild(action);
+    grid.appendChild(card);
+    });
+
+    groupEl.appendChild(groupHead);
+    groupEl.appendChild(grid);
+    groupsRoot.appendChild(groupEl);
+  });
+}
+
+renderWebsiteProjects();
+
 /* ════════════════════════════════════════
    ROUTER
 ════════════════════════════════════════ */

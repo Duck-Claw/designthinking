@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#eee9df"/>
+      <stop offset="1" stop-color="#cbc5b9"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#b9e4dc"/>
+      <stop offset="1" stop-color="#8fc0b8"/>
+    </linearGradient>
+    <filter id="shadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="35" stdDeviation="32" flood-color="#554f47" flood-opacity=".38"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <g fill="none" stroke="#777166" stroke-opacity=".12">
+    <circle cx="1230" cy="180" r="130"/><circle cx="1230" cy="180" r="168"/>
+    <path d="M0 735c346-146 590-99 805 22 261 146 498 108 795-70"/>
+  </g>
+  <g font-family="Trebuchet MS,Arial,sans-serif">
+    <text x="88" y="116" fill="#6e685f" font-size="20" letter-spacing="8">POCKET ARCHIVE · NO. 03</text>
+    <text x="88" y="238" fill="#2d2b2a" font-size="82" font-weight="700">Tiny worlds,</text>
+    <text x="88" y="326" fill="#2d2b2a" font-size="82" font-weight="700">kept close.</text>
+    <text x="92" y="390" fill="#777168" font-size="19" letter-spacing="3">A 3D CARTRIDGE LIBRARY</text>
+  </g>
+  <g transform="translate(825 112) rotate(-7 300 330)" filter="url(#shadow)">
+    <rect x="76" y="0" width="448" height="760" rx="92" fill="#605c58"/>
+    <rect x="94" y="18" width="412" height="724" rx="78" fill="#d9d4ca"/>
+    <rect x="132" y="78" width="336" height="306" rx="32" fill="#343331"/>
+    <rect x="154" y="100" width="292" height="262" rx="18" fill="url(#screen)"/>
+    <g transform="translate(185 128)">
+      <rect width="228" height="204" rx="12" fill="#20333a"/>
+      <circle cx="158" cy="64" r="36" fill="#f3cf5d"/>
+      <path d="M0 164l50-53 42 34 38-72 98 91z" fill="#6fb2a5"/>
+      <path d="M0 178c54-18 108-18 162 0s92 16 66 26H0z" fill="#8bd4c8"/>
+      <g fill="#f4efe6" opacity=".7"><circle cx="30" cy="34" r="3"/><circle cx="84" cy="48" r="2"/><circle cx="202" cy="28" r="3"/></g>
+    </g>
+    <g transform="translate(146 454)">
+      <rect x="0" y="58" width="152" height="44" rx="10" fill="#5c5853"/>
+      <rect x="54" y="4" width="44" height="152" rx="10" fill="#5c5853"/>
+      <circle cx="304" cy="44" r="32" fill="#d46e62"/>
+      <circle cx="244" cy="104" r="32" fill="#d4b65d"/>
+      <circle cx="304" cy="44" r="12" fill="#b9564e"/>
+      <circle cx="244" cy="104" r="12" fill="#b39748"/>
+    </g>
+    <rect x="184" y="665" width="232" height="22" rx="11" fill="#b8b2a8"/>
+    <circle cx="300" cy="701" r="12" fill="#aaa49a"/>
+  </g>
+  <g transform="translate(600 525) rotate(9)" filter="url(#shadow)">
+    <rect width="222" height="288" rx="24" fill="#3d4e62"/>
+    <rect x="22" y="24" width="178" height="118" rx="12" fill="#f1eadb"/>
+    <text x="42" y="72" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="#283445">ORBITAL</text>
+    <text x="42" y="101" font-family="Arial,sans-serif" font-size="12" fill="#6e7378" letter-spacing="2">NIGHT RUNNER</text>
+    <path d="M70 204h82v84H70z" fill="#1e2935"/>
+  </g>
+  <g transform="translate(1350 560) rotate(12)" opacity=".72">
+    <rect width="180" height="240" rx="22" fill="#d16e61"/>
+    <text x="28" y="74" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#f4eadb">EMBER CLUB</text>
+    <path d="M62 168h56v72H62z" fill="#733e39"/>
+  </g>
+</svg>

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <radialGradient id="glow" cx=".72" cy=".42" r=".58">
+      <stop stop-color="#7b281f"/>
+      <stop offset=".42" stop-color="#271314"/>
+      <stop offset="1" stop-color="#08080a"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#d9ad66"/>
+      <stop offset="1" stop-color="#f0d7a0"/>
+    </linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="30"/></filter>
+  </defs>
+  <rect width="1600" height="900" fill="#08080a"/>
+  <rect width="1600" height="900" fill="url(#glow)"/>
+  <circle cx="1180" cy="320" r="210" fill="#d4553f" opacity=".12" filter="url(#blur)"/>
+  <g fill="none" stroke="#d9ad66" opacity=".16">
+    <circle cx="1170" cy="320" r="116"/><circle cx="1170" cy="320" r="210"/>
+    <path d="M926 320h488M1170 76v488"/>
+    <path d="M1022 172l296 296M1318 172l-296 296"/>
+  </g>
+  <g font-family="Georgia,'Noto Serif SC',serif">
+    <text x="92" y="118" fill="#d9ad66" font-size="20" letter-spacing="9">A THOUGHT EXPERIMENT · 2026</text>
+    <text x="92" y="245" fill="#f0ece4" font-size="86">穿越千年的</text>
+    <text x="92" y="345" fill="url(#gold)" font-size="108">灵魂</text>
+    <text x="98" y="405" fill="#a8a19b" font-size="19" letter-spacing="4">IF THEY LIVED TODAY</text>
+  </g>
+  <g transform="translate(660 178)" font-family="Georgia,'Noto Serif SC',serif">
+    <g transform="rotate(-4 120 260)">
+      <rect width="194" height="470" rx="97" fill="#141316" stroke="#d9ad66" stroke-opacity=".26"/>
+      <text x="97" y="88" fill="#d9ad66" font-size="22" text-anchor="middle">701</text>
+      <text x="97" y="214" fill="#f0ece4" font-size="48" text-anchor="middle" writing-mode="tb">李白</text>
+      <text x="97" y="428" fill="#77716d" font-size="13" text-anchor="middle">THE COMET</text>
+    </g>
+    <g transform="translate(170 72) rotate(3 120 260)">
+      <rect width="194" height="470" rx="97" fill="#191416" stroke="#d4553f" stroke-opacity=".38"/>
+      <text x="97" y="88" fill="#d4553f" font-size="22" text-anchor="middle">1037</text>
+      <text x="97" y="214" fill="#f0ece4" font-size="48" text-anchor="middle" writing-mode="tb">苏轼</text>
+      <text x="97" y="428" fill="#77716d" font-size="13" text-anchor="middle">LIFE MAKER</text>
+    </g>
+    <g transform="translate(340 -24) rotate(-2 120 260)">
+      <rect width="194" height="470" rx="97" fill="#121215" stroke="#d9ad66" stroke-opacity=".22"/>
+      <text x="97" y="88" fill="#d9ad66" font-size="22" text-anchor="middle">772</text>
+      <text x="97" y="214" fill="#f0ece4" font-size="48" text-anchor="middle" writing-mode="tb">白居易</text>
+      <text x="97" y="428" fill="#77716d" font-size="13" text-anchor="middle">TRANSLATOR</text>
+    </g>
+    <g transform="translate(510 96) rotate(5 120 260)">
+      <rect width="194" height="470" rx="97" fill="#181315" stroke="#d4553f" stroke-opacity=".3"/>
+      <text x="97" y="88" fill="#d4553f" font-size="22" text-anchor="middle">1140</text>
+      <text x="97" y="214" fill="#f0ece4" font-size="48" text-anchor="middle" writing-mode="tb">辛弃疾</text>
+      <text x="97" y="428" fill="#77716d" font-size="13" text-anchor="middle">THE GENERAL</text>
+    </g>
+  </g>
+  <g fill="#f0ece4" opacity=".7">
+    <circle cx="1380" cy="164" r="3"/><circle cx="1460" cy="284" r="2"/>
+    <circle cx="1290" cy="672" r="3"/><circle cx="870" cy="710" r="2"/>
+  </g>
+  <path d="M96 508h360" stroke="#d9ad66" stroke-width="2" opacity=".45"/>
+  <text x="96" y="560" fill="#aaa39c" font-family="Arial,sans-serif" font-size="18" letter-spacing="2">8 CREATORS · ONE IMPOSSIBLE PRESENT</text>
+</svg>

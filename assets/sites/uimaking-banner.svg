@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#0b0c11"/>
+      <stop offset=".58" stop-color="#171821"/>
+      <stop offset="1" stop-color="#241416"/>
+    </linearGradient>
+    <linearGradient id="red" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#ff665e"/>
+      <stop offset="1" stop-color="#ff9a72"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="24" stdDeviation="24" flood-color="#000" flood-opacity=".6"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1260" cy="180" r="210" fill="#ff4e49" opacity=".12" filter="url(#glow)"/>
+  <g stroke="#fff" stroke-opacity=".035">
+    <path d="M0 90h1600M0 180h1600M0 270h1600M0 360h1600M0 450h1600M0 540h1600M0 630h1600M0 720h1600M0 810h1600"/>
+    <path d="M100 0v900M200 0v900M300 0v900M400 0v900M500 0v900M600 0v900M700 0v900M800 0v900M900 0v900M1000 0v900M1100 0v900M1200 0v900M1300 0v900M1400 0v900M1500 0v900"/>
+  </g>
+  <g font-family="Arial,sans-serif">
+    <text x="90" y="125" fill="#ff756d" font-size="23" letter-spacing="8">DUCK CLAW · DEV TOOLS</text>
+    <text x="90" y="232" fill="#fff" font-size="76" font-weight="700">From PSD</text>
+    <text x="90" y="312" fill="#fff" font-size="76" font-weight="700">to playable UI.</text>
+    <text x="94" y="374" fill="#a9a9b5" font-size="21" letter-spacing="2">SLICE · NAME · RESTORE · SHIP</text>
+  </g>
+  <g transform="translate(770 105)" filter="url(#shadow)">
+    <rect width="650" height="520" rx="28" fill="#20212b" stroke="#fff" stroke-opacity=".14"/>
+    <rect width="650" height="54" rx="28" fill="#2a2b36"/>
+    <circle cx="28" cy="27" r="7" fill="#ff625c"/><circle cx="52" cy="27" r="7" fill="#f4bf4f"/><circle cx="76" cy="27" r="7" fill="#58c96e"/>
+    <text x="112" y="34" fill="#d6d6de" font-family="Arial,sans-serif" font-size="15" letter-spacing="2">PSD AUTO SLICER</text>
+    <g transform="translate(34 88)">
+      <rect width="250" height="386" rx="14" fill="#171820"/>
+      <g font-family="Arial,sans-serif" font-size="15" fill="#b9bac4">
+        <text x="24" y="43">▾  HUD / Battle</text>
+        <text x="48" y="84">◫  Panel_Main</text>
+        <text x="48" y="125">◫  Btn_Start_9s</text>
+        <text x="48" y="166">◫  Icon_Skill_01</text>
+        <text x="48" y="207">◫  Font_Level</text>
+        <text x="48" y="248">◫  Line_Divider</text>
+      </g>
+      <rect x="18" y="278" width="214" height="74" rx="12" fill="url(#red)"/>
+      <text x="65" y="324" fill="#170e10" font-family="Arial,sans-serif" font-size="17" font-weight="700">EXPORT  128</text>
+    </g>
+    <g transform="translate(318 88)">
+      <rect width="298" height="386" rx="14" fill="#12131a"/>
+      <rect x="44" y="42" width="210" height="210" rx="18" fill="#292b38" stroke="#ff756d" stroke-width="2"/>
+      <path d="M71 69h36M71 69v36M227 69h-36M227 69v36M71 225h36M71 225v-36M227 225h-36M227 225v-36" fill="none" stroke="#ff756d" stroke-width="4"/>
+      <rect x="88" y="94" width="122" height="122" rx="22" fill="#ff756d" opacity=".15"/>
+      <path d="M105 158h88M149 114v88" stroke="#fff" stroke-opacity=".72" stroke-width="8" stroke-linecap="round"/>
+      <text x="54" y="300" fill="#b9bac4" font-family="Arial,sans-serif" font-size="14">export_manifest.json</text>
+      <rect x="54" y="326" width="190" height="8" rx="4" fill="#2e303b"/>
+      <rect x="54" y="326" width="154" height="8" rx="4" fill="url(#red)"/>
+    </g>
+  </g>
+  <g transform="translate(1100 650) rotate(-5)" filter="url(#shadow)">
+    <rect width="360" height="126" rx="22" fill="#f2f2f5"/>
+    <text x="28" y="42" font-family="Arial,sans-serif" font-size="14" fill="#181920" letter-spacing="2">UNITY UI RESTORE</text>
+    <path d="M34 78h40l18-18h36l18 18h56l18-18h38" fill="none" stroke="#ff625c" stroke-width="5" stroke-linecap="round"/>
+    <text x="278" y="86" font-family="Arial,sans-serif" font-size="28" font-weight="700" fill="#181920">100%</text>
+  </g>
+</svg>

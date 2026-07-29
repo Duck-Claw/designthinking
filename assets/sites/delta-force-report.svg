@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#efe9dd"/>
+      <stop offset="1" stop-color="#d8d0c3"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="24" stdDeviation="24" flood-color="#62594e" flood-opacity=".25"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#paper)"/>
+  <g stroke="#1a1714" stroke-opacity=".055">
+    <path d="M0 90h1600M0 180h1600M0 270h1600M0 360h1600M0 450h1600M0 540h1600M0 630h1600M0 720h1600M0 810h1600"/>
+    <path d="M100 0v900M200 0v900M300 0v900M400 0v900M500 0v900M600 0v900M700 0v900M800 0v900M900 0v900M1000 0v900M1100 0v900M1200 0v900M1300 0v900M1400 0v900M1500 0v900"/>
+  </g>
+  <g transform="translate(88 88)" font-family="Arial,'Noto Sans SC',sans-serif">
+    <path d="M0 58L52 0l52 58z" fill="#171512"/>
+    <text x="130" y="24" fill="#8e322a" font-size="19" letter-spacing="7">DELTA FORCE · UX DIAGNOSIS</text>
+    <text x="130" y="65" fill="#171512" font-size="22" font-weight="700">CORE EXPERIENCE CHAIN</text>
+    <text y="190" fill="#171512" font-size="72" font-weight="800">七层体验，</text>
+    <text y="272" fill="#171512" font-size="72" font-weight="800">一条留存链路。</text>
+    <text y="332" fill="#706960" font-size="18" letter-spacing="3">MACRO FRAMEWORK × MICRO FRICTION</text>
+  </g>
+  <g transform="translate(865 104)" filter="url(#shadow)">
+    <rect width="620" height="660" rx="28" fill="#f8f4ec" stroke="#171512" stroke-opacity=".14"/>
+    <g transform="translate(64 64)">
+      <text fill="#171512" font-family="Arial,sans-serif" font-size="17" font-weight="700">EXPERIENCE LAYERS</text>
+      <text x="466" fill="#8e322a" font-family="Arial,sans-serif" font-size="15" font-weight="700">07</text>
+      <g transform="translate(0 44)" font-family="Arial,sans-serif">
+        <g><rect width="492" height="54" rx="10" fill="#171512"/><text x="20" y="34" fill="#fff" font-size="14">01 · LEARNABILITY</text><rect x="388" y="23" width="82" height="8" rx="4" fill="#d95843"/></g>
+        <g transform="translate(0 64)"><rect width="492" height="54" rx="10" fill="#e9e1d5"/><text x="20" y="34" fill="#171512" font-size="14">02 · COMBAT FEEL</text><rect x="404" y="23" width="66" height="8" rx="4" fill="#d88343"/></g>
+        <g transform="translate(0 128)"><rect width="492" height="54" rx="10" fill="#e9e1d5"/><text x="20" y="34" fill="#171512" font-size="14">03 · INFORMATION</text><rect x="414" y="23" width="56" height="8" rx="4" fill="#d88343"/></g>
+        <g transform="translate(0 192)"><rect width="492" height="54" rx="10" fill="#e9e1d5"/><text x="20" y="34" fill="#171512" font-size="14">04 · COOPERATION</text><rect x="410" y="23" width="60" height="8" rx="4" fill="#d8aa43"/></g>
+        <g transform="translate(0 256)"><rect width="492" height="54" rx="10" fill="#e9e1d5"/><text x="20" y="34" fill="#171512" font-size="14">05 · PROGRESSION</text><rect x="426" y="23" width="44" height="8" rx="4" fill="#7a9b62"/></g>
+        <g transform="translate(0 320)"><rect width="492" height="54" rx="10" fill="#e9e1d5"/><text x="20" y="34" fill="#171512" font-size="14">06 · LOOP</text><rect x="422" y="23" width="48" height="8" rx="4" fill="#7a9b62"/></g>
+        <g transform="translate(0 384)"><rect width="492" height="54" rx="10" fill="#e9e1d5"/><text x="20" y="34" fill="#171512" font-size="14">07 · EMOTION</text><rect x="430" y="23" width="40" height="8" rx="4" fill="#6f849d"/></g>
+      </g>
+      <path d="M0 526h492" stroke="#171512" stroke-opacity=".14"/>
+      <text y="566" fill="#777068" font-family="Arial,sans-serif" font-size="12" letter-spacing="2">RETENTION PRIORITY · HIGH → LOW</text>
+    </g>
+  </g>
+  <g transform="translate(96 545)">
+    <path d="M118 0l118 204H0z" fill="none" stroke="#8e322a" stroke-width="4"/>
+    <path d="M118 48l76 132H42z" fill="#8e322a" opacity=".12"/>
+    <circle cx="118" cy="136" r="18" fill="#8e322a"/>
+    <path d="M118 66v52M118 154v24" stroke="#efe9dd" stroke-width="6" stroke-linecap="round"/>
+    <text x="270" y="85" fill="#171512" font-family="Arial,sans-serif" font-size="24" font-weight="700">FRICTION IS A CHAIN.</text>
+    <text x="270" y="126" fill="#706960" font-family="Arial,sans-serif" font-size="17">Learn → Fight → Understand → Cooperate → Grow</text>
+  </g>
+</svg>

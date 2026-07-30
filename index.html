@@ -648,15 +648,29 @@ footer {
   border-top: 1px solid var(--border);
 }
 .home-about-inner {
-  max-width: var(--max-w); margin: 0 auto; padding: 52px 36px;
-  display: grid; grid-template-columns: 1fr auto; gap: 72px; align-items: start;
+  max-width: var(--max-w); margin: 0 auto; padding: 36px;
+  display: grid; grid-template-columns: minmax(0,1fr) minmax(320px,380px);
+  gap: 72px; align-items: center;
 }
 .about-label {
   font-family: 'Space Mono', monospace; font-size: 9.5px;
   color: var(--tx-4); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 13px;
 }
 .about-text { font-size: 14px; color: var(--tx-2); line-height: 1.85; max-width: 440px; }
-.home-stats { display: flex; gap: 48px; }
+.home-stats {
+  display: grid; grid-template-columns: repeat(2,minmax(0,1fr));
+  column-gap: 54px; row-gap: 14px;
+}
+.home-stat {
+  min-width: 0;
+}
+.home-stat:nth-child(n+3) {
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+.home-stat.is-progress {
+  grid-column: 2; grid-row: 2;
+}
 .stat-num {
   font-family: 'Cormorant Garamond', serif; font-weight: 800; font-size: 30px;
   color: var(--tx-hi); letter-spacing: -0.03em; line-height: 1;
@@ -1114,7 +1128,8 @@ footer {
   .sites-empty { min-height: 260px; padding: 28px; }
   .art-hero, .art-body, .skill-tabs-bar, .skill-hero, .skill-body { padding-left: 20px; padding-right: 20px; }
   .needs-grid { grid-template-columns: 1fr; }
-  .home-about-inner { grid-template-columns: 1fr; gap: 28px; }
+  .home-about-inner { grid-template-columns: 1fr; gap: 24px; padding: 36px 20px; }
+  .home-stats { width: 100%; column-gap: 28px; row-gap: 14px; }
   .skill-tabs { grid-template-columns: repeat(2, 1fr); }
   .skill-tabs-bar { padding-left: 20px; padding-right: 20px; }
   .skill-hero-meta { gap: 18px; }
@@ -1432,7 +1447,7 @@ footer {
 
   <section class="articles-wrap">
     <div class="articles-head">
-      <span class="articles-head-label">All Articles — 06 Published</span>
+      <span class="articles-head-label" id="articles-published-label">All Articles — 06 Published</span>
       <span class="articles-head-rule"></span>
     </div>
 
@@ -1618,8 +1633,22 @@ footer {
         <p class="about-text">这是一份由AI主导生成的设计思考记录。每篇文章在内容构建与呈现设计上均由AI一体化生成，感谢Claude Code、Chatgpt、Trae的贡献与智慧。</p>
       </div>
       <div class="home-stats">
-        <div><div class="stat-num">06</div><div class="stat-label">Articles</div></div>
-        <div><div class="stat-num">∞</div><div class="stat-label">In Progress</div></div>
+        <div class="home-stat">
+          <div class="stat-num" id="stat-articles">06</div>
+          <div class="stat-label">Articles</div>
+        </div>
+        <div class="home-stat">
+          <div class="stat-num" id="stat-websites">10</div>
+          <div class="stat-label">Websites</div>
+        </div>
+        <div class="home-stat">
+          <div class="stat-num" id="stat-categories">03</div>
+          <div class="stat-label">Categories</div>
+        </div>
+        <div class="home-stat is-progress">
+          <div class="stat-num">∞</div>
+          <div class="stat-label">In Progress</div>
+        </div>
       </div>
     </div>
   </section>
@@ -2921,7 +2950,7 @@ npm start</code></pre>
       </svg>
       <span class="footer-name">David Design Thinking</span>
     </div>
-    <div class="footer-right">© 2026 · Personal Journal<br><span style="opacity:.5">06 Articles Published</span></div>
+    <div class="footer-right">© 2026 · Personal Journal<br><span id="footer-article-count" style="opacity:.5">06 Articles Published</span></div>
   </div>
 </footer>
 
@@ -3180,7 +3209,33 @@ function renderWebsiteProjects() {
   });
 }
 
+function syncHomeStats() {
+  var articleCount = document.querySelectorAll('#view-home .art-card').length;
+  var websiteCount = WEBSITE_PROJECTS.filter(function (site) {
+    return site.url && site.status !== 'soon';
+  }).length;
+  var categoryCount = WEBSITE_GROUPS.filter(function (group) {
+    return WEBSITE_PROJECTS.some(function (site) {
+      return site.group === group.id && site.url && site.status !== 'soon';
+    });
+  }).length;
+  var formatCount = function (count) { return String(count).padStart(2, '0'); };
+
+  var articleStat = document.getElementById('stat-articles');
+  var websiteStat = document.getElementById('stat-websites');
+  var categoryStat = document.getElementById('stat-categories');
+  var publishedLabel = document.getElementById('articles-published-label');
+  var footerCount = document.getElementById('footer-article-count');
+
+  if (articleStat) articleStat.textContent = formatCount(articleCount);
+  if (websiteStat) websiteStat.textContent = formatCount(websiteCount);
+  if (categoryStat) categoryStat.textContent = formatCount(categoryCount);
+  if (publishedLabel) publishedLabel.textContent = 'All Articles — ' + formatCount(articleCount) + ' Published';
+  if (footerCount) footerCount.textContent = formatCount(articleCount) + ' Articles Published';
+}
+
 renderWebsiteProjects();
+syncHomeStats();
 
 /* ════════════════════════════════════════
    ROUTER

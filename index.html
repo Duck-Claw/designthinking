@@ -546,6 +546,16 @@ footer {
   background-size: 28px 28px;
   mask-image: linear-gradient(90deg, #000, transparent 68%);
 }
+.site-card.is-light::before {
+  background:
+    linear-gradient(180deg, transparent 42%, color-mix(in srgb, var(--site-surface) 52%, transparent) 100%),
+    linear-gradient(90deg, var(--site-surface) 0%, color-mix(in srgb, var(--site-surface) 94%, transparent) 42%,
+                    color-mix(in srgb, var(--site-surface) 38%, transparent) 72%, transparent 100%);
+}
+.site-card.is-light::after {
+  background-image: linear-gradient(rgba(38,34,28,.026) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(38,34,28,.026) 1px, transparent 1px);
+}
 .site-card-content {
   width: 100%; min-height: inherit; padding: 24px;
   display: flex; flex-direction: column; justify-content: space-between;
@@ -3004,6 +3014,21 @@ var WEBSITE_PROJECTS = [
   },
   {
     group: 'interest',
+    name: '苏轼：一个人的风雨与明月',
+    type: 'Biography · 36 Slides',
+    description: '沿眉山、黄州、惠州与儋州展开一册可翻阅的人物传记，在诗、月色与人间烟火里重新认识苏东坡。',
+    url: 'https://sushi-share-20260904.netlify.app/',
+    image: 'https://sushi-share-20260904.netlify.app/assets/sushi-portrait.jpg',
+    imageFit: 'contain',
+    imagePosition: '82% center',
+    accent: '#b03a2e',
+    surface: '#f4efe4',
+    ink: '#26221c',
+    light: true,
+    wide: true
+  },
+  {
+    group: 'interest',
     name: 'Pocket Archive',
     type: '3D · Interactive',
     description: '一台可以旋转、插卡和游玩的复古掌机，把三个微小世界留在手边。',
@@ -3142,7 +3167,7 @@ function renderWebsiteProjects() {
     var index = WEBSITE_PROJECTS.indexOf(site);
     var isSoon = site.status === 'soon';
     var card = document.createElement(isSoon ? 'article' : 'a');
-    card.className = 'site-card' + (site.wide ? ' is-wide' : '') + (isSoon ? ' is-soon' : '');
+    card.className = 'site-card' + (site.wide ? ' is-wide' : '') + (site.light ? ' is-light' : '') + (isSoon ? ' is-soon' : '');
     if (isSoon) {
       card.setAttribute('aria-label', site.name + '，开发中');
     } else {
@@ -3162,6 +3187,7 @@ function renderWebsiteProjects() {
       image.alt = '';
       image.loading = index === 0 ? 'eager' : 'lazy';
       image.decoding = 'async';
+      image.style.objectFit = site.imageFit || 'cover';
       image.style.objectPosition = site.imagePosition || 'center';
       card.appendChild(image);
     }
